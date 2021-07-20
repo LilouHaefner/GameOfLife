@@ -415,6 +415,7 @@ namespace GameOfLife
             this.toolStripPlayButton.Name = "toolStripPlayButton";
             this.toolStripPlayButton.Size = new System.Drawing.Size(36, 36);
             this.toolStripPlayButton.Text = "Play";
+            this.toolStripPlayButton.Click += new System.EventHandler(this.toolStripPlayButton_Click);
             // 
             // toolStripPauseButton
             // 
@@ -427,6 +428,7 @@ namespace GameOfLife
             this.toolStripPauseButton.Name = "toolStripPauseButton";
             this.toolStripPauseButton.Size = new System.Drawing.Size(36, 36);
             this.toolStripPauseButton.Text = "Pause";
+            this.toolStripPauseButton.Click += new System.EventHandler(this.toolStripPauseButton_Click);
             // 
             // toolStripNextButton
             // 
@@ -439,6 +441,7 @@ namespace GameOfLife
             this.toolStripNextButton.Name = "toolStripNextButton";
             this.toolStripNextButton.Size = new System.Drawing.Size(36, 36);
             this.toolStripNextButton.Text = "Next";
+            this.toolStripNextButton.Click += new System.EventHandler(this.toolStripNextButton_Click);
             // 
             // graphicsPanel
             // 
@@ -450,6 +453,8 @@ namespace GameOfLife
             this.graphicsPanel.Name = "graphicsPanel";
             this.graphicsPanel.Size = new System.Drawing.Size(944, 411);
             this.graphicsPanel.TabIndex = 3;
+            this.graphicsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel_Paint);
+            this.graphicsPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel_MouseClick);
             // 
             // hudPanel
             // 
@@ -616,6 +621,8 @@ namespace GameOfLife
             this.Name = "MainForm";
             this.Text = "Game of Life";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
             this.tableLayoutPanel.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
