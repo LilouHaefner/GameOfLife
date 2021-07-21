@@ -62,8 +62,9 @@ namespace GameOfLife
                 public bool bShowGrid;
                 public Color GridColor;
                 public Color CellColor;
-                public int NeighborsTextMargin;
-                public int NeighborsTextSizeMin;
+                public int NeighborTextMargin;
+                public int NeighborTextSizeMin;
+                public int NeighborTextSizeMax;
             }
 
             public FOptionsGeneral General;
@@ -114,8 +115,9 @@ namespace GameOfLife
             Options.Display.bShowGrid = true;
             Options.Display.GridColor = Color.FromArgb(240, 240, 240);
             Options.Display.CellColor = Color.FromArgb(208, 208, 208);
-            Options.Display.NeighborsTextMargin = 2;
-            Options.Display.NeighborsTextSizeMin = 8;
+            Options.Display.NeighborTextMargin = 2;
+            Options.Display.NeighborTextSizeMin = 8;
+            Options.Display.NeighborTextSizeMin = 32;
 
             Cells = new FCell[Options.General.Scale.X, Options.General.Scale.Y];
 
@@ -149,7 +151,64 @@ namespace GameOfLife
 
         private void graphicsPanel_Paint(object sender, PaintEventArgs e)
         {
-            // add implementation here
+            // calculate cell size
+            float CellWidth = (float)graphicsPanel.ClientSize.Width / (float)Cells.GetLength(0);
+            float CellHeight = (float)graphicsPanel.ClientSize.Height / (float)Cells.GetLength(1);
+
+            // create pen for grid lines
+            Pen GridPen = new Pen(Options.Display.GridColor, 1);
+
+            // create pen for cell fill
+            Brush CellBrush = new SolidBrush(Options.Display.CellColor);
+
+            // neighbor count font setup
+            float FontSize = (Math.Min(CellWidth, CellHeight) - (Options.Display.NeighborTextMargin * 2));
+            Font Font = new Font("Century Gothic", FontSize);
+            StringFormat StringFormat = new StringFormat();
+            StringFormat.Alignment = StringAlignment.Center;
+            StringFormat.LineAlignment = StringAlignment.Center;
+
+            bool bShowNeighbors = Options.Display.bShowNeighbors && FontSize == Math.Min(Math.Max(Options.Display.NeighborTextSizeMin, FontSize), Options.Display.NeighborTextSizeMax);
+
+            // iterate through the universe
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    // create rectangle to represent each cell in pixels
+                    RectangleF cellRect = RectangleF.Empty;
+                    cellRect.X = x * CellWidth;
+                    cellRect.Y = y * CellHeight;
+                    cellRect.Width = CellWidth;
+                    cellRect.Height = CellHeight;
+
+                    // fill the cell if live
+                    if (Cells[x, y].Value == true)
+                    {
+                        e.Graphics.FillRectangle(CellBrush, cellRect);
+                    }
+
+                    // outline the cell
+                    e.Graphics.DrawRectangle(GridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+
+                    if (bShowNeighbors)
+                    {
+                        // only allow neighbor count to be shown if greater than 0 or cell is alive
+                        if (Cells[x, y].Neighbors > 0 || Cells[x, y].Value)
+                        {
+                            // create rectangle
+                            RectangleF rect = new RectangleF(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+
+                            // draw neighbor count in rectangle
+                            e.Graphics.DrawString(2.ToString(), Font, Brushes.White, rect, StringFormat);
+                        }
+                    }
+                }
+            }
+
+            // clean up pens and brushes
+            GridPen.Dispose();
+            CellBrush.Dispose();
         }
 
         private void graphicsPanel_MouseClick(object sender, MouseEventArgs e)
@@ -169,6 +228,63 @@ namespace GameOfLife
             NextGeneration();
             OnWorldTick();
         }
+
+        #region Input
+
+        private void OnPlay()
+        {
+            // disable play and next buttons
+            toolStripPlayButton.Enabled = false;
+            toolStripNextButton.Enabled = false;
+
+            // enable pause button
+            toolStripPauseButton.Enabled = true;
+
+            // enable timer
+            FormTimer.Enabled = true;
+        }
+
+        private void OnPause()
+        {
+            // disable pause button
+            toolStripPauseButton.Enabled = false;
+
+            // enable play and next buttons
+            toolStripPlayButton.Enabled = true;
+            toolStripNextButton.Enabled = true;
+
+            // disable timer
+            FormTimer.Enabled = false;
+        }
+
+        private void OnNext(object sender, EventArgs e)
+        {
+            Timer_Tick(sender, e);
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        #endregion
+
+        #region Tool Strip
+
+        private void toolStripPlayButton_Click(object sender, EventArgs e)
+        {
+            OnPlay();
+        }
+
+        private void toolStripPauseButton_Click(object sender, EventArgs e)
+        {
+            OnPause();
+        }
+
+        private void toolStripNextButton_Click(object sender, EventArgs e)
+        {
+            OnNext(sender, e);
+        }
+
+        #endregion
 
         private void NextGeneration()
         {
@@ -257,62 +373,5 @@ namespace GameOfLife
             statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
             statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
         }
-
-        #region Input
-
-        private void OnPlay()
-        {
-            // disable play and next buttons
-            toolStripPlayButton.Enabled = false;
-            toolStripNextButton.Enabled = false;
-
-            // enable pause button
-            toolStripPauseButton.Enabled = true;
-
-            // enable timer
-            FormTimer.Enabled = true;
-        }
-
-        private void OnPause()
-        {
-            // disable pause button
-            toolStripPauseButton.Enabled = false;
-
-            // enable play and next buttons
-            toolStripPlayButton.Enabled = true;
-            toolStripNextButton.Enabled = true;
-
-            // disable timer
-            FormTimer.Enabled = false;
-        }
-
-        private void OnNext(object sender, EventArgs e)
-        {
-            Timer_Tick(sender, e);
-
-            // repaint form
-            graphicsPanel.Invalidate();
-        }
-
-        #endregion
-
-        #region Tool Strip
-
-        private void toolStripPlayButton_Click(object sender, EventArgs e)
-        {
-            OnPlay();
-        }
-
-        private void toolStripPauseButton_Click(object sender, EventArgs e)
-        {
-            OnPause();
-        }
-
-        private void toolStripNextButton_Click(object sender, EventArgs e)
-        {
-            OnNext(sender, e);
-        }
-
-        #endregion
     }
 }
