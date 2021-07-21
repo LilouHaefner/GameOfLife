@@ -422,9 +422,26 @@ namespace GameOfLife
             return Count;
         }
 
-        private void Randomize()
+        private void Randomize(int seed = 0, float threshold = 7.5f, float multiplier = 10.0f)
         {
-            // add implementation here
+            // reset live
+            Live = 0;
+
+            // create random
+            Random random = new Random(seed);
+
+            // iterate through cells
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    // check random against threshold
+                    Cells[x, y].Value = random.NextDouble() * multiplier > threshold;
+
+                    // increment live
+                    if (Cells[x, y].Value) Live++;
+                }
+            }
         }
 
         private void Clear()
