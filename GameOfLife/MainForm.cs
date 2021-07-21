@@ -446,7 +446,14 @@ namespace GameOfLife
 
         private void Clear()
         {
-            // add implementation here
+            // iterate through cells
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    Cells[x, y].Value = false;
+                }
+            }
         }
 
         private void OnWorldLoad()
