@@ -19,6 +19,12 @@ namespace GameOfLife
             Reflect // not yet implemented
         }
 
+        public enum ERandomMode
+        {
+            Seed,
+            Time
+        }
+
         #endregion
 
         #region Structs
@@ -44,6 +50,7 @@ namespace GameOfLife
             public struct FOptionsGeneration
             {
                 public bool bRandomize;
+                public ERandomMode RandomMode;
                 public int RandomSeed;
                 public float RandomThreshold;
                 public float RandomMultiplier;
@@ -82,10 +89,13 @@ namespace GameOfLife
         int Live = 0;
         int Total = 0;
 
+        // input
+        bool bIsPlay = false;
+
         public MainForm()
         {
             InitializeComponent();
-            
+
             // setup options (temp)
             Options.General.Scale = (64, 32);
             Options.General.Interval = 20;
@@ -96,6 +106,7 @@ namespace GameOfLife
             Options.Rules.NeighborBirthMin = 3;
             Options.Rules.NeighborBirthMax = 3;
             Options.Generation.bRandomize = true;
+            Options.Generation.RandomMode = ERandomMode.Seed;
             Options.Generation.RandomSeed = 2000;
             Options.Generation.RandomThreshold = 7.5f;
             Options.Generation.RandomMultiplier = 10.0f;
@@ -116,7 +127,7 @@ namespace GameOfLife
             toolStripPauseButton.Enabled = false;
 
             Randomize();
-            UpdateOptions();
+            OnWorldLoad();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -145,14 +156,15 @@ namespace GameOfLife
             {
                 // add implementation here
 
-                graphicsPanel.Invalidate(); // repaint form
+                // repaint form
+                graphicsPanel.Invalidate();
             }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             NextGeneration();
-            UpdateStatusStrip();
+            OnWorldTick();
         }
 
         private void NextGeneration()
@@ -210,14 +222,12 @@ namespace GameOfLife
             // add implementation here
         }
 
-        private void UpdateOptions()
+        private void OnWorldLoad()
         {
-            // add implementation here
-
             Generation = 0;
             Live = 0;
             Total = Options.General.Scale.X * Options.General.Scale.Y;
-            
+
             for (int x = 0; x < Cells.GetLength(0); x++)
             {
                 for (int y = 0; y < Cells.GetLength(1); y++)
@@ -226,7 +236,7 @@ namespace GameOfLife
                 }
             }
 
-            UpdateStatusStrip();
+            OnWorldTick();
 
             hudIntervalValueLabel.Text = Options.General.Interval.ToString();
             hudSeedValueLabel.Text = Options.Generation.RandomSeed.ToString();
@@ -235,18 +245,19 @@ namespace GameOfLife
 
             hudSeedNameLabel.Visible = Options.Generation.bRandomize;
             hudSeedValueLabel.Visible = Options.Generation.bRandomize;
-        }
 
-        private void UpdateStatusStrip()
-        {
-            statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
-            statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
             statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
         }
 
-        #region Tool Strip
+        private void OnWorldTick()
+        {
+            statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
+            statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
+        }
 
-        private void toolStripPlayButton_Click(object sender, EventArgs e)
+        #region Input
+
+        private void OnPlay()
         {
             // disable play and next buttons
             toolStripPlayButton.Enabled = false;
@@ -259,7 +270,7 @@ namespace GameOfLife
             FormTimer.Enabled = true;
         }
 
-        private void toolStripPauseButton_Click(object sender, EventArgs e)
+        private void OnPause()
         {
             // disable pause button
             toolStripPauseButton.Enabled = false;
@@ -272,12 +283,31 @@ namespace GameOfLife
             FormTimer.Enabled = false;
         }
 
-        private void toolStripNextButton_Click(object sender, EventArgs e)
+        private void OnNext(object sender, EventArgs e)
         {
             Timer_Tick(sender, e);
 
             // repaint form
             graphicsPanel.Invalidate();
+        }
+
+        #endregion
+
+        #region Tool Strip
+
+        private void toolStripPlayButton_Click(object sender, EventArgs e)
+        {
+            OnPlay();
+        }
+
+        private void toolStripPauseButton_Click(object sender, EventArgs e)
+        {
+            OnPause();
+        }
+
+        private void toolStripNextButton_Click(object sender, EventArgs e)
+        {
+            OnNext(sender, e);
         }
 
         #endregion
