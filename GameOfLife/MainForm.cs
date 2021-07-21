@@ -140,7 +140,10 @@ namespace GameOfLife
             // check for Spacebar input
             if (e.KeyChar == ' ')
             {
-                // add implementation here
+                if (bIsPlay) OnPause();
+                else OnPlay();
+
+                bIsPlay = !bIsPlay;
             }
         }
 
