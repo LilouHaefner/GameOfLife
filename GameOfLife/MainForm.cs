@@ -62,9 +62,9 @@ namespace GameOfLife
                 public bool bShowGrid;
                 public Color GridColor;
                 public Color CellColor;
-                public int NeighborTextMargin;
-                public int NeighborTextSizeMin;
-                public int NeighborTextSizeMax;
+                public float NeighborTextSizeMulitplier;
+                public float NeighborTextSizeMin;
+                public float NeighborTextSizeMax;
             }
 
             public FOptionsGeneral General;
@@ -115,9 +115,9 @@ namespace GameOfLife
             Options.Display.bShowGrid = true;
             Options.Display.GridColor = Color.FromArgb(240, 240, 240);
             Options.Display.CellColor = Color.FromArgb(208, 208, 208);
-            Options.Display.NeighborTextMargin = 2;
-            Options.Display.NeighborTextSizeMin = 8;
-            Options.Display.NeighborTextSizeMin = 32;
+            Options.Display.NeighborTextSizeMulitplier = 12;
+            Options.Display.NeighborTextSizeMin = 4;
+            Options.Display.NeighborTextSizeMax = 24;
 
             Cells = new FCell[Options.General.Scale.X, Options.General.Scale.Y];
 
@@ -162,7 +162,8 @@ namespace GameOfLife
             Brush CellBrush = new SolidBrush(Options.Display.CellColor);
 
             // neighbor count font setup
-            float FontSize = (Math.Min(CellWidth, CellHeight) - (Options.Display.NeighborTextMargin * 2));
+            float FontSizeMultiplier = 0.05f;
+            float FontSize = Math.Min(CellWidth, CellHeight) * (Options.Display.NeighborTextSizeMulitplier * FontSizeMultiplier);
             Font Font = new Font("Century Gothic", FontSize);
             StringFormat StringFormat = new StringFormat();
             StringFormat.Alignment = StringAlignment.Center;
@@ -200,7 +201,7 @@ namespace GameOfLife
                             RectangleF rect = new RectangleF(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
 
                             // draw neighbor count in rectangle
-                            e.Graphics.DrawString(2.ToString(), Font, Brushes.White, rect, StringFormat);
+                            e.Graphics.DrawString(Cells[x, y].Neighbors.ToString(), Font, Brushes.White, rect, StringFormat);
                         }
                     }
                 }
@@ -324,6 +325,8 @@ namespace GameOfLife
             for (int i = 0; i < Queue.Count; i++)
             {
                 Cells[Queue[i].x, Queue[i].y].Value = Queue[i].Value;
+
+
             }
 
             // increment generation
