@@ -288,8 +288,45 @@ namespace GameOfLife
 
         private void NextGeneration()
         {
-            // add implementation here
+            // create queue
+            List<(int x, int y, bool Value)> Queue = new List<(int x, int y, bool Value)>();
 
+            // iterate through universe
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    // count neighbors
+                    int Neighbors = CountNeighbors(x, y);
+
+                    // apply rules
+
+                    // // if current cell is live
+                    if (Cells[x, y].Value)
+                    {
+                        if (Neighbors < 2 || Neighbors > 3)
+                        {
+                            Queue.Add((x, y, false));
+                        }
+                    }
+                    // // if current cell is dead
+                    else
+                    {
+                        if (Neighbors == 3)
+                        {
+                            Queue.Add((x, y, true));
+                        }
+                    }
+                }
+            }
+
+            // resolve queue
+            for (int i = 0; i < Queue.Count; i++)
+            {
+                Cells[Queue[i].x, Queue[i].y].Value = Queue[i].Value;
+            }
+
+            // increment generation
             Generation++;
 
             // repaint form
