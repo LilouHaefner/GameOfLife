@@ -217,7 +217,16 @@ namespace GameOfLife
             // check for LMB input
             if (e.Button == MouseButtons.Left)
             {
-                // add implementation here
+                // calculate the width and height of each cell in pixels
+                float cellWidth = (float)graphicsPanel.ClientSize.Width / (float)Cells.GetLength(0);
+                float cellHeight = (float)graphicsPanel.ClientSize.Height / (float)Cells.GetLength(1);
+
+                // calculate the cell that was clicked in
+                int x = (int)(e.X / cellWidth);
+                int y = (int)(e.Y / cellHeight);
+
+                // toggle the value of the cell
+                Cells[x, y].Value = !Cells[x, y].Value;
 
                 // repaint form
                 graphicsPanel.Invalidate();
