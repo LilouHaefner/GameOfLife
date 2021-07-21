@@ -299,7 +299,7 @@ namespace GameOfLife
         private int CountNeighbors(int X, int Y)
         {
             int Count = 0;
-
+            
             switch (Options.General.BorderMode)
             {
                 case EBorderMode.Clip:
@@ -316,8 +316,35 @@ namespace GameOfLife
         private int CountNeighborsClip(int X, int Y, int Radius)
         {
             int Count = 0;
+            int LengthX = Cells.GetLength(0);
+            int LengthY = Cells.GetLength(1);
 
-            // add implementation here
+            // iterate through a (2 * Radius) by (2 * Radius) square centered on cell (x, y)
+            for (int OffsetX = -Radius; OffsetX <= Radius; OffsetX++)
+            {
+                for (int OffsetY = -Radius; OffsetY <= Radius; OffsetY++)
+                {
+                    int CellX = X + OffsetX;
+                    int CellY = Y + OffsetY;
+
+                    // if OffsetX and OffsetY are both equal to 0, continue
+                    if (OffsetX == 0 && OffsetY == 0) continue;
+
+                    // if CellX is less than 0, continue
+                    if (CellX < 0) continue;
+
+                    // if CellY is less than 0, continue
+                    if (CellY < 0) continue;
+
+                    // if CellX is greater than or equal to LengthX, continue
+                    if (CellX >= LengthX) continue;
+
+                    // if CellY is greater than or equal to LengthY, continue
+                    if (CellY >= LengthY) continue;
+
+                    if (Cells[CellX, CellY].Value) Count++;
+                }
+            }
 
             return Count;
         }
@@ -325,7 +352,7 @@ namespace GameOfLife
         private int CountNeighborsWrap(int X, int Y, int Radius)
         {
             int Count = 0;
-
+            
             // add implementation here
 
             return Count;
