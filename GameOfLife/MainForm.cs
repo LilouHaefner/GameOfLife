@@ -352,8 +352,35 @@ namespace GameOfLife
         private int CountNeighborsWrap(int X, int Y, int Radius)
         {
             int Count = 0;
-            
-            // add implementation here
+            int LengthX = Cells.GetLength(0);
+            int LengthY = Cells.GetLength(1);
+
+            // iterate through a (2 * Radius) by (2 * Radius) square centered on cell (x, y)
+            for (int OffsetX = -Radius; OffsetX <= Radius; OffsetX++)
+            {
+                for (int OffsetY = -Radius; OffsetY <= Radius; OffsetY++)
+                {
+                    int CellX = X + OffsetX;
+                    int CellY = Y + OffsetY;
+
+                    // if OffsetX and OffsetY are both equal to 0, continue
+                    if (OffsetX == 0 && OffsetY == 0) continue;
+
+                    // if CellX is less than 0, set to LengthX - 1
+                    if (CellX < 0) CellX = LengthX - 1;
+
+                    // if CellY is less than 0, set to LengthY - 1
+                    if (CellY < 0) CellY = LengthY - 1;
+
+                    // if CellX is greater than or equal to LengthX, set to 0
+                    if (CellX >= LengthX) CellX = 0;
+
+                    // if CellY is greater than or equal to LengthY, set to 0
+                    if (CellY >= LengthY) CellY = 0;
+
+                    if (Cells[CellX, CellY].Value) Count++;
+                }
+            }
 
             return Count;
         }
