@@ -71,6 +71,19 @@ namespace GameOfLife
             this.label9 = new System.Windows.Forms.Label();
             this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.colorDialog2 = new System.Windows.Forms.ColorDialog();
             this.tabControl.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.generalTableLayout.SuspendLayout();
@@ -80,6 +93,7 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumericUpDown)).BeginInit();
             this.rulesTab.SuspendLayout();
             this.generationTab.SuspendLayout();
+            this.displayTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).BeginInit();
             this.rulesTableLayout.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -92,6 +106,7 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -326,6 +341,7 @@ namespace GameOfLife
             // 
             // displayTab
             // 
+            this.displayTab.Controls.Add(this.tableLayoutPanel2);
             this.displayTab.Location = new System.Drawing.Point(4, 22);
             this.displayTab.Name = "displayTab";
             this.displayTab.Size = new System.Drawing.Size(912, 425);
@@ -718,6 +734,148 @@ namespace GameOfLife
             0,
             0});
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.button3, 1, 4);
+            this.tableLayoutPanel2.Controls.Add(this.checkBox4, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.checkBox3, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label10, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.label11, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label12, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label13, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.checkBox2, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label14, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.button2, 1, 3);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel2.RowCount = 6;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(912, 425);
+            this.tableLayoutPanel2.TabIndex = 7;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(2, 89);
+            this.label10.Margin = new System.Windows.Forms.Padding(0);
+            this.label10.Name = "label10";
+            this.label10.Padding = new System.Windows.Forms.Padding(8);
+            this.label10.Size = new System.Drawing.Size(69, 29);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Grid Color";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(2, 2);
+            this.label11.Margin = new System.Windows.Forms.Padding(0);
+            this.label11.Name = "label11";
+            this.label11.Padding = new System.Windows.Forms.Padding(8);
+            this.label11.Size = new System.Drawing.Size(77, 29);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Show HUD";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(2, 31);
+            this.label12.Margin = new System.Windows.Forms.Padding(0);
+            this.label12.Name = "label12";
+            this.label12.Padding = new System.Windows.Forms.Padding(8);
+            this.label12.Size = new System.Drawing.Size(127, 29);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "Show Neighbor Count";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(2, 60);
+            this.label13.Margin = new System.Windows.Forms.Padding(0);
+            this.label13.Name = "label13";
+            this.label13.Padding = new System.Windows.Forms.Padding(8);
+            this.label13.Size = new System.Drawing.Size(72, 29);
+            this.label13.TabIndex = 14;
+            this.label13.Text = "Show Grid";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox2.Location = new System.Drawing.Point(456, 6);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(15, 21);
+            this.checkBox2.TabIndex = 16;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(2, 118);
+            this.label14.Margin = new System.Windows.Forms.Padding(0);
+            this.label14.Name = "label14";
+            this.label14.Padding = new System.Windows.Forms.Padding(8);
+            this.label14.Size = new System.Drawing.Size(67, 29);
+            this.label14.TabIndex = 20;
+            this.label14.Text = "Cell Color";
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox3.Location = new System.Drawing.Point(456, 35);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(15, 21);
+            this.checkBox3.TabIndex = 23;
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Checked = true;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox4.Location = new System.Drawing.Point(456, 64);
+            this.checkBox4.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(15, 21);
+            this.checkBox4.TabIndex = 24;
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(459, 92);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 25;
+            this.button2.Text = "Edit";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(459, 121);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 26;
+            this.button3.Text = "Edit";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
             // OptionsForm
             // 
             this.AcceptButton = this.confirmButton;
@@ -745,6 +903,7 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumericUpDown)).EndInit();
             this.rulesTab.ResumeLayout(false);
             this.generationTab.ResumeLayout(false);
+            this.displayTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).EndInit();
             this.rulesTableLayout.ResumeLayout(false);
             this.rulesTableLayout.PerformLayout();
@@ -761,6 +920,8 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -808,5 +969,18 @@ namespace GameOfLife
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numericUpDown6;
         private System.Windows.Forms.NumericUpDown numericUpDown7;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.ColorDialog colorDialog2;
     }
 }
