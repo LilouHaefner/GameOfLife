@@ -285,6 +285,15 @@ namespace GameOfLife
 
         #endregion
 
+        #region Menu Strip
+
+        private void menuStripClearMenuItem_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+        #endregion
+
         #region Tool Strip
 
         private void toolStripPlayButton_Click(object sender, EventArgs e)
@@ -313,7 +322,7 @@ namespace GameOfLife
 
         private void contextMenuDisplayClearMenuItem_Click(object sender, EventArgs e)
         {
-
+            Clear();
         }
 
         private void contextMenuDisplayEditColors_Click(object sender, EventArgs e)
@@ -533,6 +542,9 @@ namespace GameOfLife
                     Cells[x, y].Value = false;
                 }
             }
-        }        
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
     }
 }

@@ -239,7 +239,7 @@ namespace GameOfLife
             this.menuStripOptionsMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.menuStripOptionsMenuItem.Name = "menuStripOptionsMenuItem";
             this.menuStripOptionsMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuStripOptionsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuStripOptionsMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripOptionsMenuItem.Text = "&Options";
             // 
             // menuStripClearMenuItem
@@ -247,8 +247,9 @@ namespace GameOfLife
             this.menuStripClearMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.menuStripClearMenuItem.Name = "menuStripClearMenuItem";
             this.menuStripClearMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.menuStripClearMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuStripClearMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripClearMenuItem.Text = "&Clear";
+            this.menuStripClearMenuItem.Click += new System.EventHandler(this.menuStripClearMenuItem_Click);
             // 
             // menuStripViewMenu
             // 
@@ -476,37 +477,37 @@ namespace GameOfLife
             this.contextMenuDisplayToggleHudMenuItem,
             this.contextMenuDisplayToggleGridMenuItem});
             this.contextMenuDisplay.Name = "contextMenuStrip";
-            this.contextMenuDisplay.Size = new System.Drawing.Size(181, 142);
+            this.contextMenuDisplay.Size = new System.Drawing.Size(138, 120);
             // 
             // contextMenuDisplayOptionsMenuItem
             // 
             this.contextMenuDisplayOptionsMenuItem.Name = "contextMenuDisplayOptionsMenuItem";
-            this.contextMenuDisplayOptionsMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuDisplayOptionsMenuItem.Size = new System.Drawing.Size(137, 22);
             this.contextMenuDisplayOptionsMenuItem.Text = "Options";
             this.contextMenuDisplayOptionsMenuItem.Click += new System.EventHandler(this.contextMenuDisplayOptionsMenuItem_Click);
             // 
             // contextMenuDisplaySeparator1
             // 
             this.contextMenuDisplaySeparator1.Name = "contextMenuDisplaySeparator1";
-            this.contextMenuDisplaySeparator1.Size = new System.Drawing.Size(177, 6);
+            this.contextMenuDisplaySeparator1.Size = new System.Drawing.Size(134, 6);
             // 
             // contextMenuDisplayEditColors
             // 
             this.contextMenuDisplayEditColors.Name = "contextMenuDisplayEditColors";
-            this.contextMenuDisplayEditColors.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuDisplayEditColors.Size = new System.Drawing.Size(137, 22);
             this.contextMenuDisplayEditColors.Text = "Edit Colors";
             this.contextMenuDisplayEditColors.Click += new System.EventHandler(this.contextMenuDisplayEditColors_Click);
             // 
             // contextMenuDisplayToggleHudMenuItem
             // 
             this.contextMenuDisplayToggleHudMenuItem.Name = "contextMenuDisplayToggleHudMenuItem";
-            this.contextMenuDisplayToggleHudMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuDisplayToggleHudMenuItem.Size = new System.Drawing.Size(137, 22);
             this.contextMenuDisplayToggleHudMenuItem.Text = "Toggle HUD";
             // 
             // contextMenuDisplayToggleGridMenuItem
             // 
             this.contextMenuDisplayToggleGridMenuItem.Name = "contextMenuDisplayToggleGridMenuItem";
-            this.contextMenuDisplayToggleGridMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuDisplayToggleGridMenuItem.Size = new System.Drawing.Size(137, 22);
             this.contextMenuDisplayToggleGridMenuItem.Text = "Toggle Grid";
             // 
             // hudPanel
@@ -668,7 +669,7 @@ namespace GameOfLife
             // contextMenuDisplayClearMenuItem
             // 
             this.contextMenuDisplayClearMenuItem.Name = "contextMenuDisplayClearMenuItem";
-            this.contextMenuDisplayClearMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuDisplayClearMenuItem.Size = new System.Drawing.Size(137, 22);
             this.contextMenuDisplayClearMenuItem.Text = "Clear";
             this.contextMenuDisplayClearMenuItem.Click += new System.EventHandler(this.contextMenuDisplayClearMenuItem_Click);
             // 
