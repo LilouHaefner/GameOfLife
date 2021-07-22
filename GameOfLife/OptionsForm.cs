@@ -24,8 +24,18 @@ namespace GameOfLife
             generationTableLayout.VerticalScroll.Visible = false;
             generationTableLayout.AutoScroll = true;
 
+            displayTableLayout.HorizontalScroll.Maximum = 0;
+            displayTableLayout.AutoScroll = false;
+            displayTableLayout.VerticalScroll.Visible = false;
+            displayTableLayout.AutoScroll = true;
+
             borderComboBox.DataSource = Enum.GetValues(typeof(EBorderMode));
             randomModeComboBox.DataSource = Enum.GetValues(typeof(ERandomMode));
+        }
+
+        private void generationRandomizeNameLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -84,6 +84,11 @@ namespace GameOfLife
             this.hudBorderNameLabel = new System.Windows.Forms.Label();
             this.hudSeedNameLabel = new System.Windows.Forms.Label();
             this.hudIntervalNameLabel = new System.Windows.Forms.Label();
+            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -157,7 +162,7 @@ namespace GameOfLife
             this.menuStripNewMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripNewMenuItem.Name = "menuStripNewMenuItem";
             this.menuStripNewMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.menuStripNewMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.menuStripNewMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripNewMenuItem.Text = "&New";
             // 
             // menuStripOpenMenuItem
@@ -166,13 +171,13 @@ namespace GameOfLife
             this.menuStripOpenMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripOpenMenuItem.Name = "menuStripOpenMenuItem";
             this.menuStripOpenMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuStripOpenMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.menuStripOpenMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripOpenMenuItem.Text = "&Open";
             // 
             // menuStripFileMenuSeparator1
             // 
             this.menuStripFileMenuSeparator1.Name = "menuStripFileMenuSeparator1";
-            this.menuStripFileMenuSeparator1.Size = new System.Drawing.Size(142, 6);
+            this.menuStripFileMenuSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // menuStripSaveMenuItem
             // 
@@ -180,27 +185,27 @@ namespace GameOfLife
             this.menuStripSaveMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripSaveMenuItem.Name = "menuStripSaveMenuItem";
             this.menuStripSaveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.menuStripSaveMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.menuStripSaveMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripSaveMenuItem.Text = "&Save";
             // 
             // menuStripSaveAsMenuItem
             // 
             this.menuStripSaveAsMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.menuStripSaveAsMenuItem.Name = "menuStripSaveAsMenuItem";
-            this.menuStripSaveAsMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.menuStripSaveAsMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripSaveAsMenuItem.Text = "Save &As";
             // 
             // menuStripFileMenuSeparator2
             // 
             this.menuStripFileMenuSeparator2.Name = "menuStripFileMenuSeparator2";
-            this.menuStripFileMenuSeparator2.Size = new System.Drawing.Size(142, 6);
+            this.menuStripFileMenuSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // menuStripImportMenuItem
             // 
             this.menuStripImportMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.menuStripImportMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripImportMenuItem.Name = "menuStripImportMenuItem";
-            this.menuStripImportMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.menuStripImportMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripImportMenuItem.Text = "&Import";
             // 
             // menuStripExportMenuItem
@@ -208,19 +213,19 @@ namespace GameOfLife
             this.menuStripExportMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.menuStripExportMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripExportMenuItem.Name = "menuStripExportMenuItem";
-            this.menuStripExportMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.menuStripExportMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripExportMenuItem.Text = "&Export";
             // 
             // menuStripFileMenuSeparator3
             // 
             this.menuStripFileMenuSeparator3.Name = "menuStripFileMenuSeparator3";
-            this.menuStripFileMenuSeparator3.Size = new System.Drawing.Size(142, 6);
+            this.menuStripFileMenuSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // menuStripQuitMenuItem
             // 
             this.menuStripQuitMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.menuStripQuitMenuItem.Name = "menuStripQuitMenuItem";
-            this.menuStripQuitMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.menuStripQuitMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripQuitMenuItem.Text = "&Quit";
             // 
             // menuStripToolsMenu
@@ -239,7 +244,7 @@ namespace GameOfLife
             this.menuStripOptionsMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.menuStripOptionsMenuItem.Name = "menuStripOptionsMenuItem";
             this.menuStripOptionsMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuStripOptionsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuStripOptionsMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripOptionsMenuItem.Text = "&Options";
             // 
             // menuStripClearMenuItem
@@ -247,7 +252,7 @@ namespace GameOfLife
             this.menuStripClearMenuItem.ForeColor = System.Drawing.Color.Gray;
             this.menuStripClearMenuItem.Name = "menuStripClearMenuItem";
             this.menuStripClearMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.menuStripClearMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuStripClearMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripClearMenuItem.Text = "&Clear";
             this.menuStripClearMenuItem.Click += new System.EventHandler(this.menuStripClearMenuItem_Click);
             // 
@@ -470,52 +475,61 @@ namespace GameOfLife
             // contextMenuDisplay
             // 
             this.contextMenuDisplay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playToolStripMenuItem,
+            this.pauseToolStripMenuItem,
+            this.nextToolStripMenuItem,
+            this.contextMenuDisplaySeparator1,
             this.contextMenuDisplayOptionsMenuItem,
             this.contextMenuDisplayClearMenuItem,
-            this.contextMenuDisplaySeparator1,
+            this.toolStripSeparator3,
             this.contextMenuDisplayEditColors,
             this.contextMenuDisplayToggleHudMenuItem,
+            this.toolStripMenuItem1,
             this.contextMenuDisplayToggleGridMenuItem});
             this.contextMenuDisplay.Name = "contextMenuStrip";
-            this.contextMenuDisplay.Size = new System.Drawing.Size(138, 120);
+            this.contextMenuDisplay.Size = new System.Drawing.Size(193, 214);
             // 
             // contextMenuDisplayOptionsMenuItem
             // 
             this.contextMenuDisplayOptionsMenuItem.Name = "contextMenuDisplayOptionsMenuItem";
-            this.contextMenuDisplayOptionsMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.contextMenuDisplayOptionsMenuItem.Size = new System.Drawing.Size(192, 22);
             this.contextMenuDisplayOptionsMenuItem.Text = "Options";
             this.contextMenuDisplayOptionsMenuItem.Click += new System.EventHandler(this.contextMenuDisplayOptionsMenuItem_Click);
             // 
             // contextMenuDisplayClearMenuItem
             // 
             this.contextMenuDisplayClearMenuItem.Name = "contextMenuDisplayClearMenuItem";
-            this.contextMenuDisplayClearMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.contextMenuDisplayClearMenuItem.Size = new System.Drawing.Size(192, 22);
             this.contextMenuDisplayClearMenuItem.Text = "Clear";
             this.contextMenuDisplayClearMenuItem.Click += new System.EventHandler(this.contextMenuDisplayClearMenuItem_Click);
             // 
             // contextMenuDisplaySeparator1
             // 
             this.contextMenuDisplaySeparator1.Name = "contextMenuDisplaySeparator1";
-            this.contextMenuDisplaySeparator1.Size = new System.Drawing.Size(134, 6);
+            this.contextMenuDisplaySeparator1.Size = new System.Drawing.Size(189, 6);
             // 
             // contextMenuDisplayEditColors
             // 
             this.contextMenuDisplayEditColors.Name = "contextMenuDisplayEditColors";
-            this.contextMenuDisplayEditColors.Size = new System.Drawing.Size(137, 22);
+            this.contextMenuDisplayEditColors.Size = new System.Drawing.Size(192, 22);
             this.contextMenuDisplayEditColors.Text = "Edit Colors";
             this.contextMenuDisplayEditColors.Click += new System.EventHandler(this.contextMenuDisplayEditColors_Click);
             // 
             // contextMenuDisplayToggleHudMenuItem
             // 
+            this.contextMenuDisplayToggleHudMenuItem.Checked = true;
+            this.contextMenuDisplayToggleHudMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.contextMenuDisplayToggleHudMenuItem.Name = "contextMenuDisplayToggleHudMenuItem";
-            this.contextMenuDisplayToggleHudMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.contextMenuDisplayToggleHudMenuItem.Text = "Toggle HUD";
+            this.contextMenuDisplayToggleHudMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuDisplayToggleHudMenuItem.Text = "Show HUD";
             // 
             // contextMenuDisplayToggleGridMenuItem
             // 
+            this.contextMenuDisplayToggleGridMenuItem.Checked = true;
+            this.contextMenuDisplayToggleGridMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.contextMenuDisplayToggleGridMenuItem.Name = "contextMenuDisplayToggleGridMenuItem";
-            this.contextMenuDisplayToggleGridMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.contextMenuDisplayToggleGridMenuItem.Text = "Toggle Grid";
+            this.contextMenuDisplayToggleGridMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuDisplayToggleGridMenuItem.Text = "Show Grid";
             // 
             // hudPanel
             // 
@@ -673,6 +687,37 @@ namespace GameOfLife
             this.hudIntervalNameLabel.TabIndex = 4;
             this.hudIntervalNameLabel.Text = "Interval";
             // 
+            // playToolStripMenuItem
+            // 
+            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.playToolStripMenuItem.Text = "Play";
+            // 
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.pauseToolStripMenuItem.Text = "Pause";
+            // 
+            // nextToolStripMenuItem
+            // 
+            this.nextToolStripMenuItem.Name = "nextToolStripMenuItem";
+            this.nextToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.nextToolStripMenuItem.Text = "Next";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(189, 6);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Checked = true;
+            this.toolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(192, 22);
+            this.toolStripMenuItem1.Text = "Show Neighbor Count";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -759,6 +804,11 @@ namespace GameOfLife
         private System.Windows.Forms.ToolStripMenuItem contextMenuDisplayOptionsMenuItem;
         private System.Windows.Forms.ToolStripSeparator contextMenuDisplaySeparator1;
         private System.Windows.Forms.ToolStripMenuItem contextMenuDisplayClearMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 

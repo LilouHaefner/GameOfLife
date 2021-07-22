@@ -30,8 +30,8 @@ namespace GameOfLife
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.confirmButton = new System.Windows.Forms.Button();
+            this.dialogCancelButton = new System.Windows.Forms.Button();
+            this.dialogConfirmButton = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
             this.generalTableLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -39,95 +39,99 @@ namespace GameOfLife
             this.scaleNameLabel = new System.Windows.Forms.Label();
             this.intervalLabel = new System.Windows.Forms.Label();
             this.borderNameLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.scaleTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.scaleXNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.scaleSeparatorLabel = new System.Windows.Forms.Label();
             this.scaleYNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.borderComboBox = new System.Windows.Forms.ComboBox();
             this.rulesTab = new System.Windows.Forms.TabPage();
-            this.generationTab = new System.Windows.Forms.TabPage();
-            this.displayTab = new System.Windows.Forms.TabPage();
-            this.eBorderModeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.rulesTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.neighborRadiusNameLabel = new System.Windows.Forms.Label();
+            this.neighborRangeNameLabel = new System.Windows.Forms.Label();
+            this.neighborRangeTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.neighborRangeMinNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.neighborRangeSeparatorLabel = new System.Windows.Forms.Label();
+            this.neighborRangeMaxNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.neighborRadiusNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.birthThresholdNameLabel = new System.Windows.Forms.Label();
+            this.birthThresholdNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.generationTab = new System.Windows.Forms.TabPage();
             this.generationTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.button1 = new System.Windows.Forms.Button();
+            this.randomThresholdNameLabel = new System.Windows.Forms.Label();
+            this.randomSeedTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.randomSeedNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.randomSeedNewSeedButton = new System.Windows.Forms.Button();
             this.randomModeComboBox = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.randomizeNameLabel = new System.Windows.Forms.Label();
+            this.randomModeNameLabel = new System.Windows.Forms.Label();
+            this.randomSeedNameLabel = new System.Windows.Forms.Label();
+            this.randomizeCheckbox = new System.Windows.Forms.CheckBox();
+            this.randomMultiplierNameLabel = new System.Windows.Forms.Label();
+            this.randomThresholdNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.randomMultiplierNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.displayTab = new System.Windows.Forms.TabPage();
+            this.displayTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.cellColorButton = new System.Windows.Forms.Button();
+            this.showGridCheckbox = new System.Windows.Forms.CheckBox();
+            this.showNeighborCountCheckbox = new System.Windows.Forms.CheckBox();
+            this.gridColorNameLabel = new System.Windows.Forms.Label();
+            this.showHudNameLabel = new System.Windows.Forms.Label();
+            this.showNeighborCountNameLabel = new System.Windows.Forms.Label();
+            this.showGridNameLabel = new System.Windows.Forms.Label();
+            this.showHudCheckbox = new System.Windows.Forms.CheckBox();
+            this.cellColorNameLabel = new System.Windows.Forms.Label();
+            this.gridColorButton = new System.Windows.Forms.Button();
+            this.eBorderModeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.colorDialog2 = new System.Windows.Forms.ColorDialog();
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.dialogTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.generalTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.intervalNumericUpDown)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.scaleTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scaleXNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumericUpDown)).BeginInit();
             this.rulesTab.SuspendLayout();
-            this.generationTab.SuspendLayout();
-            this.displayTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).BeginInit();
             this.rulesTableLayout.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            this.neighborRangeTableLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.neighborRangeMinNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.neighborRangeMaxNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.neighborRadiusNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.birthThresholdNumericUpDown)).BeginInit();
+            this.generationTab.SuspendLayout();
             this.generationTableLayout.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.randomSeedTableLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.randomSeedNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.randomThresholdNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.randomMultiplierNumericUpDown)).BeginInit();
+            this.displayTab.SuspendLayout();
+            this.displayTableLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).BeginInit();
+            this.tableLayoutPanel.SuspendLayout();
+            this.dialogTableLayout.SuspendLayout();
             this.SuspendLayout();
             // 
-            // cancelButton
+            // dialogCancelButton
             // 
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(856, 470);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 1;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
+            this.dialogCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.dialogCancelButton.Location = new System.Drawing.Point(84, 3);
+            this.dialogCancelButton.Name = "dialogCancelButton";
+            this.dialogCancelButton.Size = new System.Drawing.Size(75, 23);
+            this.dialogCancelButton.TabIndex = 1;
+            this.dialogCancelButton.Text = "Cancel";
+            this.dialogCancelButton.UseVisualStyleBackColor = true;
             // 
-            // confirmButton
+            // dialogConfirmButton
             // 
-            this.confirmButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.confirmButton.Location = new System.Drawing.Point(772, 470);
-            this.confirmButton.Name = "confirmButton";
-            this.confirmButton.Size = new System.Drawing.Size(75, 23);
-            this.confirmButton.TabIndex = 0;
-            this.confirmButton.Text = "Confirm";
-            this.confirmButton.UseVisualStyleBackColor = true;
+            this.dialogConfirmButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.dialogConfirmButton.Location = new System.Drawing.Point(3, 3);
+            this.dialogConfirmButton.Name = "dialogConfirmButton";
+            this.dialogConfirmButton.Size = new System.Drawing.Size(75, 23);
+            this.dialogConfirmButton.TabIndex = 0;
+            this.dialogConfirmButton.Text = "Confirm";
+            this.dialogConfirmButton.UseVisualStyleBackColor = true;
             // 
             // tabControl
             // 
@@ -135,11 +139,12 @@ namespace GameOfLife
             this.tabControl.Controls.Add(this.rulesTab);
             this.tabControl.Controls.Add(this.generationTab);
             this.tabControl.Controls.Add(this.displayTab);
-            this.tabControl.Location = new System.Drawing.Point(12, 12);
-            this.tabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(8, 8);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(920, 451);
+            this.tabControl.Size = new System.Drawing.Size(448, 180);
             this.tabControl.TabIndex = 2;
             // 
             // generalTab
@@ -162,7 +167,7 @@ namespace GameOfLife
             this.generalTableLayout.Controls.Add(this.scaleNameLabel, 0, 0);
             this.generalTableLayout.Controls.Add(this.intervalLabel, 0, 1);
             this.generalTableLayout.Controls.Add(this.borderNameLabel, 0, 2);
-            this.generalTableLayout.Controls.Add(this.tableLayoutPanel1, 1, 0);
+            this.generalTableLayout.Controls.Add(this.scaleTableLayout, 1, 0);
             this.generalTableLayout.Controls.Add(this.borderComboBox, 1, 2);
             this.generalTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.generalTableLayout.Location = new System.Drawing.Point(0, 0);
@@ -234,25 +239,25 @@ namespace GameOfLife
             this.borderNameLabel.TabIndex = 2;
             this.borderNameLabel.Text = "Border";
             // 
-            // tableLayoutPanel1
+            // scaleTableLayout
             // 
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.scaleXNumericUpDown, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.scaleSeparatorLabel, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.scaleYNumericUpDown, 3, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(456, 2);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(102, 29);
-            this.tableLayoutPanel1.TabIndex = 9;
+            this.scaleTableLayout.AutoSize = true;
+            this.scaleTableLayout.ColumnCount = 4;
+            this.scaleTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.scaleTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.scaleTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.scaleTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.scaleTableLayout.Controls.Add(this.scaleXNumericUpDown, 0, 0);
+            this.scaleTableLayout.Controls.Add(this.scaleSeparatorLabel, 2, 0);
+            this.scaleTableLayout.Controls.Add(this.scaleYNumericUpDown, 3, 0);
+            this.scaleTableLayout.Dock = System.Windows.Forms.DockStyle.Left;
+            this.scaleTableLayout.Location = new System.Drawing.Point(456, 2);
+            this.scaleTableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.scaleTableLayout.Name = "scaleTableLayout";
+            this.scaleTableLayout.RowCount = 1;
+            this.scaleTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.scaleTableLayout.Size = new System.Drawing.Size(102, 29);
+            this.scaleTableLayout.TabIndex = 9;
             // 
             // scaleXNumericUpDown
             // 
@@ -329,37 +334,17 @@ namespace GameOfLife
             this.rulesTab.Text = "Rules";
             this.rulesTab.UseVisualStyleBackColor = true;
             // 
-            // generationTab
-            // 
-            this.generationTab.Controls.Add(this.generationTableLayout);
-            this.generationTab.Location = new System.Drawing.Point(4, 22);
-            this.generationTab.Name = "generationTab";
-            this.generationTab.Size = new System.Drawing.Size(912, 425);
-            this.generationTab.TabIndex = 2;
-            this.generationTab.Text = "Generation";
-            this.generationTab.UseVisualStyleBackColor = true;
-            // 
-            // displayTab
-            // 
-            this.displayTab.Controls.Add(this.tableLayoutPanel2);
-            this.displayTab.Location = new System.Drawing.Point(4, 22);
-            this.displayTab.Name = "displayTab";
-            this.displayTab.Size = new System.Drawing.Size(912, 425);
-            this.displayTab.TabIndex = 3;
-            this.displayTab.Text = "Display";
-            this.displayTab.UseVisualStyleBackColor = true;
-            // 
             // rulesTableLayout
             // 
             this.rulesTableLayout.ColumnCount = 2;
             this.rulesTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.rulesTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.rulesTableLayout.Controls.Add(this.label1, 0, 0);
-            this.rulesTableLayout.Controls.Add(this.label2, 0, 1);
-            this.rulesTableLayout.Controls.Add(this.tableLayoutPanel3, 1, 1);
-            this.rulesTableLayout.Controls.Add(this.numericUpDown1, 1, 0);
-            this.rulesTableLayout.Controls.Add(this.label5, 0, 2);
-            this.rulesTableLayout.Controls.Add(this.numericUpDown4, 1, 2);
+            this.rulesTableLayout.Controls.Add(this.neighborRadiusNameLabel, 0, 0);
+            this.rulesTableLayout.Controls.Add(this.neighborRangeNameLabel, 0, 1);
+            this.rulesTableLayout.Controls.Add(this.neighborRangeTableLayout, 1, 1);
+            this.rulesTableLayout.Controls.Add(this.neighborRadiusNumericUpDown, 1, 0);
+            this.rulesTableLayout.Controls.Add(this.birthThresholdNameLabel, 0, 2);
+            this.rulesTableLayout.Controls.Add(this.birthThresholdNumericUpDown, 1, 2);
             this.rulesTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rulesTableLayout.Location = new System.Drawing.Point(0, 0);
             this.rulesTableLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -373,177 +358,187 @@ namespace GameOfLife
             this.rulesTableLayout.Size = new System.Drawing.Size(912, 425);
             this.rulesTableLayout.TabIndex = 5;
             // 
-            // label1
+            // neighborRadiusNameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 2);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(8);
-            this.label1.Size = new System.Drawing.Size(102, 29);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Neighbor Radius";
+            this.neighborRadiusNameLabel.AutoSize = true;
+            this.neighborRadiusNameLabel.Location = new System.Drawing.Point(2, 2);
+            this.neighborRadiusNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.neighborRadiusNameLabel.Name = "neighborRadiusNameLabel";
+            this.neighborRadiusNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.neighborRadiusNameLabel.Size = new System.Drawing.Size(102, 29);
+            this.neighborRadiusNameLabel.TabIndex = 0;
+            this.neighborRadiusNameLabel.Text = "Neighbor Radius";
             // 
-            // label2
+            // neighborRangeNameLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 31);
-            this.label2.Margin = new System.Windows.Forms.Padding(0);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(8);
-            this.label2.Size = new System.Drawing.Size(101, 29);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Neighbor Range";
+            this.neighborRangeNameLabel.AutoSize = true;
+            this.neighborRangeNameLabel.Location = new System.Drawing.Point(2, 31);
+            this.neighborRangeNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.neighborRangeNameLabel.Name = "neighborRangeNameLabel";
+            this.neighborRangeNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.neighborRangeNameLabel.Size = new System.Drawing.Size(101, 29);
+            this.neighborRangeNameLabel.TabIndex = 1;
+            this.neighborRangeNameLabel.Text = "Neighbor Range";
             // 
-            // tableLayoutPanel3
+            // neighborRangeTableLayout
             // 
-            this.tableLayoutPanel3.AutoSize = true;
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown2, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.label4, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown3, 3, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(456, 31);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(100, 29);
-            this.tableLayoutPanel3.TabIndex = 9;
+            this.neighborRangeTableLayout.AutoSize = true;
+            this.neighborRangeTableLayout.ColumnCount = 4;
+            this.neighborRangeTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.neighborRangeTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.neighborRangeTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.neighborRangeTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.neighborRangeTableLayout.Controls.Add(this.neighborRangeMinNumericUpDown, 0, 0);
+            this.neighborRangeTableLayout.Controls.Add(this.neighborRangeSeparatorLabel, 2, 0);
+            this.neighborRangeTableLayout.Controls.Add(this.neighborRangeMaxNumericUpDown, 3, 0);
+            this.neighborRangeTableLayout.Dock = System.Windows.Forms.DockStyle.Left;
+            this.neighborRangeTableLayout.Location = new System.Drawing.Point(456, 31);
+            this.neighborRangeTableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.neighborRangeTableLayout.Name = "neighborRangeTableLayout";
+            this.neighborRangeTableLayout.RowCount = 1;
+            this.neighborRangeTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.neighborRangeTableLayout.Size = new System.Drawing.Size(100, 29);
+            this.neighborRangeTableLayout.TabIndex = 9;
             // 
-            // numericUpDown2
+            // neighborRangeMinNumericUpDown
             // 
-            this.numericUpDown2.AutoSize = true;
-            this.numericUpDown2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown2.Location = new System.Drawing.Point(0, 4);
-            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.neighborRangeMinNumericUpDown.AutoSize = true;
+            this.neighborRangeMinNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.neighborRangeMinNumericUpDown.Location = new System.Drawing.Point(0, 4);
+            this.neighborRangeMinNumericUpDown.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.neighborRangeMinNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDown2.TabIndex = 9;
-            this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.neighborRangeMinNumericUpDown.Name = "neighborRangeMinNumericUpDown";
+            this.neighborRangeMinNumericUpDown.Size = new System.Drawing.Size(41, 20);
+            this.neighborRangeMinNumericUpDown.TabIndex = 9;
+            this.neighborRangeMinNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.neighborRangeMinNumericUpDown.Value = new decimal(new int[] {
             2,
             0,
             0,
             0});
             // 
-            // label4
+            // neighborRangeSeparatorLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(41, 3);
-            this.label4.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(4);
-            this.label4.Size = new System.Drawing.Size(18, 21);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "-";
+            this.neighborRangeSeparatorLabel.AutoSize = true;
+            this.neighborRangeSeparatorLabel.Location = new System.Drawing.Point(41, 3);
+            this.neighborRangeSeparatorLabel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.neighborRangeSeparatorLabel.Name = "neighborRangeSeparatorLabel";
+            this.neighborRangeSeparatorLabel.Padding = new System.Windows.Forms.Padding(4);
+            this.neighborRangeSeparatorLabel.Size = new System.Drawing.Size(18, 21);
+            this.neighborRangeSeparatorLabel.TabIndex = 8;
+            this.neighborRangeSeparatorLabel.Text = "-";
             // 
-            // numericUpDown3
+            // neighborRangeMaxNumericUpDown
             // 
-            this.numericUpDown3.AutoSize = true;
-            this.numericUpDown3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown3.Location = new System.Drawing.Point(59, 4);
-            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.neighborRangeMaxNumericUpDown.AutoSize = true;
+            this.neighborRangeMaxNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.neighborRangeMaxNumericUpDown.Location = new System.Drawing.Point(59, 4);
+            this.neighborRangeMaxNumericUpDown.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.neighborRangeMaxNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDown3.TabIndex = 10;
-            this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown3.Value = new decimal(new int[] {
+            this.neighborRangeMaxNumericUpDown.Name = "neighborRangeMaxNumericUpDown";
+            this.neighborRangeMaxNumericUpDown.Size = new System.Drawing.Size(41, 20);
+            this.neighborRangeMaxNumericUpDown.TabIndex = 10;
+            this.neighborRangeMaxNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.neighborRangeMaxNumericUpDown.Value = new decimal(new int[] {
             3,
             0,
             0,
             0});
             // 
-            // numericUpDown1
+            // neighborRadiusNumericUpDown
             // 
-            this.numericUpDown1.AutoSize = true;
-            this.numericUpDown1.Location = new System.Drawing.Point(456, 6);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.neighborRadiusNumericUpDown.AutoSize = true;
+            this.neighborRadiusNumericUpDown.Location = new System.Drawing.Point(456, 6);
+            this.neighborRadiusNumericUpDown.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.neighborRadiusNumericUpDown.Maximum = new decimal(new int[] {
             200,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.neighborRadiusNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDown1.TabIndex = 12;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.neighborRadiusNumericUpDown.Name = "neighborRadiusNumericUpDown";
+            this.neighborRadiusNumericUpDown.Size = new System.Drawing.Size(41, 20);
+            this.neighborRadiusNumericUpDown.TabIndex = 12;
+            this.neighborRadiusNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.neighborRadiusNumericUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
             // 
-            // label5
+            // birthThresholdNameLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(2, 60);
-            this.label5.Margin = new System.Windows.Forms.Padding(0);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(8);
-            this.label5.Size = new System.Drawing.Size(94, 29);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Birth Threshold";
+            this.birthThresholdNameLabel.AutoSize = true;
+            this.birthThresholdNameLabel.Location = new System.Drawing.Point(2, 60);
+            this.birthThresholdNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.birthThresholdNameLabel.Name = "birthThresholdNameLabel";
+            this.birthThresholdNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.birthThresholdNameLabel.Size = new System.Drawing.Size(94, 29);
+            this.birthThresholdNameLabel.TabIndex = 14;
+            this.birthThresholdNameLabel.Text = "Birth Threshold";
             // 
-            // numericUpDown4
+            // birthThresholdNumericUpDown
             // 
-            this.numericUpDown4.AutoSize = true;
-            this.numericUpDown4.Location = new System.Drawing.Point(456, 64);
-            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.numericUpDown4.Maximum = new decimal(new int[] {
+            this.birthThresholdNumericUpDown.AutoSize = true;
+            this.birthThresholdNumericUpDown.Location = new System.Drawing.Point(456, 64);
+            this.birthThresholdNumericUpDown.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.birthThresholdNumericUpDown.Maximum = new decimal(new int[] {
             200,
             0,
             0,
             0});
-            this.numericUpDown4.Minimum = new decimal(new int[] {
+            this.birthThresholdNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDown4.TabIndex = 15;
-            this.numericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown4.Value = new decimal(new int[] {
+            this.birthThresholdNumericUpDown.Name = "birthThresholdNumericUpDown";
+            this.birthThresholdNumericUpDown.Size = new System.Drawing.Size(41, 20);
+            this.birthThresholdNumericUpDown.TabIndex = 15;
+            this.birthThresholdNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.birthThresholdNumericUpDown.Value = new decimal(new int[] {
             3,
             0,
             0,
             0});
+            // 
+            // generationTab
+            // 
+            this.generationTab.Controls.Add(this.generationTableLayout);
+            this.generationTab.Location = new System.Drawing.Point(4, 22);
+            this.generationTab.Name = "generationTab";
+            this.generationTab.Size = new System.Drawing.Size(912, 425);
+            this.generationTab.TabIndex = 2;
+            this.generationTab.Text = "Generation";
+            this.generationTab.UseVisualStyleBackColor = true;
             // 
             // generationTableLayout
             // 
             this.generationTableLayout.ColumnCount = 2;
             this.generationTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.generationTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.generationTableLayout.Controls.Add(this.label7, 0, 3);
-            this.generationTableLayout.Controls.Add(this.tableLayoutPanel5, 1, 2);
+            this.generationTableLayout.Controls.Add(this.randomThresholdNameLabel, 0, 3);
+            this.generationTableLayout.Controls.Add(this.randomSeedTableLayout, 1, 2);
             this.generationTableLayout.Controls.Add(this.randomModeComboBox, 1, 1);
-            this.generationTableLayout.Controls.Add(this.label3, 0, 0);
-            this.generationTableLayout.Controls.Add(this.label6, 0, 1);
-            this.generationTableLayout.Controls.Add(this.label8, 0, 2);
-            this.generationTableLayout.Controls.Add(this.checkBox1, 1, 0);
-            this.generationTableLayout.Controls.Add(this.label9, 0, 4);
-            this.generationTableLayout.Controls.Add(this.numericUpDown6, 1, 3);
-            this.generationTableLayout.Controls.Add(this.numericUpDown7, 1, 4);
+            this.generationTableLayout.Controls.Add(this.randomizeNameLabel, 0, 0);
+            this.generationTableLayout.Controls.Add(this.randomModeNameLabel, 0, 1);
+            this.generationTableLayout.Controls.Add(this.randomSeedNameLabel, 0, 2);
+            this.generationTableLayout.Controls.Add(this.randomizeCheckbox, 1, 0);
+            this.generationTableLayout.Controls.Add(this.randomMultiplierNameLabel, 0, 4);
+            this.generationTableLayout.Controls.Add(this.randomThresholdNumericUpDown, 1, 3);
+            this.generationTableLayout.Controls.Add(this.randomMultiplierNumericUpDown, 1, 4);
             this.generationTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.generationTableLayout.Location = new System.Drawing.Point(0, 0);
             this.generationTableLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -559,68 +554,68 @@ namespace GameOfLife
             this.generationTableLayout.Size = new System.Drawing.Size(912, 425);
             this.generationTableLayout.TabIndex = 6;
             // 
-            // label7
+            // randomThresholdNameLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(2, 89);
-            this.label7.Margin = new System.Windows.Forms.Padding(0);
-            this.label7.Name = "label7";
-            this.label7.Padding = new System.Windows.Forms.Padding(8);
-            this.label7.Size = new System.Drawing.Size(113, 29);
-            this.label7.TabIndex = 19;
-            this.label7.Text = "Random Threshold";
+            this.randomThresholdNameLabel.AutoSize = true;
+            this.randomThresholdNameLabel.Location = new System.Drawing.Point(2, 89);
+            this.randomThresholdNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.randomThresholdNameLabel.Name = "randomThresholdNameLabel";
+            this.randomThresholdNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.randomThresholdNameLabel.Size = new System.Drawing.Size(113, 29);
+            this.randomThresholdNameLabel.TabIndex = 19;
+            this.randomThresholdNameLabel.Text = "Random Threshold";
             // 
-            // tableLayoutPanel5
+            // randomSeedTableLayout
             // 
-            this.tableLayoutPanel5.AutoSize = true;
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel5.Controls.Add(this.numericUpDown5, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.button1, 1, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(456, 60);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(140, 29);
-            this.tableLayoutPanel5.TabIndex = 18;
+            this.randomSeedTableLayout.AutoSize = true;
+            this.randomSeedTableLayout.ColumnCount = 2;
+            this.randomSeedTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.randomSeedTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.randomSeedTableLayout.Controls.Add(this.randomSeedNumericUpDown, 0, 0);
+            this.randomSeedTableLayout.Controls.Add(this.randomSeedNewSeedButton, 1, 0);
+            this.randomSeedTableLayout.Dock = System.Windows.Forms.DockStyle.Left;
+            this.randomSeedTableLayout.Location = new System.Drawing.Point(456, 60);
+            this.randomSeedTableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.randomSeedTableLayout.Name = "randomSeedTableLayout";
+            this.randomSeedTableLayout.RowCount = 1;
+            this.randomSeedTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.randomSeedTableLayout.Size = new System.Drawing.Size(140, 29);
+            this.randomSeedTableLayout.TabIndex = 18;
             // 
-            // numericUpDown5
+            // randomSeedNumericUpDown
             // 
-            this.numericUpDown5.AutoSize = true;
-            this.numericUpDown5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown5.Location = new System.Drawing.Point(0, 4);
-            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.numericUpDown5.Maximum = new decimal(new int[] {
+            this.randomSeedNumericUpDown.AutoSize = true;
+            this.randomSeedNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.randomSeedNumericUpDown.Location = new System.Drawing.Point(0, 4);
+            this.randomSeedNumericUpDown.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.randomSeedNumericUpDown.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
-            this.numericUpDown5.Minimum = new decimal(new int[] {
+            this.randomSeedNumericUpDown.Minimum = new decimal(new int[] {
             1000000,
             0,
             0,
             -2147483648});
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(59, 20);
-            this.numericUpDown5.TabIndex = 9;
-            this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown5.Value = new decimal(new int[] {
+            this.randomSeedNumericUpDown.Name = "randomSeedNumericUpDown";
+            this.randomSeedNumericUpDown.Size = new System.Drawing.Size(59, 20);
+            this.randomSeedNumericUpDown.TabIndex = 9;
+            this.randomSeedNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.randomSeedNumericUpDown.Value = new decimal(new int[] {
             2000,
             0,
             0,
             0});
             // 
-            // button1
+            // randomSeedNewSeedButton
             // 
-            this.button1.Location = new System.Drawing.Point(62, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "New Seed";
-            this.button1.UseVisualStyleBackColor = true;
+            this.randomSeedNewSeedButton.Location = new System.Drawing.Point(62, 3);
+            this.randomSeedNewSeedButton.Name = "randomSeedNewSeedButton";
+            this.randomSeedNewSeedButton.Size = new System.Drawing.Size(75, 23);
+            this.randomSeedNewSeedButton.TabIndex = 10;
+            this.randomSeedNewSeedButton.Text = "New Seed";
+            this.randomSeedNewSeedButton.UseVisualStyleBackColor = true;
             // 
             // randomModeComboBox
             // 
@@ -635,257 +630,299 @@ namespace GameOfLife
             this.randomModeComboBox.Size = new System.Drawing.Size(121, 21);
             this.randomModeComboBox.TabIndex = 17;
             // 
-            // label3
+            // randomizeNameLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(2, 2);
-            this.label3.Margin = new System.Windows.Forms.Padding(0);
-            this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(8);
-            this.label3.Size = new System.Drawing.Size(76, 29);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Randomize";
+            this.randomizeNameLabel.AutoSize = true;
+            this.randomizeNameLabel.Location = new System.Drawing.Point(2, 2);
+            this.randomizeNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.randomizeNameLabel.Name = "randomizeNameLabel";
+            this.randomizeNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.randomizeNameLabel.Size = new System.Drawing.Size(76, 29);
+            this.randomizeNameLabel.TabIndex = 0;
+            this.randomizeNameLabel.Text = "Randomize";
+            this.randomizeNameLabel.Click += new System.EventHandler(this.generationRandomizeNameLabel_Click);
             // 
-            // label6
+            // randomModeNameLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(2, 31);
-            this.label6.Margin = new System.Windows.Forms.Padding(0);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(8);
-            this.label6.Size = new System.Drawing.Size(93, 29);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Random Mode";
+            this.randomModeNameLabel.AutoSize = true;
+            this.randomModeNameLabel.Location = new System.Drawing.Point(2, 31);
+            this.randomModeNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.randomModeNameLabel.Name = "randomModeNameLabel";
+            this.randomModeNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.randomModeNameLabel.Size = new System.Drawing.Size(93, 29);
+            this.randomModeNameLabel.TabIndex = 1;
+            this.randomModeNameLabel.Text = "Random Mode";
             // 
-            // label8
+            // randomSeedNameLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(2, 60);
-            this.label8.Margin = new System.Windows.Forms.Padding(0);
-            this.label8.Name = "label8";
-            this.label8.Padding = new System.Windows.Forms.Padding(8);
-            this.label8.Size = new System.Drawing.Size(91, 29);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "Random Seed";
+            this.randomSeedNameLabel.AutoSize = true;
+            this.randomSeedNameLabel.Location = new System.Drawing.Point(2, 60);
+            this.randomSeedNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.randomSeedNameLabel.Name = "randomSeedNameLabel";
+            this.randomSeedNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.randomSeedNameLabel.Size = new System.Drawing.Size(91, 29);
+            this.randomSeedNameLabel.TabIndex = 14;
+            this.randomSeedNameLabel.Text = "Random Seed";
             // 
-            // checkBox1
+            // randomizeCheckbox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox1.Location = new System.Drawing.Point(456, 6);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 21);
-            this.checkBox1.TabIndex = 16;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.randomizeCheckbox.AutoSize = true;
+            this.randomizeCheckbox.Checked = true;
+            this.randomizeCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.randomizeCheckbox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.randomizeCheckbox.Location = new System.Drawing.Point(456, 6);
+            this.randomizeCheckbox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.randomizeCheckbox.Name = "randomizeCheckbox";
+            this.randomizeCheckbox.Size = new System.Drawing.Size(15, 21);
+            this.randomizeCheckbox.TabIndex = 16;
+            this.randomizeCheckbox.UseVisualStyleBackColor = true;
             // 
-            // label9
+            // randomMultiplierNameLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(2, 118);
-            this.label9.Margin = new System.Windows.Forms.Padding(0);
-            this.label9.Name = "label9";
-            this.label9.Padding = new System.Windows.Forms.Padding(8);
-            this.label9.Size = new System.Drawing.Size(107, 29);
-            this.label9.TabIndex = 20;
-            this.label9.Text = "Random Multiplier";
+            this.randomMultiplierNameLabel.AutoSize = true;
+            this.randomMultiplierNameLabel.Location = new System.Drawing.Point(2, 118);
+            this.randomMultiplierNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.randomMultiplierNameLabel.Name = "randomMultiplierNameLabel";
+            this.randomMultiplierNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.randomMultiplierNameLabel.Size = new System.Drawing.Size(107, 29);
+            this.randomMultiplierNameLabel.TabIndex = 20;
+            this.randomMultiplierNameLabel.Text = "Random Multiplier";
             // 
-            // numericUpDown6
+            // randomThresholdNumericUpDown
             // 
-            this.numericUpDown6.AutoSize = true;
-            this.numericUpDown6.DecimalPlaces = 2;
-            this.numericUpDown6.Location = new System.Drawing.Point(456, 93);
-            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.numericUpDown6.Minimum = new decimal(new int[] {
+            this.randomThresholdNumericUpDown.AutoSize = true;
+            this.randomThresholdNumericUpDown.DecimalPlaces = 2;
+            this.randomThresholdNumericUpDown.Location = new System.Drawing.Point(456, 93);
+            this.randomThresholdNumericUpDown.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.randomThresholdNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown6.TabIndex = 21;
-            this.numericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown6.Value = new decimal(new int[] {
+            this.randomThresholdNumericUpDown.Name = "randomThresholdNumericUpDown";
+            this.randomThresholdNumericUpDown.Size = new System.Drawing.Size(56, 20);
+            this.randomThresholdNumericUpDown.TabIndex = 21;
+            this.randomThresholdNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.randomThresholdNumericUpDown.Value = new decimal(new int[] {
             75,
             0,
             0,
             65536});
             // 
-            // numericUpDown7
+            // randomMultiplierNumericUpDown
             // 
-            this.numericUpDown7.AutoSize = true;
-            this.numericUpDown7.DecimalPlaces = 2;
-            this.numericUpDown7.Location = new System.Drawing.Point(456, 122);
-            this.numericUpDown7.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.numericUpDown7.Minimum = new decimal(new int[] {
+            this.randomMultiplierNumericUpDown.AutoSize = true;
+            this.randomMultiplierNumericUpDown.DecimalPlaces = 2;
+            this.randomMultiplierNumericUpDown.Location = new System.Drawing.Point(456, 122);
+            this.randomMultiplierNumericUpDown.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.randomMultiplierNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown7.Name = "numericUpDown7";
-            this.numericUpDown7.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown7.TabIndex = 22;
-            this.numericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown7.Value = new decimal(new int[] {
+            this.randomMultiplierNumericUpDown.Name = "randomMultiplierNumericUpDown";
+            this.randomMultiplierNumericUpDown.Size = new System.Drawing.Size(56, 20);
+            this.randomMultiplierNumericUpDown.TabIndex = 22;
+            this.randomMultiplierNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.randomMultiplierNumericUpDown.Value = new decimal(new int[] {
             10,
             0,
             0,
             0});
             // 
-            // tableLayoutPanel2
+            // displayTab
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.button3, 1, 4);
-            this.tableLayoutPanel2.Controls.Add(this.checkBox4, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.checkBox3, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label10, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.label11, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label12, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label13, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.checkBox2, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label14, 0, 4);
-            this.tableLayoutPanel2.Controls.Add(this.button2, 1, 3);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(2);
-            this.tableLayoutPanel2.RowCount = 6;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(912, 425);
-            this.tableLayoutPanel2.TabIndex = 7;
+            this.displayTab.Controls.Add(this.displayTableLayout);
+            this.displayTab.Location = new System.Drawing.Point(4, 22);
+            this.displayTab.Name = "displayTab";
+            this.displayTab.Size = new System.Drawing.Size(440, 154);
+            this.displayTab.TabIndex = 3;
+            this.displayTab.Text = "Display";
+            this.displayTab.UseVisualStyleBackColor = true;
             // 
-            // label10
+            // displayTableLayout
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(2, 89);
-            this.label10.Margin = new System.Windows.Forms.Padding(0);
-            this.label10.Name = "label10";
-            this.label10.Padding = new System.Windows.Forms.Padding(8);
-            this.label10.Size = new System.Drawing.Size(69, 29);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "Grid Color";
+            this.displayTableLayout.ColumnCount = 2;
+            this.displayTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.displayTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.displayTableLayout.Controls.Add(this.cellColorButton, 1, 4);
+            this.displayTableLayout.Controls.Add(this.showGridCheckbox, 1, 2);
+            this.displayTableLayout.Controls.Add(this.showNeighborCountCheckbox, 1, 1);
+            this.displayTableLayout.Controls.Add(this.gridColorNameLabel, 0, 3);
+            this.displayTableLayout.Controls.Add(this.showHudNameLabel, 0, 0);
+            this.displayTableLayout.Controls.Add(this.showNeighborCountNameLabel, 0, 1);
+            this.displayTableLayout.Controls.Add(this.showGridNameLabel, 0, 2);
+            this.displayTableLayout.Controls.Add(this.showHudCheckbox, 1, 0);
+            this.displayTableLayout.Controls.Add(this.cellColorNameLabel, 0, 4);
+            this.displayTableLayout.Controls.Add(this.gridColorButton, 1, 3);
+            this.displayTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.displayTableLayout.Location = new System.Drawing.Point(0, 0);
+            this.displayTableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.displayTableLayout.Name = "displayTableLayout";
+            this.displayTableLayout.Padding = new System.Windows.Forms.Padding(2);
+            this.displayTableLayout.RowCount = 6;
+            this.displayTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.displayTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.displayTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.displayTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.displayTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.displayTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.displayTableLayout.Size = new System.Drawing.Size(440, 154);
+            this.displayTableLayout.TabIndex = 7;
             // 
-            // label11
+            // cellColorButton
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(2, 2);
-            this.label11.Margin = new System.Windows.Forms.Padding(0);
-            this.label11.Name = "label11";
-            this.label11.Padding = new System.Windows.Forms.Padding(8);
-            this.label11.Size = new System.Drawing.Size(77, 29);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Show HUD";
+            this.cellColorButton.Location = new System.Drawing.Point(223, 121);
+            this.cellColorButton.Name = "cellColorButton";
+            this.cellColorButton.Size = new System.Drawing.Size(75, 23);
+            this.cellColorButton.TabIndex = 26;
+            this.cellColorButton.Text = "Edit";
+            this.cellColorButton.UseVisualStyleBackColor = true;
             // 
-            // label12
+            // showGridCheckbox
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(2, 31);
-            this.label12.Margin = new System.Windows.Forms.Padding(0);
-            this.label12.Name = "label12";
-            this.label12.Padding = new System.Windows.Forms.Padding(8);
-            this.label12.Size = new System.Drawing.Size(127, 29);
-            this.label12.TabIndex = 1;
-            this.label12.Text = "Show Neighbor Count";
+            this.showGridCheckbox.AutoSize = true;
+            this.showGridCheckbox.Checked = true;
+            this.showGridCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showGridCheckbox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.showGridCheckbox.Location = new System.Drawing.Point(220, 64);
+            this.showGridCheckbox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.showGridCheckbox.Name = "showGridCheckbox";
+            this.showGridCheckbox.Size = new System.Drawing.Size(15, 21);
+            this.showGridCheckbox.TabIndex = 24;
+            this.showGridCheckbox.UseVisualStyleBackColor = true;
             // 
-            // label13
+            // showNeighborCountCheckbox
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(2, 60);
-            this.label13.Margin = new System.Windows.Forms.Padding(0);
-            this.label13.Name = "label13";
-            this.label13.Padding = new System.Windows.Forms.Padding(8);
-            this.label13.Size = new System.Drawing.Size(72, 29);
-            this.label13.TabIndex = 14;
-            this.label13.Text = "Show Grid";
+            this.showNeighborCountCheckbox.AutoSize = true;
+            this.showNeighborCountCheckbox.Checked = true;
+            this.showNeighborCountCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showNeighborCountCheckbox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.showNeighborCountCheckbox.Location = new System.Drawing.Point(220, 35);
+            this.showNeighborCountCheckbox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.showNeighborCountCheckbox.Name = "showNeighborCountCheckbox";
+            this.showNeighborCountCheckbox.Size = new System.Drawing.Size(15, 21);
+            this.showNeighborCountCheckbox.TabIndex = 23;
+            this.showNeighborCountCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // gridColorNameLabel
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox2.Location = new System.Drawing.Point(456, 6);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 21);
-            this.checkBox2.TabIndex = 16;
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.gridColorNameLabel.AutoSize = true;
+            this.gridColorNameLabel.Location = new System.Drawing.Point(2, 89);
+            this.gridColorNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.gridColorNameLabel.Name = "gridColorNameLabel";
+            this.gridColorNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.gridColorNameLabel.Size = new System.Drawing.Size(69, 29);
+            this.gridColorNameLabel.TabIndex = 19;
+            this.gridColorNameLabel.Text = "Grid Color";
             // 
-            // label14
+            // showHudNameLabel
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(2, 118);
-            this.label14.Margin = new System.Windows.Forms.Padding(0);
-            this.label14.Name = "label14";
-            this.label14.Padding = new System.Windows.Forms.Padding(8);
-            this.label14.Size = new System.Drawing.Size(67, 29);
-            this.label14.TabIndex = 20;
-            this.label14.Text = "Cell Color";
+            this.showHudNameLabel.AutoSize = true;
+            this.showHudNameLabel.Location = new System.Drawing.Point(2, 2);
+            this.showHudNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.showHudNameLabel.Name = "showHudNameLabel";
+            this.showHudNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.showHudNameLabel.Size = new System.Drawing.Size(77, 29);
+            this.showHudNameLabel.TabIndex = 0;
+            this.showHudNameLabel.Text = "Show HUD";
             // 
-            // checkBox3
+            // showNeighborCountNameLabel
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox3.Location = new System.Drawing.Point(456, 35);
-            this.checkBox3.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(15, 21);
-            this.checkBox3.TabIndex = 23;
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.showNeighborCountNameLabel.AutoSize = true;
+            this.showNeighborCountNameLabel.Location = new System.Drawing.Point(2, 31);
+            this.showNeighborCountNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.showNeighborCountNameLabel.Name = "showNeighborCountNameLabel";
+            this.showNeighborCountNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.showNeighborCountNameLabel.Size = new System.Drawing.Size(127, 29);
+            this.showNeighborCountNameLabel.TabIndex = 1;
+            this.showNeighborCountNameLabel.Text = "Show Neighbor Count";
             // 
-            // checkBox4
+            // showGridNameLabel
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Checked = true;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox4.Location = new System.Drawing.Point(456, 64);
-            this.checkBox4.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(15, 21);
-            this.checkBox4.TabIndex = 24;
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.showGridNameLabel.AutoSize = true;
+            this.showGridNameLabel.Location = new System.Drawing.Point(2, 60);
+            this.showGridNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.showGridNameLabel.Name = "showGridNameLabel";
+            this.showGridNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.showGridNameLabel.Size = new System.Drawing.Size(72, 29);
+            this.showGridNameLabel.TabIndex = 14;
+            this.showGridNameLabel.Text = "Show Grid";
             // 
-            // button2
+            // showHudCheckbox
             // 
-            this.button2.Location = new System.Drawing.Point(459, 92);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "Edit";
-            this.button2.UseVisualStyleBackColor = true;
+            this.showHudCheckbox.AutoSize = true;
+            this.showHudCheckbox.Checked = true;
+            this.showHudCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showHudCheckbox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.showHudCheckbox.Location = new System.Drawing.Point(220, 6);
+            this.showHudCheckbox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.showHudCheckbox.Name = "showHudCheckbox";
+            this.showHudCheckbox.Size = new System.Drawing.Size(15, 21);
+            this.showHudCheckbox.TabIndex = 16;
+            this.showHudCheckbox.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // cellColorNameLabel
             // 
-            this.button3.Location = new System.Drawing.Point(459, 121);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 26;
-            this.button3.Text = "Edit";
-            this.button3.UseVisualStyleBackColor = true;
+            this.cellColorNameLabel.AutoSize = true;
+            this.cellColorNameLabel.Location = new System.Drawing.Point(2, 118);
+            this.cellColorNameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.cellColorNameLabel.Name = "cellColorNameLabel";
+            this.cellColorNameLabel.Padding = new System.Windows.Forms.Padding(8);
+            this.cellColorNameLabel.Size = new System.Drawing.Size(67, 29);
+            this.cellColorNameLabel.TabIndex = 20;
+            this.cellColorNameLabel.Text = "Cell Color";
+            // 
+            // gridColorButton
+            // 
+            this.gridColorButton.Location = new System.Drawing.Point(223, 92);
+            this.gridColorButton.Name = "gridColorButton";
+            this.gridColorButton.Size = new System.Drawing.Size(75, 23);
+            this.gridColorButton.TabIndex = 25;
+            this.gridColorButton.Text = "Edit";
+            this.gridColorButton.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel
+            // 
+            this.tableLayoutPanel.ColumnCount = 1;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.Controls.Add(this.dialogTableLayout, 0, 1);
+            this.tableLayoutPanel.Controls.Add(this.tabControl, 0, 0);
+            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.Padding = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel.RowCount = 2;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.Size = new System.Drawing.Size(464, 231);
+            this.tableLayoutPanel.TabIndex = 5;
+            // 
+            // dialogTableLayout
+            // 
+            this.dialogTableLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.dialogTableLayout.AutoSize = true;
+            this.dialogTableLayout.ColumnCount = 2;
+            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.dialogTableLayout.Controls.Add(this.dialogCancelButton, 1, 0);
+            this.dialogTableLayout.Controls.Add(this.dialogConfirmButton, 0, 0);
+            this.dialogTableLayout.Location = new System.Drawing.Point(295, 195);
+            this.dialogTableLayout.Name = "dialogTableLayout";
+            this.dialogTableLayout.RowCount = 1;
+            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.dialogTableLayout.Size = new System.Drawing.Size(162, 29);
+            this.dialogTableLayout.TabIndex = 6;
             // 
             // OptionsForm
             // 
-            this.AcceptButton = this.confirmButton;
+            this.AcceptButton = this.dialogConfirmButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(944, 501);
-            this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.confirmButton);
-            this.Controls.Add(this.cancelButton);
+            this.CancelButton = this.dialogCancelButton;
+            this.ClientSize = new System.Drawing.Size(464, 231);
+            this.Controls.Add(this.tableLayoutPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -897,39 +934,42 @@ namespace GameOfLife
             this.generalTableLayout.ResumeLayout(false);
             this.generalTableLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.intervalNumericUpDown)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.scaleTableLayout.ResumeLayout(false);
+            this.scaleTableLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scaleXNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumericUpDown)).EndInit();
             this.rulesTab.ResumeLayout(false);
-            this.generationTab.ResumeLayout(false);
-            this.displayTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).EndInit();
             this.rulesTableLayout.ResumeLayout(false);
             this.rulesTableLayout.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            this.neighborRangeTableLayout.ResumeLayout(false);
+            this.neighborRangeTableLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.neighborRangeMinNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.neighborRangeMaxNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.neighborRadiusNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.birthThresholdNumericUpDown)).EndInit();
+            this.generationTab.ResumeLayout(false);
             this.generationTableLayout.ResumeLayout(false);
             this.generationTableLayout.PerformLayout();
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
+            this.randomSeedTableLayout.ResumeLayout(false);
+            this.randomSeedTableLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.randomSeedNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.randomThresholdNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.randomMultiplierNumericUpDown)).EndInit();
+            this.displayTab.ResumeLayout(false);
+            this.displayTableLayout.ResumeLayout(false);
+            this.displayTableLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).EndInit();
+            this.tableLayoutPanel.ResumeLayout(false);
+            this.tableLayoutPanel.PerformLayout();
+            this.dialogTableLayout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Button confirmButton;
+        private System.Windows.Forms.Button dialogCancelButton;
+        private System.Windows.Forms.Button dialogConfirmButton;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage generalTab;
         private System.Windows.Forms.TableLayoutPanel generalTableLayout;
@@ -939,7 +979,7 @@ namespace GameOfLife
         private System.Windows.Forms.TabPage rulesTab;
         private System.Windows.Forms.TabPage generationTab;
         private System.Windows.Forms.TabPage displayTab;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel scaleTableLayout;
         private System.Windows.Forms.NumericUpDown scaleXNumericUpDown;
         private System.Windows.Forms.Label scaleSeparatorLabel;
         private System.Windows.Forms.NumericUpDown scaleYNumericUpDown;
@@ -947,40 +987,42 @@ namespace GameOfLife
         private System.Windows.Forms.ComboBox borderComboBox;
         private System.Windows.Forms.BindingSource eBorderModeBindingSource;
         private System.Windows.Forms.TableLayoutPanel rulesTableLayout;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.Label neighborRadiusNameLabel;
+        private System.Windows.Forms.Label neighborRangeNameLabel;
+        private System.Windows.Forms.TableLayoutPanel neighborRangeTableLayout;
+        private System.Windows.Forms.NumericUpDown neighborRangeMinNumericUpDown;
+        private System.Windows.Forms.Label neighborRangeSeparatorLabel;
+        private System.Windows.Forms.NumericUpDown neighborRangeMaxNumericUpDown;
+        private System.Windows.Forms.NumericUpDown neighborRadiusNumericUpDown;
+        private System.Windows.Forms.Label birthThresholdNameLabel;
+        private System.Windows.Forms.NumericUpDown birthThresholdNumericUpDown;
         private System.Windows.Forms.TableLayoutPanel generationTableLayout;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label randomThresholdNameLabel;
+        private System.Windows.Forms.TableLayoutPanel randomSeedTableLayout;
+        private System.Windows.Forms.NumericUpDown randomSeedNumericUpDown;
+        private System.Windows.Forms.Button randomSeedNewSeedButton;
         private System.Windows.Forms.ComboBox randomModeComboBox;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
-        private System.Windows.Forms.NumericUpDown numericUpDown7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label randomizeNameLabel;
+        private System.Windows.Forms.Label randomModeNameLabel;
+        private System.Windows.Forms.Label randomSeedNameLabel;
+        private System.Windows.Forms.CheckBox randomizeCheckbox;
+        private System.Windows.Forms.Label randomMultiplierNameLabel;
+        private System.Windows.Forms.NumericUpDown randomThresholdNumericUpDown;
+        private System.Windows.Forms.NumericUpDown randomMultiplierNumericUpDown;
+        private System.Windows.Forms.TableLayoutPanel displayTableLayout;
+        private System.Windows.Forms.Label gridColorNameLabel;
+        private System.Windows.Forms.Label showHudNameLabel;
+        private System.Windows.Forms.Label showNeighborCountNameLabel;
+        private System.Windows.Forms.Label showGridNameLabel;
+        private System.Windows.Forms.CheckBox showHudCheckbox;
+        private System.Windows.Forms.Label cellColorNameLabel;
+        private System.Windows.Forms.CheckBox showGridCheckbox;
+        private System.Windows.Forms.CheckBox showNeighborCountCheckbox;
+        private System.Windows.Forms.Button cellColorButton;
+        private System.Windows.Forms.Button gridColorButton;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.ColorDialog colorDialog2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel dialogTableLayout;
     }
 }
