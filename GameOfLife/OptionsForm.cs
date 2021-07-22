@@ -19,7 +19,13 @@ namespace GameOfLife
             rulesTableLayout.VerticalScroll.Visible = false;
             rulesTableLayout.AutoScroll = true;
 
+            generationTableLayout.HorizontalScroll.Maximum = 0;
+            generationTableLayout.AutoScroll = false;
+            generationTableLayout.VerticalScroll.Visible = false;
+            generationTableLayout.AutoScroll = true;
+
             borderComboBox.DataSource = Enum.GetValues(typeof(EBorderMode));
+            randomModeComboBox.DataSource = Enum.GetValues(typeof(ERandomMode));
         }
     }
 }

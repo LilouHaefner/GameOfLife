@@ -58,6 +58,19 @@ namespace GameOfLife
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.generationTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
+            this.button1 = new System.Windows.Forms.Button();
+            this.randomModeComboBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
             this.tabControl.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.generalTableLayout.SuspendLayout();
@@ -66,6 +79,7 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.scaleXNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumericUpDown)).BeginInit();
             this.rulesTab.SuspendLayout();
+            this.generationTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).BeginInit();
             this.rulesTableLayout.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -73,6 +87,11 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            this.generationTableLayout.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -297,6 +316,7 @@ namespace GameOfLife
             // 
             // generationTab
             // 
+            this.generationTab.Controls.Add(this.generationTableLayout);
             this.generationTab.Location = new System.Drawing.Point(4, 22);
             this.generationTab.Name = "generationTab";
             this.generationTab.Size = new System.Drawing.Size(912, 425);
@@ -493,6 +513,211 @@ namespace GameOfLife
             0,
             0});
             // 
+            // generationTableLayout
+            // 
+            this.generationTableLayout.ColumnCount = 2;
+            this.generationTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.generationTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.generationTableLayout.Controls.Add(this.label7, 0, 3);
+            this.generationTableLayout.Controls.Add(this.tableLayoutPanel5, 1, 2);
+            this.generationTableLayout.Controls.Add(this.randomModeComboBox, 1, 1);
+            this.generationTableLayout.Controls.Add(this.label3, 0, 0);
+            this.generationTableLayout.Controls.Add(this.label6, 0, 1);
+            this.generationTableLayout.Controls.Add(this.label8, 0, 2);
+            this.generationTableLayout.Controls.Add(this.checkBox1, 1, 0);
+            this.generationTableLayout.Controls.Add(this.label9, 0, 4);
+            this.generationTableLayout.Controls.Add(this.numericUpDown6, 1, 3);
+            this.generationTableLayout.Controls.Add(this.numericUpDown7, 1, 4);
+            this.generationTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.generationTableLayout.Location = new System.Drawing.Point(0, 0);
+            this.generationTableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.generationTableLayout.Name = "generationTableLayout";
+            this.generationTableLayout.Padding = new System.Windows.Forms.Padding(2);
+            this.generationTableLayout.RowCount = 6;
+            this.generationTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.generationTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.generationTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.generationTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.generationTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.generationTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.generationTableLayout.Size = new System.Drawing.Size(912, 425);
+            this.generationTableLayout.TabIndex = 6;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(2, 89);
+            this.label7.Margin = new System.Windows.Forms.Padding(0);
+            this.label7.Name = "label7";
+            this.label7.Padding = new System.Windows.Forms.Padding(8);
+            this.label7.Size = new System.Drawing.Size(113, 29);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "Random Threshold";
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.AutoSize = true;
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel5.Controls.Add(this.numericUpDown5, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(456, 60);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(140, 29);
+            this.tableLayoutPanel5.TabIndex = 18;
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.AutoSize = true;
+            this.numericUpDown5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown5.Location = new System.Drawing.Point(0, 4);
+            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.numericUpDown5.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Minimum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDown5.TabIndex = 9;
+            this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown5.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(62, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "New Seed";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // randomModeComboBox
+            // 
+            this.randomModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.randomModeComboBox.FormattingEnabled = true;
+            this.randomModeComboBox.Items.AddRange(new object[] {
+            "Clip",
+            "Wrap"});
+            this.randomModeComboBox.Location = new System.Drawing.Point(456, 35);
+            this.randomModeComboBox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.randomModeComboBox.Name = "randomModeComboBox";
+            this.randomModeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.randomModeComboBox.TabIndex = 17;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(2, 2);
+            this.label3.Margin = new System.Windows.Forms.Padding(0);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(8);
+            this.label3.Size = new System.Drawing.Size(76, 29);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Randomize";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(2, 31);
+            this.label6.Margin = new System.Windows.Forms.Padding(0);
+            this.label6.Name = "label6";
+            this.label6.Padding = new System.Windows.Forms.Padding(8);
+            this.label6.Size = new System.Drawing.Size(93, 29);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Random Mode";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(2, 60);
+            this.label8.Margin = new System.Windows.Forms.Padding(0);
+            this.label8.Name = "label8";
+            this.label8.Padding = new System.Windows.Forms.Padding(8);
+            this.label8.Size = new System.Drawing.Size(91, 29);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Random Seed";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox1.Location = new System.Drawing.Point(456, 6);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 21);
+            this.checkBox1.TabIndex = 16;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(2, 118);
+            this.label9.Margin = new System.Windows.Forms.Padding(0);
+            this.label9.Name = "label9";
+            this.label9.Padding = new System.Windows.Forms.Padding(8);
+            this.label9.Size = new System.Drawing.Size(107, 29);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "Random Multiplier";
+            // 
+            // numericUpDown6
+            // 
+            this.numericUpDown6.AutoSize = true;
+            this.numericUpDown6.DecimalPlaces = 2;
+            this.numericUpDown6.Location = new System.Drawing.Point(456, 93);
+            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.numericUpDown6.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown6.Name = "numericUpDown6";
+            this.numericUpDown6.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown6.TabIndex = 21;
+            this.numericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown6.Value = new decimal(new int[] {
+            75,
+            0,
+            0,
+            65536});
+            // 
+            // numericUpDown7
+            // 
+            this.numericUpDown7.AutoSize = true;
+            this.numericUpDown7.DecimalPlaces = 2;
+            this.numericUpDown7.Location = new System.Drawing.Point(456, 122);
+            this.numericUpDown7.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.numericUpDown7.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown7.Name = "numericUpDown7";
+            this.numericUpDown7.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown7.TabIndex = 22;
+            this.numericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown7.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
             // OptionsForm
             // 
             this.AcceptButton = this.confirmButton;
@@ -519,6 +744,7 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.scaleXNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumericUpDown)).EndInit();
             this.rulesTab.ResumeLayout(false);
+            this.generationTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).EndInit();
             this.rulesTableLayout.ResumeLayout(false);
             this.rulesTableLayout.PerformLayout();
@@ -528,6 +754,13 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            this.generationTableLayout.ResumeLayout(false);
+            this.generationTableLayout.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -562,5 +795,18 @@ namespace GameOfLife
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.TableLayoutPanel generationTableLayout;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.NumericUpDown numericUpDown5;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox randomModeComboBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown numericUpDown6;
+        private System.Windows.Forms.NumericUpDown numericUpDown7;
     }
 }
