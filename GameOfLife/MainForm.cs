@@ -146,14 +146,29 @@ namespace GameOfLife
             // check for play input
             if (e.KeyChar == ' ')
             {
-                if (bIsPlay) OnPause();
-                else OnPlay();
+                if (bIsPlay) Pause();
+                else Play();
             }
         }
 
         #region Shared Actions
 
-        private void OnPlay()
+        private void Clear()
+        {
+            // iterate through cells
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    Cells[x, y].Value = false;
+                }
+            }
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void Play()
         {
             // disable play and next buttons
             toolStripPlayButton.Enabled = false;
@@ -169,7 +184,7 @@ namespace GameOfLife
             bIsPlay = true;
         }
 
-        private void OnPause()
+        private void Pause()
         {
             // disable pause button
             toolStripPauseButton.Enabled = false;
@@ -185,7 +200,7 @@ namespace GameOfLife
             bIsPlay = false;
         }
 
-        private void OnNext(object sender, EventArgs e)
+        private void Next(object sender, EventArgs e)
         {
             Timer_Tick(sender, e);
 
@@ -202,6 +217,26 @@ namespace GameOfLife
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
                 graphicsPanel.BackColor = Dialog.Color;
+            }
+        }
+
+        private void ShowOptions()
+        {
+            OptionsForm Dialog = new OptionsForm();
+
+            if (Dialog.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
+
+        private void ShowDisplay()
+        {
+            DisplayForm Dialog = new DisplayForm();
+
+            if (Dialog.ShowDialog() == DialogResult.OK)
+            {
+
             }
         }
 
@@ -310,17 +345,17 @@ namespace GameOfLife
 
         private void toolStripPlayButton_Click(object sender, EventArgs e)
         {
-            OnPlay();
+            Play();
         }
 
         private void toolStripPauseButton_Click(object sender, EventArgs e)
         {
-            OnPause();
+            Pause();
         }
 
         private void toolStripNextButton_Click(object sender, EventArgs e)
         {
-            OnNext(sender, e);
+            Next(sender, e);
         }
 
         #endregion
@@ -329,12 +364,17 @@ namespace GameOfLife
 
         private void contextMenuDisplayOptionsMenuItem_Click(object sender, EventArgs e)
         {
-
+            ShowOptions();
         }
 
         private void contextMenuDisplayClearMenuItem_Click(object sender, EventArgs e)
         {
             Clear();
+        }
+
+        private void contextMenuDisplayDisplayMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowDisplay();
         }
 
         private void contextMenuDisplayEditColors_Click(object sender, EventArgs e)
@@ -542,21 +582,6 @@ namespace GameOfLife
                     if (Cells[x, y].Value) Live++;
                 }
             }
-        }
-
-        private void Clear()
-        {
-            // iterate through cells
-            for (int x = 0; x < Cells.GetLength(0); x++)
-            {
-                for (int y = 0; y < Cells.GetLength(1); y++)
-                {
-                    Cells[x, y].Value = false;
-                }
-            }
-
-            // repaint form
-            graphicsPanel.Invalidate();
         }
     }
 }
