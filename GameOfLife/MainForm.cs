@@ -93,6 +93,7 @@ namespace GameOfLife
         // input
         bool bIsPlay = false;
 
+        // constructor
         public MainForm()
         {
             InitializeComponent();
@@ -115,7 +116,7 @@ namespace GameOfLife
             Options.Display.bShowGrid = true;
             Options.Display.GridColor = Color.FromArgb(240, 240, 240);
             Options.Display.CellColor = Color.FromArgb(208, 208, 208);
-            Options.Display.NeighborTextSizeMulitplier = 12;
+            Options.Display.NeighborTextSizeMulitplier = 10;
             Options.Display.NeighborTextSizeMin = 4;
             Options.Display.NeighborTextSizeMax = 24;
 
@@ -130,6 +131,9 @@ namespace GameOfLife
 
             Randomize();
             OnWorldLoad();
+
+            // repaint form
+            graphicsPanel.Invalidate();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -139,15 +143,59 @@ namespace GameOfLife
 
         private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // check for Spacebar input
+            // check for play input
             if (e.KeyChar == ' ')
             {
                 if (bIsPlay) OnPause();
                 else OnPlay();
-
-                bIsPlay = !bIsPlay;
             }
         }
+
+        #region Input
+
+        private void OnPlay()
+        {
+            // disable play and next buttons
+            toolStripPlayButton.Enabled = false;
+            toolStripNextButton.Enabled = false;
+
+            // enable pause button
+            toolStripPauseButton.Enabled = true;
+
+            // enable timer
+            FormTimer.Enabled = true;
+
+            // update play input
+            bIsPlay = true;
+        }
+
+        private void OnPause()
+        {
+            // disable pause button
+            toolStripPauseButton.Enabled = false;
+
+            // enable play and next buttons
+            toolStripPlayButton.Enabled = true;
+            toolStripNextButton.Enabled = true;
+
+            // disable timer
+            FormTimer.Enabled = false;
+
+            // update play input
+            bIsPlay = false;
+        }
+
+        private void OnNext(object sender, EventArgs e)
+        {
+            Timer_Tick(sender, e);
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        #endregion
+
+        #region Graphics Panel
 
         private void graphicsPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -171,11 +219,13 @@ namespace GameOfLife
 
             bool bShowNeighbors = Options.Display.bShowNeighbors && FontSize == Math.Min(Math.Max(Options.Display.NeighborTextSizeMin, FontSize), Options.Display.NeighborTextSizeMax);
 
-            // iterate through the universe
+            // iterate through cells
             for (int x = 0; x < Cells.GetLength(0); x++)
             {
                 for (int y = 0; y < Cells.GetLength(1); y++)
                 {
+                    Cells[x, y].Neighbors = CountNeighbors(x, y);
+
                     // create rectangle to represent each cell in pixels
                     RectangleF cellRect = RectangleF.Empty;
                     cellRect.X = x * CellWidth;
@@ -233,48 +283,6 @@ namespace GameOfLife
             }
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            NextGeneration();
-            OnWorldTick();
-        }
-
-        #region Input
-
-        private void OnPlay()
-        {
-            // disable play and next buttons
-            toolStripPlayButton.Enabled = false;
-            toolStripNextButton.Enabled = false;
-
-            // enable pause button
-            toolStripPauseButton.Enabled = true;
-
-            // enable timer
-            FormTimer.Enabled = true;
-        }
-
-        private void OnPause()
-        {
-            // disable pause button
-            toolStripPauseButton.Enabled = false;
-
-            // enable play and next buttons
-            toolStripPlayButton.Enabled = true;
-            toolStripNextButton.Enabled = true;
-
-            // disable timer
-            FormTimer.Enabled = false;
-        }
-
-        private void OnNext(object sender, EventArgs e)
-        {
-            Timer_Tick(sender, e);
-
-            // repaint form
-            graphicsPanel.Invalidate();
-        }
-
         #endregion
 
         #region Tool Strip
@@ -295,34 +303,81 @@ namespace GameOfLife
         }
 
         #endregion
-
-        private void NextGeneration()
+        
+        private void Timer_Tick(object sender, EventArgs e)
         {
-            // create queue
-            List<(int x, int y, bool Value)> Queue = new List<(int x, int y, bool Value)>();
+            ApplyRules();
 
-            // iterate through universe
+            // increment generation
+            Generation++;
+
+            // repaint form
+            graphicsPanel.Invalidate();
+
+            OnWorldTick();
+        }
+
+        private void OnWorldLoad()
+        {
+            Generation = 0;
+            Live = 0;
+            Total = Options.General.Scale.X * Options.General.Scale.Y;
+
+            // iterate through cells
             for (int x = 0; x < Cells.GetLength(0); x++)
             {
                 for (int y = 0; y < Cells.GetLength(1); y++)
                 {
-                    // count neighbors
-                    int Neighbors = CountNeighbors(x, y);
+                    Cells[x, y].Neighbors = CountNeighbors(x, y);
+                    if (Cells[x, y].Value) Live++;
+                }
+            }
 
-                    // apply rules
+            ApplyRules();
+            OnWorldTick();
 
-                    // // if current cell is live
+            // update hud labels
+            hudIntervalValueLabel.Text = Options.General.Interval.ToString();
+            hudSeedValueLabel.Text = Options.Generation.RandomSeed.ToString();
+            hudBorderValueLabel.Text = Options.General.BorderMode.ToString();
+            hudScaleValueLabel.Text = Options.General.Scale.X.ToString() + " x " + Options.General.Scale.Y.ToString();
+
+            hudSeedNameLabel.Visible = Options.Generation.bRandomize;
+            hudSeedValueLabel.Visible = Options.Generation.bRandomize;
+
+            // update total
+            statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
+        }
+
+        private void OnWorldTick()
+        {
+            // update status labels
+            statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
+            statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
+        }
+
+        private void ApplyRules()
+        {
+            // create queue
+            List<(int x, int y, bool Value)> Queue = new List<(int x, int y, bool Value)>();
+
+            // iterate through cells
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    // // if cell is live
                     if (Cells[x, y].Value)
                     {
-                        if (Neighbors < 2 || Neighbors > 3)
+                        if (Cells[x, y].Neighbors < 2 || Cells[x, y].Neighbors > 3)
                         {
                             Queue.Add((x, y, false));
                         }
                     }
-                    // // if current cell is dead
+                    // // if cell is dead
                     else
                     {
-                        if (Neighbors == 3)
+                        if (Cells[x, y].Neighbors == 3)
                         {
                             Queue.Add((x, y, true));
                         }
@@ -335,14 +390,7 @@ namespace GameOfLife
             {
                 Cells[Queue[i].x, Queue[i].y].Value = Queue[i].Value;
 
-
             }
-
-            // increment generation
-            Generation++;
-
-            // repaint form
-            graphicsPanel.Invalidate();
         }
 
         private int CountNeighbors(int X, int Y)
@@ -466,39 +514,6 @@ namespace GameOfLife
                     Cells[x, y].Value = false;
                 }
             }
-        }
-
-        private void OnWorldLoad()
-        {
-            Generation = 0;
-            Live = 0;
-            Total = Options.General.Scale.X * Options.General.Scale.Y;
-
-            for (int x = 0; x < Cells.GetLength(0); x++)
-            {
-                for (int y = 0; y < Cells.GetLength(1); y++)
-                {
-                    if (Cells[x, y].Value) Live++;
-                }
-            }
-
-            OnWorldTick();
-
-            hudIntervalValueLabel.Text = Options.General.Interval.ToString();
-            hudSeedValueLabel.Text = Options.Generation.RandomSeed.ToString();
-            hudBorderValueLabel.Text = Options.General.BorderMode.ToString();
-            hudScaleValueLabel.Text = Options.General.Scale.X.ToString() + " x " + Options.General.Scale.Y.ToString();
-
-            hudSeedNameLabel.Visible = Options.Generation.bRandomize;
-            hudSeedValueLabel.Visible = Options.Generation.bRandomize;
-
-            statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
-        }
-
-        private void OnWorldTick()
-        {
-            statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
-            statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
         }
     }
 }

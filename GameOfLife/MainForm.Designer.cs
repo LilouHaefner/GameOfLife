@@ -465,15 +465,15 @@ namespace GameOfLife
             this.hudPanel.BackgroundImage = global::GameOfLife.Properties.Resources.HUD_Background;
             this.hudPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.hudPanel.Controls.Add(this.hudTableLayout);
-            this.hudPanel.Location = new System.Drawing.Point(0, 317);
+            this.hudPanel.Location = new System.Drawing.Point(0, 319);
             this.hudPanel.Margin = new System.Windows.Forms.Padding(0);
             this.hudPanel.Name = "hudPanel";
-            this.hudPanel.Size = new System.Drawing.Size(177, 94);
+            this.hudPanel.Padding = new System.Windows.Forms.Padding(2);
+            this.hudPanel.Size = new System.Drawing.Size(174, 92);
             this.hudPanel.TabIndex = 0;
             // 
             // hudTableLayout
             // 
-            this.hudTableLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.hudTableLayout.AutoSize = true;
             this.hudTableLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.hudTableLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -488,13 +488,15 @@ namespace GameOfLife
             this.hudTableLayout.Controls.Add(this.hudBorderNameLabel, 0, 2);
             this.hudTableLayout.Controls.Add(this.hudSeedNameLabel, 0, 1);
             this.hudTableLayout.Controls.Add(this.hudIntervalNameLabel, 0, 0);
-            this.hudTableLayout.Location = new System.Drawing.Point(4, 3);
+            this.hudTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hudTableLayout.Location = new System.Drawing.Point(2, 2);
+            this.hudTableLayout.Margin = new System.Windows.Forms.Padding(0);
             this.hudTableLayout.Name = "hudTableLayout";
             this.hudTableLayout.RowCount = 4;
-            this.hudTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.hudTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.hudTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.hudTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.hudTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.hudTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.hudTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.hudTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.hudTableLayout.Size = new System.Drawing.Size(170, 88);
             this.hudTableLayout.TabIndex = 1;
             // 
