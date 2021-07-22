@@ -32,7 +32,7 @@ namespace GameOfLife
             this.components = new System.ComponentModel.Container();
             this.cancelButton = new System.Windows.Forms.Button();
             this.confirmButton = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
             this.generalTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.intervalNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -48,14 +48,31 @@ namespace GameOfLife
             this.generationTab = new System.Windows.Forms.TabPage();
             this.displayTab = new System.Windows.Forms.TabPage();
             this.eBorderModeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tabControl1.SuspendLayout();
+            this.rulesTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.tabControl.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.generalTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.intervalNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scaleXNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumericUpDown)).BeginInit();
+            this.rulesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).BeginInit();
+            this.rulesTableLayout.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -78,25 +95,25 @@ namespace GameOfLife
             this.confirmButton.Text = "Confirm";
             this.confirmButton.UseVisualStyleBackColor = true;
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.generalTab);
-            this.tabControl1.Controls.Add(this.rulesTab);
-            this.tabControl1.Controls.Add(this.generationTab);
-            this.tabControl1.Controls.Add(this.displayTab);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(920, 451);
-            this.tabControl1.TabIndex = 2;
+            this.tabControl.Controls.Add(this.generalTab);
+            this.tabControl.Controls.Add(this.rulesTab);
+            this.tabControl.Controls.Add(this.generationTab);
+            this.tabControl.Controls.Add(this.displayTab);
+            this.tabControl.Location = new System.Drawing.Point(12, 12);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(920, 451);
+            this.tabControl.TabIndex = 2;
             // 
             // generalTab
             // 
             this.generalTab.Controls.Add(this.generalTableLayout);
             this.generalTab.Location = new System.Drawing.Point(4, 22);
+            this.generalTab.Margin = new System.Windows.Forms.Padding(0);
             this.generalTab.Name = "generalTab";
-            this.generalTab.Padding = new System.Windows.Forms.Padding(3);
             this.generalTab.Size = new System.Drawing.Size(912, 425);
             this.generalTab.TabIndex = 0;
             this.generalTab.Text = "General";
@@ -114,7 +131,7 @@ namespace GameOfLife
             this.generalTableLayout.Controls.Add(this.tableLayoutPanel1, 1, 0);
             this.generalTableLayout.Controls.Add(this.borderComboBox, 1, 2);
             this.generalTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.generalTableLayout.Location = new System.Drawing.Point(3, 3);
+            this.generalTableLayout.Location = new System.Drawing.Point(0, 0);
             this.generalTableLayout.Margin = new System.Windows.Forms.Padding(0);
             this.generalTableLayout.Name = "generalTableLayout";
             this.generalTableLayout.Padding = new System.Windows.Forms.Padding(2);
@@ -123,13 +140,13 @@ namespace GameOfLife
             this.generalTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.generalTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.generalTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.generalTableLayout.Size = new System.Drawing.Size(906, 419);
+            this.generalTableLayout.Size = new System.Drawing.Size(912, 425);
             this.generalTableLayout.TabIndex = 3;
             // 
             // intervalNumericUpDown
             // 
             this.intervalNumericUpDown.AutoSize = true;
-            this.intervalNumericUpDown.Location = new System.Drawing.Point(453, 35);
+            this.intervalNumericUpDown.Location = new System.Drawing.Point(456, 35);
             this.intervalNumericUpDown.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.intervalNumericUpDown.Maximum = new decimal(new int[] {
             200,
@@ -195,7 +212,7 @@ namespace GameOfLife
             this.tableLayoutPanel1.Controls.Add(this.scaleSeparatorLabel, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.scaleYNumericUpDown, 3, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(453, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(456, 2);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
@@ -261,7 +278,7 @@ namespace GameOfLife
             this.borderComboBox.Items.AddRange(new object[] {
             "Clip",
             "Wrap"});
-            this.borderComboBox.Location = new System.Drawing.Point(453, 64);
+            this.borderComboBox.Location = new System.Drawing.Point(456, 64);
             this.borderComboBox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.borderComboBox.Name = "borderComboBox";
             this.borderComboBox.Size = new System.Drawing.Size(121, 21);
@@ -269,9 +286,10 @@ namespace GameOfLife
             // 
             // rulesTab
             // 
+            this.rulesTab.Controls.Add(this.rulesTableLayout);
             this.rulesTab.Location = new System.Drawing.Point(4, 22);
+            this.rulesTab.Margin = new System.Windows.Forms.Padding(0);
             this.rulesTab.Name = "rulesTab";
-            this.rulesTab.Padding = new System.Windows.Forms.Padding(3);
             this.rulesTab.Size = new System.Drawing.Size(912, 425);
             this.rulesTab.TabIndex = 1;
             this.rulesTab.Text = "Rules";
@@ -295,6 +313,186 @@ namespace GameOfLife
             this.displayTab.Text = "Display";
             this.displayTab.UseVisualStyleBackColor = true;
             // 
+            // rulesTableLayout
+            // 
+            this.rulesTableLayout.ColumnCount = 2;
+            this.rulesTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.rulesTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.rulesTableLayout.Controls.Add(this.label1, 0, 0);
+            this.rulesTableLayout.Controls.Add(this.label2, 0, 1);
+            this.rulesTableLayout.Controls.Add(this.tableLayoutPanel3, 1, 1);
+            this.rulesTableLayout.Controls.Add(this.numericUpDown1, 1, 0);
+            this.rulesTableLayout.Controls.Add(this.label5, 0, 2);
+            this.rulesTableLayout.Controls.Add(this.numericUpDown4, 1, 2);
+            this.rulesTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rulesTableLayout.Location = new System.Drawing.Point(0, 0);
+            this.rulesTableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.rulesTableLayout.Name = "rulesTableLayout";
+            this.rulesTableLayout.Padding = new System.Windows.Forms.Padding(2);
+            this.rulesTableLayout.RowCount = 4;
+            this.rulesTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.rulesTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.rulesTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.rulesTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.rulesTableLayout.Size = new System.Drawing.Size(912, 425);
+            this.rulesTableLayout.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(2, 2);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(8);
+            this.label1.Size = new System.Drawing.Size(102, 29);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Neighbor Radius";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(2, 31);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(8);
+            this.label2.Size = new System.Drawing.Size(101, 29);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Neighbor Range";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.AutoSize = true;
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.Controls.Add(this.numericUpDown2, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label4, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.numericUpDown3, 3, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(456, 31);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(100, 29);
+            this.tableLayoutPanel3.TabIndex = 9;
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.AutoSize = true;
+            this.numericUpDown2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown2.Location = new System.Drawing.Point(0, 4);
+            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDown2.TabIndex = 9;
+            this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(41, 3);
+            this.label4.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(4);
+            this.label4.Size = new System.Drawing.Size(18, 21);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "-";
+            // 
+            // numericUpDown3
+            // 
+            this.numericUpDown3.AutoSize = true;
+            this.numericUpDown3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown3.Location = new System.Drawing.Point(59, 4);
+            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.numericUpDown3.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown3.Name = "numericUpDown3";
+            this.numericUpDown3.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDown3.TabIndex = 10;
+            this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown3.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.AutoSize = true;
+            this.numericUpDown1.Location = new System.Drawing.Point(456, 6);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDown1.TabIndex = 12;
+            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(2, 60);
+            this.label5.Margin = new System.Windows.Forms.Padding(0);
+            this.label5.Name = "label5";
+            this.label5.Padding = new System.Windows.Forms.Padding(8);
+            this.label5.Size = new System.Drawing.Size(94, 29);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Birth Threshold";
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.AutoSize = true;
+            this.numericUpDown4.Location = new System.Drawing.Point(456, 64);
+            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.numericUpDown4.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericUpDown4.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDown4.TabIndex = 15;
+            this.numericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown4.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
             // OptionsForm
             // 
             this.AcceptButton = this.confirmButton;
@@ -302,7 +500,7 @@ namespace GameOfLife
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(944, 501);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.cancelButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -311,7 +509,7 @@ namespace GameOfLife
             this.Name = "OptionsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Options";
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.generalTab.ResumeLayout(false);
             this.generalTableLayout.ResumeLayout(false);
             this.generalTableLayout.PerformLayout();
@@ -320,7 +518,16 @@ namespace GameOfLife
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scaleXNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumericUpDown)).EndInit();
+            this.rulesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).EndInit();
+            this.rulesTableLayout.ResumeLayout(false);
+            this.rulesTableLayout.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -329,7 +536,7 @@ namespace GameOfLife
 
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button confirmButton;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage generalTab;
         private System.Windows.Forms.TableLayoutPanel generalTableLayout;
         private System.Windows.Forms.Label scaleNameLabel;
@@ -345,5 +552,15 @@ namespace GameOfLife
         private System.Windows.Forms.NumericUpDown intervalNumericUpDown;
         private System.Windows.Forms.ComboBox borderComboBox;
         private System.Windows.Forms.BindingSource eBorderModeBindingSource;
+        private System.Windows.Forms.TableLayoutPanel rulesTableLayout;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown numericUpDown4;
     }
 }
