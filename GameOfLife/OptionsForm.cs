@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameOfLife
@@ -15,6 +8,13 @@ namespace GameOfLife
         public OptionsForm()
         {
             InitializeComponent();
+
+            generalTableLayout.HorizontalScroll.Maximum = 0;
+            generalTableLayout.AutoScroll = false;
+            generalTableLayout.VerticalScroll.Visible = false;
+            generalTableLayout.AutoScroll = true;
+            
+            borderComboBox.DataSource = Enum.GetValues(typeof(EBorderMode));
         }
     }
 }
