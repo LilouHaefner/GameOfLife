@@ -303,7 +303,26 @@ namespace GameOfLife
         }
 
         #endregion
-        
+
+        #region Context Menu
+
+        private void contextMenuDisplayOptionsMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void contextMenuDisplayClearMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void contextMenuDisplayEditColors_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             ApplyRules();
@@ -514,6 +533,6 @@ namespace GameOfLife
                     Cells[x, y].Value = false;
                 }
             }
-        }
+        }        
     }
 }
