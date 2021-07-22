@@ -7,80 +7,80 @@ using System.Windows.Forms;
 
 namespace GameOfLife
 {
+    #region Enums
+
+    public enum EBorderMode
+    {
+        Clip,   // same as 'finite'
+        Wrap,   // same as 'toroidal'
+        Tile,   // not yet implemented
+        Reflect // not yet implemented
+    }
+
+    public enum ERandomMode
+    {
+        Seed,
+        Time
+    }
+
+    #endregion
+
+    #region Structs
+
+    struct FOptions
+    {
+        public struct FOptionsGeneral
+        {
+            public (int X, int Y) Scale;
+            public int Interval;
+            public EBorderMode BorderMode;
+        }
+
+        public struct FOptionsRules
+        {
+            public int NeighborRadius;
+            public int NeighborDeathMin;
+            public int NeighborDeathMax;
+            public int NeighborBirthMin;
+            public int NeighborBirthMax;
+        }
+
+        public struct FOptionsGeneration
+        {
+            public bool bRandomize;
+            public ERandomMode RandomMode;
+            public int RandomSeed;
+            public float RandomThreshold;
+            public float RandomMultiplier;
+        }
+
+        public struct FOptionsDisplay
+        {
+            public bool bShowNeighbors;
+            public bool bShowGrid;
+            public Color GridColor;
+            public Color CellColor;
+            public float NeighborTextSizeMulitplier;
+            public float NeighborTextSizeMin;
+            public float NeighborTextSizeMax;
+        }
+
+        public FOptionsGeneral General;
+        public FOptionsRules Rules;
+        public FOptionsGeneration Generation;
+        public FOptionsDisplay Display;
+    }
+
+    struct FCell
+    {
+        public bool Value;
+        public int Neighbors;
+    }
+
+    #endregion
+
     public partial class MainForm : Form
     {
-        #region Enums
-
-        public enum EBorderMode
-        {
-            Clip,   // same as 'finite'
-            Wrap,   // same as 'toroidal'
-            Tile,   // not yet implemented
-            Reflect // not yet implemented
-        }
-
-        public enum ERandomMode
-        {
-            Seed,
-            Time
-        }
-
-        #endregion
-
-        #region Structs
-
-        struct FOptions
-        {
-            public struct FOptionsGeneral
-            {
-                public (int X, int Y) Scale;
-                public int Interval;
-                public EBorderMode BorderMode;
-            }
-
-            public struct FOptionsRules
-            {
-                public int NeighborRadius;
-                public int NeighborDeathMin;
-                public int NeighborDeathMax;
-                public int NeighborBirthMin;
-                public int NeighborBirthMax;
-            }
-
-            public struct FOptionsGeneration
-            {
-                public bool bRandomize;
-                public ERandomMode RandomMode;
-                public int RandomSeed;
-                public float RandomThreshold;
-                public float RandomMultiplier;
-            }
-
-            public struct FOptionsDisplay
-            {
-                public bool bShowNeighbors;
-                public bool bShowGrid;
-                public Color GridColor;
-                public Color CellColor;
-                public float NeighborTextSizeMulitplier;
-                public float NeighborTextSizeMin;
-                public float NeighborTextSizeMax;
-            }
-
-            public FOptionsGeneral General;
-            public FOptionsRules Rules;
-            public FOptionsGeneration Generation;
-            public FOptionsDisplay Display;
-        }
-
-        struct FCell
-        {
-            public bool Value;
-            public int Neighbors;
-        }
-
-        #endregion
-
         FOptions Options = new FOptions();
         FCell[,] Cells;
         Timer FormTimer = new Timer();
@@ -230,16 +230,6 @@ namespace GameOfLife
             }
         }
 
-        private void ShowDisplay()
-        {
-            DisplayForm Dialog = new DisplayForm();
-
-            if (Dialog.ShowDialog() == DialogResult.OK)
-            {
-
-            }
-        }
-
         #endregion
 
         #region Graphics Panel
@@ -370,11 +360,6 @@ namespace GameOfLife
         private void contextMenuDisplayClearMenuItem_Click(object sender, EventArgs e)
         {
             Clear();
-        }
-
-        private void contextMenuDisplayDisplayMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowDisplay();
         }
 
         private void contextMenuDisplayEditColors_Click(object sender, EventArgs e)
