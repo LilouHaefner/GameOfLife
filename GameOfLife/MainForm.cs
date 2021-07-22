@@ -151,7 +151,7 @@ namespace GameOfLife
             }
         }
 
-        #region Input
+        #region Shared Actions
 
         private void OnPlay()
         {
@@ -191,6 +191,18 @@ namespace GameOfLife
 
             // repaint form
             graphicsPanel.Invalidate();
+        }
+
+        private void EditColors()
+        {
+            ColorDialog Dialog = new ColorDialog();
+
+            Dialog.Color = graphicsPanel.BackColor;
+
+            if (Dialog.ShowDialog() == DialogResult.OK)
+            {
+                graphicsPanel.BackColor = Dialog.Color;
+            }
         }
 
         #endregion
@@ -327,7 +339,7 @@ namespace GameOfLife
 
         private void contextMenuDisplayEditColors_Click(object sender, EventArgs e)
         {
-
+            EditColors();
         }
 
         #endregion
