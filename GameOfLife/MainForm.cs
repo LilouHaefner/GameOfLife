@@ -184,7 +184,8 @@ namespace GameOfLife
 
             Options.Load();
 
-            Cells = new FCell[Options.General.Scale.X, Options.General.Scale.Y];
+            // init world
+            OnWorldInit();
 
             // setup the timer
             FormTimer.Enabled = false;
@@ -226,12 +227,24 @@ namespace GameOfLife
         {
             Properties.Settings.Default.Reset();
             Options.Load();
+
+            // init world
+            OnWorldInit();
+
+            // load world
+            OnWorldLoad();
         }
 
         public void Reload()
         {
             Properties.Settings.Default.Reload();
             Options.Load();
+
+            // init world
+            OnWorldInit();
+
+            // load world
+            OnWorldLoad();
         }
 
         #region Shared Actions
@@ -564,6 +577,11 @@ namespace GameOfLife
             OnWorldTick();
         }
 
+        private void OnWorldInit()
+        {
+            Cells = new FCell[Options.General.Scale.X, Options.General.Scale.Y];
+        }
+
         public void OnWorldLoadCosmetic()
         {
             // set background color
@@ -588,7 +606,7 @@ namespace GameOfLife
             }
 
             // update total
-            Total = Cells.GetLength(0) * Cells.GetLength(1);
+            Total = Options.General.Scale.X * Options.General.Scale.Y;
             statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
         }
 
@@ -628,12 +646,12 @@ namespace GameOfLife
 
         private void OnWorldTick()
         {
-            // call cosmetic tick event
-            OnWorldTickCosmetic();
-
             // update status labels
             statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
             statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
+
+            // call cosmetic tick event
+            OnWorldTickCosmetic();
         }
 
         private void ApplyRules()
