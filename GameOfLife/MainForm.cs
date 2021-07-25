@@ -431,6 +431,14 @@ namespace GameOfLife
 
         #region Context Menu
 
+        private void contextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            // update checkboxes
+            contextMenuShowHudMenuItem.Checked = Options.Display.bShowHUD;
+            contextMenuShowNeighborCountMenuItem.Checked = Options.Display.bShowNeighborCount;
+            contextMenuShowGridMenuItem.Checked = Options.Display.bShowGrid;
+        }
+
         private void contextMenuPlayMenuItem_Click(object sender, EventArgs e)
         {
             Play();
@@ -446,17 +454,17 @@ namespace GameOfLife
             Next(sender, e);
         }
 
-        private void contextMenuDisplayOptionsMenuItem_Click(object sender, EventArgs e)
+        private void contextMenuOptionsMenuItem_Click(object sender, EventArgs e)
         {
             ShowOptions();
         }
 
-        private void contextMenuDisplayClearMenuItem_Click(object sender, EventArgs e)
+        private void contextMenuClearMenuItem_Click(object sender, EventArgs e)
         {
             Clear();
         }
 
-        private void contextMenuDisplayEditColors_Click(object sender, EventArgs e)
+        private void contextMenuEditColors_Click(object sender, EventArgs e)
         {
             EditColors();
         }
