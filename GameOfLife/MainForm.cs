@@ -12,9 +12,9 @@ namespace GameOfLife
     public enum EBorderMode
     {
         Clip,   // same as 'finite'
-        Wrap,   // same as 'toroidal'
-        Tile,   // not yet implemented
-        Reflect // not yet implemented
+        Wrap   // same as 'toroidal'
+        //Tile   // not yet implemented
+        //Reflect // not yet implemented
     }
 
     public enum ERandomMode
@@ -27,7 +27,7 @@ namespace GameOfLife
 
     #region Structs
 
-    struct FOptions
+    public struct FOptions
     {
         public struct FOptionsGeneral
         {
@@ -39,15 +39,13 @@ namespace GameOfLife
         public struct FOptionsRules
         {
             public int NeighborRadius;
-            public int NeighborDeathMin;
-            public int NeighborDeathMax;
-            public int NeighborBirthMin;
-            public int NeighborBirthMax;
+            public int NeighborLiveMin;
+            public int NeighborLiveMax;
+            public int CellBirthThreshold;
         }
 
         public struct FOptionsGeneration
         {
-            public bool bRandomize;
             public ERandomMode RandomMode;
             public int RandomSeed;
             public float RandomThreshold;
@@ -56,13 +54,11 @@ namespace GameOfLife
 
         public struct FOptionsDisplay
         {
-            public bool bShowNeighbors;
+            public bool bShowHUD;
+            public bool bShowNeighborCount;
             public bool bShowGrid;
             public Color GridColor;
             public Color CellColor;
-            public float NeighborTextSizeMulitplier;
-            public float NeighborTextSizeMin;
-            public float NeighborTextSizeMax;
         }
 
         public FOptionsGeneral General;
@@ -71,7 +67,7 @@ namespace GameOfLife
         public FOptionsDisplay Display;
     }
 
-    struct FCell
+    public struct FCell
     {
         public bool Value;
         public int Neighbors;
@@ -81,7 +77,7 @@ namespace GameOfLife
 
     public partial class MainForm : Form
     {
-        FOptions Options = new FOptions();
+        public FOptions Options = new FOptions();
         FCell[,] Cells;
         Timer FormTimer = new Timer();
 
@@ -93,32 +89,34 @@ namespace GameOfLife
         // input
         bool bIsPlay = false;
 
+        // text
+        float NeighborTextSizeMulitplier = 10;
+        float NeighborTextSizeMin = 4;
+        float NeighborTextSizeMax = 24;
+
         // constructor
         public MainForm()
         {
             InitializeComponent();
 
-            // setup options (temp)
+            // setup options
+            // TODO: read from settings
             Options.General.Scale = (64, 32);
             Options.General.Interval = 20;
             Options.General.BorderMode = EBorderMode.Wrap;
             Options.Rules.NeighborRadius = 1;
-            Options.Rules.NeighborDeathMin = 2;
-            Options.Rules.NeighborDeathMax = 3;
-            Options.Rules.NeighborBirthMin = 3;
-            Options.Rules.NeighborBirthMax = 3;
-            Options.Generation.bRandomize = true;
+            Options.Rules.NeighborLiveMin = 2;
+            Options.Rules.NeighborLiveMax = 3;
+            Options.Rules.CellBirthThreshold = 3;
             Options.Generation.RandomMode = ERandomMode.Seed;
             Options.Generation.RandomSeed = 2000;
             Options.Generation.RandomThreshold = 7.5f;
             Options.Generation.RandomMultiplier = 10.0f;
-            Options.Display.bShowNeighbors = true;
+            Options.Display.bShowHUD = true;
+            Options.Display.bShowNeighborCount = true;
             Options.Display.bShowGrid = true;
             Options.Display.GridColor = Color.FromArgb(240, 240, 240);
             Options.Display.CellColor = Color.FromArgb(208, 208, 208);
-            Options.Display.NeighborTextSizeMulitplier = 10;
-            Options.Display.NeighborTextSizeMin = 4;
-            Options.Display.NeighborTextSizeMax = 24;
 
             Cells = new FCell[Options.General.Scale.X, Options.General.Scale.Y];
 
@@ -127,9 +125,10 @@ namespace GameOfLife
             FormTimer.Interval = Options.General.Interval;
             FormTimer.Tick += Timer_Tick;
 
-            toolStripPauseButton.Enabled = false;
+            // randomize world
+            Randomize(Options.Generation.RandomMode, Options.Generation.RandomThreshold, Options.Generation.RandomMultiplier, Options.Generation.RandomSeed);
 
-            Randomize();
+            // load world
             OnWorldLoad();
 
             // repaint form
@@ -161,6 +160,7 @@ namespace GameOfLife
                 for (int y = 0; y < Cells.GetLength(1); y++)
                 {
                     Cells[x, y].Value = false;
+                    Cells[x, y].Neighbors = 0;
                 }
             }
 
@@ -171,11 +171,22 @@ namespace GameOfLife
         private void Play()
         {
             // disable play and next buttons
+
+            // tool strip
             toolStripPlayButton.Enabled = false;
             toolStripNextButton.Enabled = false;
 
-            // enable pause button
+            // context menu
+            contextMenuPlayMenuItem.Enabled = false;
+            contextMenuNextMenuItem.Enabled = false;
+
+            // enable pause buttons
+            
+            // tool strip
             toolStripPauseButton.Enabled = true;
+
+            // context menu
+            contextMenuPauseMenuItem.Enabled = true;
 
             // enable timer
             FormTimer.Enabled = true;
@@ -186,12 +197,23 @@ namespace GameOfLife
 
         private void Pause()
         {
-            // disable pause button
-            toolStripPauseButton.Enabled = false;
-
             // enable play and next buttons
+
+            // tool strip
             toolStripPlayButton.Enabled = true;
             toolStripNextButton.Enabled = true;
+
+            // context menu
+            contextMenuPlayMenuItem.Enabled = true;
+            contextMenuNextMenuItem.Enabled = true;
+
+            // disable pause buttons
+
+            // tool strip
+            toolStripPauseButton.Enabled = false;
+
+            // context menu
+            contextMenuPauseMenuItem.Enabled = false;
 
             // disable timer
             FormTimer.Enabled = false;
@@ -222,12 +244,66 @@ namespace GameOfLife
 
         private void ShowOptions()
         {
-            OptionsForm Dialog = new OptionsForm();
+            // create options form
+            OptionsForm Dialog = new OptionsForm(this);
+
+            // save current state
+            FOptions SavedOptions = Options;
+            FCell[,] SavedCells = CopyCells(Cells);
 
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
-
+                // save options
+                UpdateOptions(Dialog.Options);
             }
+            else
+            {
+                Options = SavedOptions;
+                Cells = CopyCells(SavedCells);
+            }
+
+            // load world cosmetic
+            OnWorldLoadCosmetic();
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private FCell[,] CopyCells(FCell[,] InCells)
+        {
+            FCell[,] OutCells = new FCell[InCells.GetLength(0), InCells.GetLength(1)];
+
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    OutCells[x, y].Value = InCells[x, y].Value;
+                    OutCells[x, y].Neighbors = InCells[x, y].Neighbors;
+                }
+            }
+
+            return OutCells;
+        }
+
+        private void UpdateOptions(FOptions NewOptions)
+        {
+            // check if scale needs to be updated
+            if (NewOptions.General.Scale.X != Options.General.Scale.X || NewOptions.General.Scale.Y != Options.General.Scale.Y)
+            {
+                Cells = new FCell[NewOptions.General.Scale.X, NewOptions.General.Scale.Y];
+
+                // load world
+                OnWorldLoad();
+            }
+
+            // check if interval needs to be updated
+            if (NewOptions.General.Interval != Options.General.Interval)
+            {
+                FormTimer.Interval = NewOptions.General.Interval;
+            }
+
+            // update options
+            Options = NewOptions;
         }
 
         #endregion
@@ -248,13 +324,13 @@ namespace GameOfLife
 
             // neighbor count font setup
             float FontSizeMultiplier = 0.05f;
-            float FontSize = Math.Min(CellWidth, CellHeight) * (Options.Display.NeighborTextSizeMulitplier * FontSizeMultiplier);
+            float FontSize = Math.Min(CellWidth, CellHeight) * (NeighborTextSizeMulitplier * FontSizeMultiplier);
             Font Font = new Font("Century Gothic", FontSize);
             StringFormat StringFormat = new StringFormat();
             StringFormat.Alignment = StringAlignment.Center;
             StringFormat.LineAlignment = StringAlignment.Center;
 
-            bool bShowNeighbors = Options.Display.bShowNeighbors && FontSize == Math.Min(Math.Max(Options.Display.NeighborTextSizeMin, FontSize), Options.Display.NeighborTextSizeMax);
+            bool bShowNeighbors = Options.Display.bShowNeighborCount && FontSize == Math.Min(Math.Max(NeighborTextSizeMin, FontSize), NeighborTextSizeMax);
 
             // iterate through cells
             for (int x = 0; x < Cells.GetLength(0); x++)
@@ -270,14 +346,17 @@ namespace GameOfLife
                     cellRect.Width = CellWidth;
                     cellRect.Height = CellHeight;
 
-                    // fill the cell if live
+                    // draw cell fill
                     if (Cells[x, y].Value == true)
                     {
                         e.Graphics.FillRectangle(CellBrush, cellRect);
                     }
 
-                    // outline the cell
-                    e.Graphics.DrawRectangle(GridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                    // draw cell lines
+                    if (Options.Display.bShowGrid)
+                    {
+                        e.Graphics.DrawRectangle(GridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                    }
 
                     if (bShowNeighbors)
                     {
@@ -352,6 +431,21 @@ namespace GameOfLife
 
         #region Context Menu
 
+        private void contextMenuPlayMenuItem_Click(object sender, EventArgs e)
+        {
+            Play();
+        }
+
+        private void contextMenuPauseMenuItem_Click(object sender, EventArgs e)
+        {
+            Pause();
+        }
+
+        private void contextMenuNextMenuItem_Click(object sender, EventArgs e)
+        {
+            Next(sender, e);
+        }
+
         private void contextMenuDisplayOptionsMenuItem_Click(object sender, EventArgs e)
         {
             ShowOptions();
@@ -367,6 +461,45 @@ namespace GameOfLife
             EditColors();
         }
 
+        private void contextMenuShowHudMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            contextMenuShowHudMenuItem.Checked = !contextMenuShowHudMenuItem.Checked;
+
+            // update options
+            Options.Display.bShowHUD = contextMenuShowHudMenuItem.Checked;
+
+            // call cosmetic load event
+            OnWorldLoadCosmetic();
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void contextMenuShowNeighborCountMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            contextMenuShowNeighborCountMenuItem.Checked = !contextMenuShowNeighborCountMenuItem.Checked;
+
+            // update options
+            Options.Display.bShowNeighborCount = contextMenuShowNeighborCountMenuItem.Checked;
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void contextMenuShowGridMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            contextMenuShowGridMenuItem.Checked = !contextMenuShowGridMenuItem.Checked;
+
+            // update options
+            Options.Display.bShowGrid = contextMenuShowGridMenuItem.Checked;
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
         #endregion
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -379,43 +512,74 @@ namespace GameOfLife
             // repaint form
             graphicsPanel.Invalidate();
 
+            // call tick event
             OnWorldTick();
+        }
+
+        public void OnWorldLoadCosmetic()
+        {
+            // show / hide hud
+            hudPanel.Visible = Options.Display.bShowHUD;
+
+            if (Options.Display.bShowHUD)
+            {
+                // show / hide seed
+                hudSeedNameLabel.Visible = Options.Generation.RandomMode == ERandomMode.Seed;
+                hudSeedValueLabel.Visible = Options.Generation.RandomMode == ERandomMode.Seed;
+
+                // load seed
+                if (Options.Generation.RandomMode == ERandomMode.Seed) hudSeedValueLabel.Text = Options.Generation.RandomSeed.ToString();
+
+                // load hud labels
+                hudIntervalValueLabel.Text = Options.General.Interval.ToString();
+                hudBorderValueLabel.Text = Options.General.BorderMode.ToString();
+                hudScaleValueLabel.Text = Options.General.Scale.X.ToString() + " x " + Options.General.Scale.Y.ToString();
+            }
+
+            // update total
+            Total = Cells.GetLength(0) * Cells.GetLength(1);
+            statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
         }
 
         private void OnWorldLoad()
         {
+            // call cosmetic load event
+            OnWorldLoadCosmetic();
+
+            // disable pause buttons
+            toolStripPauseButton.Enabled = false;
+            contextMenuPauseMenuItem.Enabled = false;
+
+            // reset labels
             Generation = 0;
             Live = 0;
-            Total = Options.General.Scale.X * Options.General.Scale.Y;
 
             // iterate through cells
             for (int x = 0; x < Cells.GetLength(0); x++)
             {
                 for (int y = 0; y < Cells.GetLength(1); y++)
                 {
+                    // calculate cell neighbors, live
                     Cells[x, y].Neighbors = CountNeighbors(x, y);
                     if (Cells[x, y].Value) Live++;
                 }
             }
 
-            ApplyRules();
+            // call tick event
             OnWorldTick();
+        }
 
-            // update hud labels
-            hudIntervalValueLabel.Text = Options.General.Interval.ToString();
-            hudSeedValueLabel.Text = Options.Generation.RandomSeed.ToString();
-            hudBorderValueLabel.Text = Options.General.BorderMode.ToString();
-            hudScaleValueLabel.Text = Options.General.Scale.X.ToString() + " x " + Options.General.Scale.Y.ToString();
-
-            hudSeedNameLabel.Visible = Options.Generation.bRandomize;
-            hudSeedValueLabel.Visible = Options.Generation.bRandomize;
-
-            // update total
-            statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
+        public void OnWorldTickCosmetic()
+        {
+            // repaint form
+            graphicsPanel.Invalidate();
         }
 
         private void OnWorldTick()
         {
+            // call cosmetic tick event
+            OnWorldTickCosmetic();
+
             // update status labels
             statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
             statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
@@ -546,14 +710,25 @@ namespace GameOfLife
 
             return Count;
         }
-
-        private void Randomize(int seed = 0, float threshold = 7.5f, float multiplier = 10.0f)
+        
+        public void Randomize(ERandomMode RandomMode, float Threshold, float Multiplier, int Seed = 0)
         {
             // reset live
             Live = 0;
 
-            // create random
-            Random random = new Random(seed);
+            // create random generator
+            Random RandomGenerator;
+
+            // switch on random mode
+            switch (RandomMode)
+            {
+                case ERandomMode.Seed:
+                    RandomGenerator = new Random(Seed);
+                    break;
+                default:
+                    RandomGenerator = new Random();
+                    break;
+            }
 
             // iterate through cells
             for (int x = 0; x < Cells.GetLength(0); x++)
@@ -561,7 +736,7 @@ namespace GameOfLife
                 for (int y = 0; y < Cells.GetLength(1); y++)
                 {
                     // check random against threshold
-                    Cells[x, y].Value = random.NextDouble() * multiplier > threshold;
+                    Cells[x, y].Value = RandomGenerator.NextDouble() * Multiplier > Threshold;
 
                     // increment live
                     if (Cells[x, y].Value) Live++;
