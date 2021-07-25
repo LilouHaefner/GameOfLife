@@ -118,13 +118,21 @@ namespace GameOfLife
         }
 
         #endregion
-        
+
+        #region Events
+
+        public event EventHandler EventOnApply;
+
+        #endregion
+
         MainForm OwningForm;
         public FOptions Options;
 
         public OptionsForm(MainForm InOwningForm)
         {
             InitializeComponent();            
+
+            // set up tab autoscrolling
 
             generalTableLayout.HorizontalScroll.Maximum = 0;
             generalTableLayout.AutoScroll = false;
@@ -146,12 +154,18 @@ namespace GameOfLife
             displayTableLayout.VerticalScroll.Visible = false;
             displayTableLayout.AutoScroll = true;
 
+            // set combo box data sources
             borderComboBox.DataSource = Enum.GetValues(typeof(EBorderMode));
             randomModeComboBox.DataSource = Enum.GetValues(typeof(ERandomMode));
 
+            // set owner
             OwningForm = InOwningForm;
 
+            // load options
             LoadOptions(OwningForm.Options);
+
+            // bind apply event
+            EventOnApply += SaveOptions;
         }
 
         private void randomSeedNewSeedButton_Click(object sender, EventArgs e)
@@ -203,7 +217,7 @@ namespace GameOfLife
             GridColor = Options.Display.GridColor;
         }
 
-        private void SaveOptions()
+        private void SaveOptions(object sender, EventArgs e)
         {
             // general
             Options.General.Scale = ((int)ScaleX, (int)ScaleY);
@@ -226,7 +240,8 @@ namespace GameOfLife
 
         private void dialogConfirmButton_Click(object sender, EventArgs e)
         {
-            SaveOptions();
+            EventOnApply.Invoke(sender, e);
+            //SaveOptions();
         }
     }
 }
