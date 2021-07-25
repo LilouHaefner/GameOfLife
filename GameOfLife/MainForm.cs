@@ -31,9 +31,23 @@ namespace GameOfLife
     {
         public struct FOptionsGeneral
         {
-            public (int X, int Y) Scale;
+            public Point Scale;
             public int Interval;
             public EBorderMode BorderMode;
+
+            public void Load()
+            {
+                Scale = Properties.Settings.Default.Scale;
+                Interval = Properties.Settings.Default.Interval;
+                BorderMode = Properties.Settings.Default.BorderMode;
+            }
+
+            public void Save()
+            {
+                Properties.Settings.Default.Scale = Scale;
+                Properties.Settings.Default.Interval = Interval;
+                Properties.Settings.Default.BorderMode = BorderMode;
+            }
         }
 
         public struct FOptionsRules
@@ -42,6 +56,22 @@ namespace GameOfLife
             public int NeighborLiveMin;
             public int NeighborLiveMax;
             public int CellBirthThreshold;
+
+            public void Load()
+            {
+                NeighborRadius = Properties.Settings.Default.NeighborRadius;
+                NeighborLiveMin = Properties.Settings.Default.NeighborLiveMin;
+                NeighborLiveMax = Properties.Settings.Default.NeighborLiveMax;
+                CellBirthThreshold = Properties.Settings.Default.CellBirthThreshold;
+            }
+
+            public void Save()
+            {
+                Properties.Settings.Default.NeighborRadius = NeighborRadius;
+                Properties.Settings.Default.NeighborLiveMin = NeighborLiveMin;
+                Properties.Settings.Default.NeighborLiveMax = NeighborLiveMax;
+                Properties.Settings.Default.CellBirthThreshold = CellBirthThreshold;
+            }
         }
 
         public struct FOptionsGeneration
@@ -50,6 +80,22 @@ namespace GameOfLife
             public int RandomSeed;
             public float RandomThreshold;
             public float RandomMultiplier;
+
+            public void Load()
+            {
+                RandomMode = Properties.Settings.Default.RandomMode;
+                RandomSeed = Properties.Settings.Default.RandomSeed;
+                RandomThreshold = Properties.Settings.Default.RandomThreshold;
+                RandomMultiplier = Properties.Settings.Default.RandomMultiplier;
+            }
+
+            public void Save()
+            {
+                Properties.Settings.Default.RandomMode = RandomMode;
+                Properties.Settings.Default.RandomSeed = RandomSeed;
+                Properties.Settings.Default.RandomThreshold = RandomThreshold;
+                Properties.Settings.Default.RandomMultiplier = RandomMultiplier;
+            }
         }
 
         public struct FOptionsDisplay
@@ -59,12 +105,49 @@ namespace GameOfLife
             public bool bShowGrid;
             public Color GridColor;
             public Color CellColor;
+            public Color BackgroundColor;
+
+            public void Load()
+            {
+                bShowHUD = Properties.Settings.Default.bShowHUD;
+                bShowNeighborCount = Properties.Settings.Default.bShowNeighborCount;
+                bShowGrid = Properties.Settings.Default.bShowGrid;
+                GridColor = Properties.Settings.Default.GridColor;
+                CellColor = Properties.Settings.Default.CellColor;
+                BackgroundColor = Properties.Settings.Default.BackgroundColor;
+            }
+
+            public void Save()
+            {
+                Properties.Settings.Default.bShowHUD = bShowHUD;
+                Properties.Settings.Default.bShowNeighborCount = bShowNeighborCount;
+                Properties.Settings.Default.bShowGrid = bShowGrid;
+                Properties.Settings.Default.GridColor = GridColor;
+                Properties.Settings.Default.CellColor = CellColor;
+                Properties.Settings.Default.BackgroundColor = BackgroundColor;
+            }
         }
 
         public FOptionsGeneral General;
         public FOptionsRules Rules;
         public FOptionsGeneration Generation;
         public FOptionsDisplay Display;
+
+        public void Load()
+        {
+            General.Load();
+            Rules.Load();
+            Generation.Load();
+            Display.Load();
+        }
+
+        public void Save()
+        {
+            General.Save();
+            Rules.Save();
+            Generation.Save();
+            Display.Save();
+        }
     }
 
     public struct FCell
@@ -99,24 +182,7 @@ namespace GameOfLife
         {
             InitializeComponent();
 
-            // setup options
-            // TODO: read from settings
-            Options.General.Scale = (64, 32);
-            Options.General.Interval = 20;
-            Options.General.BorderMode = EBorderMode.Wrap;
-            Options.Rules.NeighborRadius = 1;
-            Options.Rules.NeighborLiveMin = 2;
-            Options.Rules.NeighborLiveMax = 3;
-            Options.Rules.CellBirthThreshold = 3;
-            Options.Generation.RandomMode = ERandomMode.Seed;
-            Options.Generation.RandomSeed = 2000;
-            Options.Generation.RandomThreshold = 7.5f;
-            Options.Generation.RandomMultiplier = 10.0f;
-            Options.Display.bShowHUD = true;
-            Options.Display.bShowNeighborCount = true;
-            Options.Display.bShowGrid = true;
-            Options.Display.GridColor = Color.FromArgb(240, 240, 240);
-            Options.Display.CellColor = Color.FromArgb(208, 208, 208);
+            Options.Load();
 
             Cells = new FCell[Options.General.Scale.X, Options.General.Scale.Y];
 
@@ -150,6 +216,24 @@ namespace GameOfLife
             }
         }
 
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Options.Save();
+            Properties.Settings.Default.Save();
+        }
+
+        public void Reset()
+        {
+            Properties.Settings.Default.Reset();
+            Options.Load();
+        }
+
+        public void Reload()
+        {
+            Properties.Settings.Default.Reload();
+            Options.Load();
+        }
+
         #region Shared Actions
 
         private void Clear()
@@ -181,7 +265,7 @@ namespace GameOfLife
             contextMenuNextMenuItem.Enabled = false;
 
             // enable pause buttons
-            
+
             // tool strip
             toolStripPauseButton.Enabled = true;
 
@@ -354,6 +438,11 @@ namespace GameOfLife
 
         #region Menu Strip
 
+        private void menuStripQuitMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void menuStripClearMenuItem_Click(object sender, EventArgs e)
         {
             Clear();
@@ -387,7 +476,7 @@ namespace GameOfLife
 
         #region Context Menu
 
-        private void contextMenu_Opening(object sender, CancelEventArgs e)
+        private void contextMenu_Opened(object sender, EventArgs e)
         {
             // update checkboxes
             contextMenuShowHudMenuItem.Checked = Options.Display.bShowHUD;
@@ -477,6 +566,9 @@ namespace GameOfLife
 
         public void OnWorldLoadCosmetic()
         {
+            // set background color
+            graphicsPanel.BackColor = Options.Display.BackgroundColor;
+
             // show / hide hud
             hudPanel.Visible = Options.Display.bShowHUD;
 
@@ -577,14 +669,13 @@ namespace GameOfLife
             for (int i = 0; i < Queue.Count; i++)
             {
                 Cells[Queue[i].x, Queue[i].y].Value = Queue[i].Value;
-
             }
         }
 
         private int CountNeighbors(int X, int Y)
         {
             int Count = 0;
-            
+
             switch (Options.General.BorderMode)
             {
                 case EBorderMode.Clip:
@@ -669,7 +760,7 @@ namespace GameOfLife
 
             return Count;
         }
-        
+
         public void Randomize(ERandomMode RandomMode, float Threshold, float Multiplier, int Seed = 0)
         {
             // reset live
@@ -738,6 +829,24 @@ namespace GameOfLife
 
             // update options
             Options = NewOptions;
+        }
+
+        public void SetCellColor(Color InColor)
+        {
+            Options.Display.CellColor = InColor;
+        }
+
+        public void SetGridColor(Color InColor)
+        {
+            Options.Display.GridColor = InColor;
+        }
+
+        public void SetBackgroundColor(Color InColor)
+        {
+            Options.Display.BackgroundColor = InColor;
+            
+            // update background color
+            graphicsPanel.BackColor = Options.Display.BackgroundColor;
         }
     }
 }

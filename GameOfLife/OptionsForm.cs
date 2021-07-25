@@ -105,18 +105,6 @@ namespace GameOfLife
             set { showGridCheckbox.Checked = value; }
         }
 
-        public System.Drawing.Color CellColor
-        {
-            get { return cellColorDialog.Color; }
-            set { cellColorDialog.Color = value; }
-        }
-
-        public System.Drawing.Color GridColor
-        {
-            get { return gridColorDialog.Color; }
-            set { gridColorDialog.Color = value; }
-        }
-
         #endregion
 
         #region Events
@@ -214,14 +202,15 @@ namespace GameOfLife
             bShowHUD = Options.Display.bShowHUD;
             bShowNeighborCount = Options.Display.bShowNeighborCount;
             bShowGrid = Options.Display.bShowGrid;
-            CellColor = Options.Display.CellColor;
-            GridColor = Options.Display.GridColor;
+            //CellColor = Options.Display.CellColor;
+            //GridColor = Options.Display.GridColor;
+            //BackgroundColor = Options.Display.BackgroundColor;
         }
 
         private void SaveOptions(object sender, EventArgs e)
         {
             // general
-            Options.General.Scale = ((int)ScaleX, (int)ScaleY);
+            Options.General.Scale = new System.Drawing.Point((int)ScaleX, (int)ScaleY);
             Options.General.Interval = (int)Interval;
             Options.General.BorderMode = (EBorderMode)BorderMode;
 
@@ -235,8 +224,9 @@ namespace GameOfLife
             Options.Display.bShowHUD = bShowHUD;
             Options.Display.bShowNeighborCount = bShowNeighborCount;
             Options.Display.bShowGrid = bShowGrid;
-            Options.Display.CellColor = CellColor;
-            Options.Display.GridColor = GridColor;
+            //Options.Display.CellColor = CellColor;
+            //Options.Display.GridColor = GridColor;
+            //Options.Display.BackgroundColor = BackgroundColor;
         }
 
         private void dialogConfirmButton_Click(object sender, EventArgs e)
@@ -246,22 +236,60 @@ namespace GameOfLife
 
         private void cellColorButton_Click(object sender, EventArgs e)
         {
-            CellColor = Options.Display.CellColor;
+            ColorDialog Dialog = new ColorDialog();
 
-            if (cellColorDialog.ShowDialog() == DialogResult.OK)
+            Dialog.Color = Options.Display.CellColor;
+
+            if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                Options.Display.CellColor = CellColor;
+                Options.Display.CellColor = Dialog.Color;
+                OwningForm.SetCellColor(Dialog.Color);
             }
+
+            
+            OwningForm.OnWorldTickCosmetic();
         }
 
         private void gridColorButton_Click(object sender, EventArgs e)
         {
-            GridColor = Options.Display.GridColor;
+            ColorDialog Dialog = new ColorDialog();
 
-            if (gridColorDialog.ShowDialog() == DialogResult.OK)
+            Dialog.Color = Options.Display.GridColor;
+
+            if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                Options.Display.GridColor = GridColor;
+                Options.Display.GridColor = Dialog.Color;
+                OwningForm.SetGridColor(Dialog.Color);
             }
+
+            OwningForm.OnWorldTickCosmetic();
+        }
+
+        private void backgroundColorButton_Click(object sender, EventArgs e)
+        {
+            ColorDialog Dialog = new ColorDialog();
+
+            Dialog.Color = Options.Display.BackgroundColor;
+
+            if (Dialog.ShowDialog() == DialogResult.OK)
+            {
+                Options.Display.BackgroundColor = Dialog.Color;
+                OwningForm.SetBackgroundColor(Dialog.Color);
+            }
+
+            OwningForm.OnWorldTickCosmetic();
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OwningForm.Reset();
+            LoadOptions(OwningForm.Options);
+        }
+
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OwningForm.Reload();
+            LoadOptions(OwningForm.Options);
         }
     }
 }
