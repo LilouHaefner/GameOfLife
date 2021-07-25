@@ -66,7 +66,6 @@ namespace GameOfLife
             this.toolStripPlayButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripPauseButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripNextButton = new System.Windows.Forms.ToolStripButton();
-            this.graphicsPanel = new GameOfLife.GraphicsPanel();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuPlayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuPauseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,10 +74,10 @@ namespace GameOfLife
             this.contextMenuOptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuClearMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextMenuEditColorsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuShowHudMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuShowNeighborCountMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuShowGridMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphicsPanel = new GameOfLife.GraphicsPanel();
             this.hudPanel = new System.Windows.Forms.Panel();
             this.hudTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.hudScaleValueLabel = new System.Windows.Forms.Label();
@@ -93,8 +92,8 @@ namespace GameOfLife
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
-            this.graphicsPanel.SuspendLayout();
             this.contextMenu.SuspendLayout();
+            this.graphicsPanel.SuspendLayout();
             this.hudPanel.SuspendLayout();
             this.hudTableLayout.SuspendLayout();
             this.SuspendLayout();
@@ -394,6 +393,7 @@ namespace GameOfLife
             this.toolStripOptionsButton.Name = "toolStripOptionsButton";
             this.toolStripOptionsButton.Size = new System.Drawing.Size(36, 36);
             this.toolStripOptionsButton.Text = "Options";
+            this.toolStripOptionsButton.Click += new System.EventHandler(this.toolStripOptionsButton_Click);
             // 
             // toolStripSeparator1
             // 
@@ -458,20 +458,6 @@ namespace GameOfLife
             this.toolStripNextButton.Text = "Next";
             this.toolStripNextButton.Click += new System.EventHandler(this.toolStripNextButton_Click);
             // 
-            // graphicsPanel
-            // 
-            this.graphicsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(176)))), ((int)(((byte)(176)))));
-            this.graphicsPanel.ContextMenuStrip = this.contextMenu;
-            this.graphicsPanel.Controls.Add(this.hudPanel);
-            this.graphicsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graphicsPanel.Location = new System.Drawing.Point(0, 70);
-            this.graphicsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.graphicsPanel.Name = "graphicsPanel";
-            this.graphicsPanel.Size = new System.Drawing.Size(944, 411);
-            this.graphicsPanel.TabIndex = 3;
-            this.graphicsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel_Paint);
-            this.graphicsPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel_MouseClick);
-            // 
             // contextMenu
             // 
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -482,12 +468,11 @@ namespace GameOfLife
             this.contextMenuOptionsMenuItem,
             this.contextMenuClearMenuItem,
             this.toolStripSeparator3,
-            this.contextMenuEditColorsMenuItem,
             this.contextMenuShowHudMenuItem,
             this.contextMenuShowNeighborCountMenuItem,
             this.contextMenuShowGridMenuItem});
             this.contextMenu.Name = "contextMenuStrip";
-            this.contextMenu.Size = new System.Drawing.Size(193, 236);
+            this.contextMenu.Size = new System.Drawing.Size(193, 192);
             this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
             // 
             // contextMenuPlayMenuItem
@@ -535,13 +520,6 @@ namespace GameOfLife
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(189, 6);
             // 
-            // contextMenuEditColorsMenuItem
-            // 
-            this.contextMenuEditColorsMenuItem.Name = "contextMenuEditColorsMenuItem";
-            this.contextMenuEditColorsMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.contextMenuEditColorsMenuItem.Text = "Edit Colors";
-            this.contextMenuEditColorsMenuItem.Click += new System.EventHandler(this.contextMenuEditColors_Click);
-            // 
             // contextMenuShowHudMenuItem
             // 
             this.contextMenuShowHudMenuItem.Checked = true;
@@ -568,6 +546,20 @@ namespace GameOfLife
             this.contextMenuShowGridMenuItem.Size = new System.Drawing.Size(192, 22);
             this.contextMenuShowGridMenuItem.Text = "Show Grid";
             this.contextMenuShowGridMenuItem.Click += new System.EventHandler(this.contextMenuShowGridMenuItem_Click);
+            // 
+            // graphicsPanel
+            // 
+            this.graphicsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(176)))), ((int)(((byte)(176)))));
+            this.graphicsPanel.ContextMenuStrip = this.contextMenu;
+            this.graphicsPanel.Controls.Add(this.hudPanel);
+            this.graphicsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graphicsPanel.Location = new System.Drawing.Point(0, 70);
+            this.graphicsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.graphicsPanel.Name = "graphicsPanel";
+            this.graphicsPanel.Size = new System.Drawing.Size(944, 411);
+            this.graphicsPanel.TabIndex = 3;
+            this.graphicsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel_Paint);
+            this.graphicsPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel_MouseClick);
             // 
             // hudPanel
             // 
@@ -745,9 +737,9 @@ namespace GameOfLife
             this.statusStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.contextMenu.ResumeLayout(false);
             this.graphicsPanel.ResumeLayout(false);
             this.graphicsPanel.PerformLayout();
-            this.contextMenu.ResumeLayout(false);
             this.hudPanel.ResumeLayout(false);
             this.hudPanel.PerformLayout();
             this.hudTableLayout.ResumeLayout(false);
@@ -807,7 +799,6 @@ namespace GameOfLife
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem contextMenuShowHudMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contextMenuShowGridMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem contextMenuEditColorsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contextMenuOptionsMenuItem;
         private System.Windows.Forms.ToolStripSeparator contextMenuDisplaySeparator1;
         private System.Windows.Forms.ToolStripMenuItem contextMenuClearMenuItem;

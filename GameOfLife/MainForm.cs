@@ -230,18 +230,6 @@ namespace GameOfLife
             graphicsPanel.Invalidate();
         }
 
-        private void EditColors()
-        {
-            ColorDialog Dialog = new ColorDialog();
-
-            Dialog.Color = graphicsPanel.BackColor;
-
-            if (Dialog.ShowDialog() == DialogResult.OK)
-            {
-                graphicsPanel.BackColor = Dialog.Color;
-            }
-        }
-
         private void ShowOptions()
         {
             // create options form
@@ -267,43 +255,6 @@ namespace GameOfLife
 
             // repaint form
             graphicsPanel.Invalidate();
-        }
-
-        private FCell[,] CopyCells(FCell[,] InCells)
-        {
-            FCell[,] OutCells = new FCell[InCells.GetLength(0), InCells.GetLength(1)];
-
-            for (int x = 0; x < Cells.GetLength(0); x++)
-            {
-                for (int y = 0; y < Cells.GetLength(1); y++)
-                {
-                    OutCells[x, y].Value = InCells[x, y].Value;
-                    OutCells[x, y].Neighbors = InCells[x, y].Neighbors;
-                }
-            }
-
-            return OutCells;
-        }
-
-        private void UpdateOptions(FOptions NewOptions)
-        {
-            // check if scale needs to be updated
-            if (NewOptions.General.Scale.X != Options.General.Scale.X || NewOptions.General.Scale.Y != Options.General.Scale.Y)
-            {
-                Cells = new FCell[NewOptions.General.Scale.X, NewOptions.General.Scale.Y];
-
-                // load world
-                OnWorldLoad();
-            }
-
-            // check if interval needs to be updated
-            if (NewOptions.General.Interval != Options.General.Interval)
-            {
-                FormTimer.Interval = NewOptions.General.Interval;
-            }
-
-            // update options
-            Options = NewOptions;
         }
 
         #endregion
@@ -412,6 +363,11 @@ namespace GameOfLife
 
         #region Tool Strip
 
+        private void toolStripOptionsButton_Click(object sender, EventArgs e)
+        {
+            ShowOptions();
+        }
+
         private void toolStripPlayButton_Click(object sender, EventArgs e)
         {
             Play();
@@ -462,11 +418,6 @@ namespace GameOfLife
         private void contextMenuClearMenuItem_Click(object sender, EventArgs e)
         {
             Clear();
-        }
-
-        private void contextMenuEditColors_Click(object sender, EventArgs e)
-        {
-            EditColors();
         }
 
         private void contextMenuShowHudMenuItem_Click(object sender, EventArgs e)
@@ -750,6 +701,43 @@ namespace GameOfLife
                     if (Cells[x, y].Value) Live++;
                 }
             }
+        }
+
+        private FCell[,] CopyCells(FCell[,] InCells)
+        {
+            FCell[,] OutCells = new FCell[InCells.GetLength(0), InCells.GetLength(1)];
+
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    OutCells[x, y].Value = InCells[x, y].Value;
+                    OutCells[x, y].Neighbors = InCells[x, y].Neighbors;
+                }
+            }
+
+            return OutCells;
+        }
+
+        private void UpdateOptions(FOptions NewOptions)
+        {
+            // check if scale needs to be updated
+            if (NewOptions.General.Scale.X != Options.General.Scale.X || NewOptions.General.Scale.Y != Options.General.Scale.Y)
+            {
+                Cells = new FCell[NewOptions.General.Scale.X, NewOptions.General.Scale.Y];
+
+                // load world
+                OnWorldLoad();
+            }
+
+            // check if interval needs to be updated
+            if (NewOptions.General.Interval != Options.General.Interval)
+            {
+                FormTimer.Interval = NewOptions.General.Interval;
+            }
+
+            // update options
+            Options = NewOptions;
         }
     }
 }

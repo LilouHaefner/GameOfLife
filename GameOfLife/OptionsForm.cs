@@ -184,6 +184,7 @@ namespace GameOfLife
             Options.Generation.RandomMultiplier = (float)RandomMultiplier;
             Options.Generation.RandomThreshold = (float)RandomThreshold;
 
+            // main form cosmetic tick
             OwningForm.OnWorldTickCosmetic();
         }
 
@@ -241,7 +242,26 @@ namespace GameOfLife
         private void dialogConfirmButton_Click(object sender, EventArgs e)
         {
             EventOnApply.Invoke(sender, e);
-            //SaveOptions();
+        }
+
+        private void cellColorButton_Click(object sender, EventArgs e)
+        {
+            CellColor = Options.Display.CellColor;
+
+            if (cellColorDialog.ShowDialog() == DialogResult.OK)
+            {
+                Options.Display.CellColor = CellColor;
+            }
+        }
+
+        private void gridColorButton_Click(object sender, EventArgs e)
+        {
+            GridColor = Options.Display.GridColor;
+
+            if (gridColorDialog.ShowDialog() == DialogResult.OK)
+            {
+                Options.Display.GridColor = GridColor;
+            }
         }
     }
 }
