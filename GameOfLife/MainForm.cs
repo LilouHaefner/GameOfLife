@@ -669,6 +669,10 @@ namespace GameOfLife
             for (int i = 0; i < Queue.Count; i++)
             {
                 Cells[Queue[i].x, Queue[i].y].Value = Queue[i].Value;
+                
+                // update live
+                if (Queue[i].Value) Live++;
+                else Live--;
             }
         }
 
