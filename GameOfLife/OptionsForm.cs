@@ -114,7 +114,7 @@ namespace GameOfLife
         #endregion
 
         MainForm OwningForm;
-        public FOptions Options;
+        public FUserOptions UserOptions;
 
         public OptionsForm(MainForm InOwningForm)
         {
@@ -150,7 +150,7 @@ namespace GameOfLife
             OwningForm = InOwningForm;
 
             // load options
-            LoadOptions(OwningForm.Options);
+            LoadOptions(OwningForm.UserOptions);
 
             // bind apply event
             EventOnApply += SaveOptions;
@@ -167,41 +167,41 @@ namespace GameOfLife
             OwningForm.Randomize((ERandomMode)RandomMode, (float)RandomThreshold, (float)RandomMultiplier, (int)RandomSeed);
 
             // save generation options
-            Options.Generation.RandomMode = (ERandomMode)RandomMode;
-            Options.Generation.RandomSeed = (int)RandomSeed;
-            Options.Generation.RandomMultiplier = (float)RandomMultiplier;
-            Options.Generation.RandomThreshold = (float)RandomThreshold;
+            UserOptions.Generation.RandomMode = (ERandomMode)RandomMode;
+            UserOptions.Generation.RandomSeed = (int)RandomSeed;
+            UserOptions.Generation.RandomMultiplier = (float)RandomMultiplier;
+            UserOptions.Generation.RandomThreshold = (float)RandomThreshold;
 
             // main form cosmetic tick
             OwningForm.OnWorldTickCosmetic();
         }
 
-        private void LoadOptions(FOptions InOptions)
+        private void LoadOptions(FUserOptions InUserOptions)
         {
-            Options = InOptions;
+            UserOptions = InUserOptions;
 
             // general
-            ScaleX = Options.General.Scale.X;
-            ScaleY = Options.General.Scale.Y;
-            Interval = Options.General.Interval;
-            BorderMode = Options.General.BorderMode;
+            ScaleX = UserOptions.General.Scale.X;
+            ScaleY = UserOptions.General.Scale.Y;
+            Interval = UserOptions.General.Interval;
+            BorderMode = UserOptions.General.BorderMode;
 
             // rules
-            NeighborRadius = Options.Rules.NeighborRadius;
-            NeighborLiveMin = Options.Rules.NeighborLiveMin;
-            NeighborLiveMax = Options.Rules.NeighborLiveMax;
-            CellBirthThreshold = Options.Rules.CellBirthThreshold;
+            NeighborRadius = UserOptions.Rules.NeighborRadius;
+            NeighborLiveMin = UserOptions.Rules.NeighborLiveMin;
+            NeighborLiveMax = UserOptions.Rules.NeighborLiveMax;
+            CellBirthThreshold = UserOptions.Rules.CellBirthThreshold;
 
             // generation
-            RandomMode = Options.Generation.RandomMode;
-            RandomSeed = Options.Generation.RandomSeed;
-            RandomMultiplier = (decimal)Options.Generation.RandomMultiplier;
-            RandomThreshold = (decimal)Options.Generation.RandomThreshold;
+            RandomMode = UserOptions.Generation.RandomMode;
+            RandomSeed = UserOptions.Generation.RandomSeed;
+            RandomMultiplier = (decimal)UserOptions.Generation.RandomMultiplier;
+            RandomThreshold = (decimal)UserOptions.Generation.RandomThreshold;
 
             // display
-            bShowHUD = Options.Display.bShowHUD;
-            bShowNeighborCount = Options.Display.bShowNeighborCount;
-            bShowGrid = Options.Display.bShowGrid;
+            bShowHUD = UserOptions.Display.bShowHUD;
+            bShowNeighborCount = UserOptions.Display.bShowNeighborCount;
+            bShowGrid = UserOptions.Display.bShowGrid;
             //CellColor = Options.Display.CellColor;
             //GridColor = Options.Display.GridColor;
             //BackgroundColor = Options.Display.BackgroundColor;
@@ -210,23 +210,20 @@ namespace GameOfLife
         private void SaveOptions(object sender, EventArgs e)
         {
             // general
-            Options.General.Scale = new System.Drawing.Point((int)ScaleX, (int)ScaleY);
-            Options.General.Interval = (int)Interval;
-            Options.General.BorderMode = (EBorderMode)BorderMode;
+            UserOptions.General.Scale = new System.Drawing.Point((int)ScaleX, (int)ScaleY);
+            UserOptions.General.Interval = (int)Interval;
+            UserOptions.General.BorderMode = (EBorderMode)BorderMode;
 
             // rules
-            Options.Rules.NeighborRadius = (int)NeighborRadius;
-            Options.Rules.NeighborLiveMin = (int)NeighborLiveMin;
-            Options.Rules.NeighborLiveMax = (int)NeighborLiveMax;
-            Options.Rules.CellBirthThreshold = (int)CellBirthThreshold;
+            UserOptions.Rules.NeighborRadius = (int)NeighborRadius;
+            UserOptions.Rules.NeighborLiveMin = (int)NeighborLiveMin;
+            UserOptions.Rules.NeighborLiveMax = (int)NeighborLiveMax;
+            UserOptions.Rules.CellBirthThreshold = (int)CellBirthThreshold;
 
             // display
-            Options.Display.bShowHUD = bShowHUD;
-            Options.Display.bShowNeighborCount = bShowNeighborCount;
-            Options.Display.bShowGrid = bShowGrid;
-            //Options.Display.CellColor = CellColor;
-            //Options.Display.GridColor = GridColor;
-            //Options.Display.BackgroundColor = BackgroundColor;
+            UserOptions.Display.bShowHUD = bShowHUD;
+            UserOptions.Display.bShowNeighborCount = bShowNeighborCount;
+            UserOptions.Display.bShowGrid = bShowGrid;
         }
 
         private void dialogConfirmButton_Click(object sender, EventArgs e)
@@ -238,11 +235,11 @@ namespace GameOfLife
         {
             ColorDialog Dialog = new ColorDialog();
 
-            Dialog.Color = Options.Display.CellColor;
+            Dialog.Color = UserOptions.Display.CellColor;
 
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                Options.Display.CellColor = Dialog.Color;
+                UserOptions.Display.CellColor = Dialog.Color;
                 OwningForm.SetCellColor(Dialog.Color);
             }
 
@@ -254,11 +251,11 @@ namespace GameOfLife
         {
             ColorDialog Dialog = new ColorDialog();
 
-            Dialog.Color = Options.Display.GridColor;
+            Dialog.Color = UserOptions.Display.GridColor;
 
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                Options.Display.GridColor = Dialog.Color;
+                UserOptions.Display.GridColor = Dialog.Color;
                 OwningForm.SetGridColor(Dialog.Color);
             }
 
@@ -269,11 +266,11 @@ namespace GameOfLife
         {
             ColorDialog Dialog = new ColorDialog();
 
-            Dialog.Color = Options.Display.BackgroundColor;
+            Dialog.Color = UserOptions.Display.BackgroundColor;
 
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                Options.Display.BackgroundColor = Dialog.Color;
+                UserOptions.Display.BackgroundColor = Dialog.Color;
                 OwningForm.SetBackgroundColor(Dialog.Color);
             }
 
@@ -283,13 +280,13 @@ namespace GameOfLife
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OwningForm.Reset();
-            LoadOptions(OwningForm.Options);
+            LoadOptions(OwningForm.UserOptions);
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OwningForm.Reload();
-            LoadOptions(OwningForm.Options);
+            LoadOptions(OwningForm.UserOptions);
         }
     }
 }

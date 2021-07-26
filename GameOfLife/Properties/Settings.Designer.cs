@@ -229,28 +229,91 @@ namespace GameOfLife.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public float NeighborTextSizeMultiplier {
+        [global::System.Configuration.DefaultSettingValueAttribute("Century Gothic")]
+        public string NeighborCountFontName {
             get {
-                return ((float)(this["NeighborTextSizeMultiplier"]));
+                return ((string)(this["NeighborCountFontName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public float NeighborCountSizeMultiplier {
+            get {
+                return ((float)(this["NeighborCountSizeMultiplier"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public float NeighborTextSizeMin {
+        public float NeighborCountSizeMin {
             get {
-                return ((float)(this["NeighborTextSizeMin"]));
+                return ((float)(this["NeighborCountSizeMin"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("24")]
-        public float NeighborTextSizeMax {
+        public float NeighborCountSizeMax {
             get {
-                return ((float)(this["NeighborTextSizeMax"]));
+                return ((float)(this["NeighborCountSizeMax"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("world")]
+        public string FileSuffix {
+            get {
+                return ((string)(this["FileSuffix"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("O")]
+        public char LiveSymbol {
+            get {
+                return ((char)(this["LiveSymbol"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".")]
+        public char DeadSymbol {
+            get {
+                return ((char)(this["DeadSymbol"]));
+            }
+            set {
+                this["DeadSymbol"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("!")]
+        public char CommentSymbol {
+            get {
+                return ((char)(this["CommentSymbol"]));
+            }
+            set {
+                this["CommentSymbol"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MaskLive")]
+        public global::GameOfLife.EImportMode ImportMode {
+            get {
+                return ((global::GameOfLife.EImportMode)(this["ImportMode"]));
+            }
+            set {
+                this["ImportMode"] = value;
             }
         }
     }

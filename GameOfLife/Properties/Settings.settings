@@ -53,14 +53,32 @@
     <Setting Name="BackgroundColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">176, 176, 176</Value>
     </Setting>
-    <Setting Name="NeighborTextSizeMultiplier" Type="System.Single" Scope="Application">
+    <Setting Name="NeighborCountFontName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Century Gothic</Value>
+    </Setting>
+    <Setting Name="NeighborCountSizeMultiplier" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="NeighborTextSizeMin" Type="System.Single" Scope="Application">
+    <Setting Name="NeighborCountSizeMin" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">4</Value>
     </Setting>
-    <Setting Name="NeighborTextSizeMax" Type="System.Single" Scope="Application">
+    <Setting Name="NeighborCountSizeMax" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">24</Value>
+    </Setting>
+    <Setting Name="FileSuffix" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">world</Value>
+    </Setting>
+    <Setting Name="LiveSymbol" Type="System.Char" Scope="Application">
+      <Value Profile="(Default)">O</Value>
+    </Setting>
+    <Setting Name="DeadSymbol" Type="System.Char" Scope="User">
+      <Value Profile="(Default)">.</Value>
+    </Setting>
+    <Setting Name="CommentSymbol" Type="System.Char" Scope="User">
+      <Value Profile="(Default)">!</Value>
+    </Setting>
+    <Setting Name="ImportMode" Type="GameOfLife.EImportMode" Scope="User">
+      <Value Profile="(Default)">MaskLive</Value>
     </Setting>
   </Settings>
 </SettingsFile>
