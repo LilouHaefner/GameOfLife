@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace GameOfLife
@@ -23,11 +25,18 @@ namespace GameOfLife
         Time
     }
 
+    public enum EImportMode
+    {
+        Override,
+        MaskLive,
+        MaskDead
+    }
+
     #endregion
 
     #region Structs
 
-    public struct FOptions
+    public struct FUserOptions
     {
         public struct FOptionsGeneral
         {
@@ -150,6 +159,52 @@ namespace GameOfLife
         }
     }
 
+    public struct FApplicationOptions
+    {
+        public struct FTextOptions
+        {
+            public string NeighborCountFontName;
+            public float NeighborCountSizeMultiplier;
+            public float NeighborCountSizeMin;
+            public float NeighborCountSizeMax;
+
+            public void Load()
+            {
+                NeighborCountFontName = Properties.Settings.Default.NeighborCountFontName;
+                NeighborCountSizeMultiplier = Properties.Settings.Default.NeighborCountSizeMultiplier;
+                NeighborCountSizeMin = Properties.Settings.Default.NeighborCountSizeMin;
+                NeighborCountSizeMax = Properties.Settings.Default.NeighborCountSizeMax;
+            }
+        }
+
+        public struct FFileOptions
+        {
+            public string FileSuffix;
+            public char LiveSymbol;
+            public char DeadSymbol;
+            public char CommentSymbol;
+            public EImportMode ImportMode;
+
+            public void Load()
+            {
+                FileSuffix = Properties.Settings.Default.FileSuffix;
+                LiveSymbol = Properties.Settings.Default.LiveSymbol;
+                DeadSymbol = Properties.Settings.Default.DeadSymbol;
+                CommentSymbol = Properties.Settings.Default.CommentSymbol;
+                //ImportMode = Properties.Settings.Default.ImportMode;
+            }
+        }
+
+        public FTextOptions Text;
+        public FFileOptions File;
+
+        public void Load()
+        {
+            Text.Load();
+            File.Load();
+        }
+    }
+
     public struct FCell
     {
         public bool Value;
@@ -160,7 +215,8 @@ namespace GameOfLife
 
     public partial class MainForm : Form
     {
-        public FOptions Options = new FOptions();
+        public FUserOptions UserOptions = new FUserOptions();
+        FApplicationOptions ApplicationOptions = new FApplicationOptions();
         FCell[,] Cells;
         Timer FormTimer = new Timer();
 
@@ -172,28 +228,28 @@ namespace GameOfLife
         // input
         bool bIsPlay = false;
 
-        // text
-        float NeighborTextSizeMulitplier = 10;
-        float NeighborTextSizeMin = 4;
-        float NeighborTextSizeMax = 24;
+        // save
+        string LastSavedFileName;
 
         // constructor
         public MainForm()
         {
             InitializeComponent();
 
-            Options.Load();
+            // load options
+            UserOptions.Load();
+            ApplicationOptions.Load();
 
             // init world
             OnWorldInit();
 
             // setup the timer
-            FormTimer.Enabled = false;
-            FormTimer.Interval = Options.General.Interval;
+            FormTimer.Interval = UserOptions.General.Interval;
             FormTimer.Tick += Timer_Tick;
+            Pause();
 
             // randomize world
-            Randomize(Options.Generation.RandomMode, Options.Generation.RandomThreshold, Options.Generation.RandomMultiplier, Options.Generation.RandomSeed);
+            Randomize(UserOptions.Generation.RandomMode, UserOptions.Generation.RandomThreshold, UserOptions.Generation.RandomMultiplier, UserOptions.Generation.RandomSeed);
 
             // load world
             OnWorldLoad();
@@ -219,14 +275,14 @@ namespace GameOfLife
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Options.Save();
+            UserOptions.Save();
             Properties.Settings.Default.Save();
         }
 
         public void Reset()
         {
             Properties.Settings.Default.Reset();
-            Options.Load();
+            UserOptions.Load();
 
             // init world
             OnWorldInit();
@@ -238,7 +294,7 @@ namespace GameOfLife
         public void Reload()
         {
             Properties.Settings.Default.Reload();
-            Options.Load();
+            UserOptions.Load();
 
             // init world
             OnWorldInit();
@@ -247,321 +303,201 @@ namespace GameOfLife
             OnWorldLoad();
         }
 
-        #region Shared Actions
-
-        private void Clear()
+        private void Save()
         {
-            // iterate through cells
-            for (int x = 0; x < Cells.GetLength(0); x++)
+            if (string.IsNullOrEmpty(LastSavedFileName) || !File.Exists(LastSavedFileName))
             {
-                for (int y = 0; y < Cells.GetLength(1); y++)
-                {
-                    Cells[x, y].Value = false;
-                    Cells[x, y].Neighbors = 0;
-                }
-            }
-
-            // repaint form
-            graphicsPanel.Invalidate();
-        }
-
-        private void Play()
-        {
-            // disable play and next buttons
-
-            // tool strip
-            toolStripPlayButton.Enabled = false;
-            toolStripNextButton.Enabled = false;
-
-            // context menu
-            contextMenuPlayMenuItem.Enabled = false;
-            contextMenuNextMenuItem.Enabled = false;
-
-            // enable pause buttons
-
-            // tool strip
-            toolStripPauseButton.Enabled = true;
-
-            // context menu
-            contextMenuPauseMenuItem.Enabled = true;
-
-            // enable timer
-            FormTimer.Enabled = true;
-
-            // update play input
-            bIsPlay = true;
-        }
-
-        private void Pause()
-        {
-            // enable play and next buttons
-
-            // tool strip
-            toolStripPlayButton.Enabled = true;
-            toolStripNextButton.Enabled = true;
-
-            // context menu
-            contextMenuPlayMenuItem.Enabled = true;
-            contextMenuNextMenuItem.Enabled = true;
-
-            // disable pause buttons
-
-            // tool strip
-            toolStripPauseButton.Enabled = false;
-
-            // context menu
-            contextMenuPauseMenuItem.Enabled = false;
-
-            // disable timer
-            FormTimer.Enabled = false;
-
-            // update play input
-            bIsPlay = false;
-        }
-
-        private void Next(object sender, EventArgs e)
-        {
-            Timer_Tick(sender, e);
-
-            // repaint form
-            graphicsPanel.Invalidate();
-        }
-
-        private void ShowOptions()
-        {
-            // create options form
-            OptionsForm Dialog = new OptionsForm(this);
-
-            // save current state
-            FOptions SavedOptions = Options;
-            FCell[,] SavedCells = CopyCells(Cells);
-
-            if (Dialog.ShowDialog() == DialogResult.OK)
-            {
-                // save options
-                UpdateOptions(Dialog.Options);
+                SaveAs();
             }
             else
             {
-                Options = SavedOptions;
-                Cells = CopyCells(SavedCells);
+                OnSave(LastSavedFileName);
             }
-
-            // load world cosmetic
-            OnWorldLoadCosmetic();
-
-            // repaint form
-            graphicsPanel.Invalidate();
         }
 
-        #endregion
-
-        #region Graphics Panel
-
-        private void graphicsPanel_Paint(object sender, PaintEventArgs e)
+        private void OnSave(string FileName)
         {
-            // calculate cell size
-            float CellWidth = (float)graphicsPanel.ClientSize.Width / (float)Cells.GetLength(0);
-            float CellHeight = (float)graphicsPanel.ClientSize.Height / (float)Cells.GetLength(1);
+            // create stream writer
+            StreamWriter Writer = new StreamWriter(FileName);
 
-            // create pen for grid lines
-            Pen GridPen = new Pen(Options.Display.GridColor, 1);
+            // updated saved file name
+            LastSavedFileName = FileName;
 
-            // create pen for cell fill
-            Brush CellBrush = new SolidBrush(Options.Display.CellColor);
+            // write header
+            Writer.WriteLine($"!Size\t\t {UserOptions.General.Scale.X} x {UserOptions.General.Scale.Y}");
+            Writer.WriteLine($"!Live Key\t {ApplicationOptions.File.LiveSymbol}");
+            Writer.WriteLine($"!Dead Key\t {ApplicationOptions.File.DeadSymbol}");
+            Writer.WriteLine();
 
-            // neighbor count font setup
-            float FontSizeMultiplier = 0.05f;
-            float FontSize = Math.Min(CellWidth, CellHeight) * (NeighborTextSizeMulitplier * FontSizeMultiplier);
-            Font Font = new Font("Century Gothic", FontSize);
-            StringFormat StringFormat = new StringFormat();
-            StringFormat.Alignment = StringAlignment.Center;
-            StringFormat.LineAlignment = StringAlignment.Center;
-
-            bool bShowNeighbors = Options.Display.bShowNeighborCount && FontSize == Math.Min(Math.Max(NeighborTextSizeMin, FontSize), NeighborTextSizeMax);
-
-            // iterate through cells
-            for (int x = 0; x < Cells.GetLength(0); x++)
+            // iterate through columns
+            for (int y = 0; y < Cells.GetLength(1); y++)
             {
-                for (int y = 0; y < Cells.GetLength(1); y++)
+                String CurrentLine = string.Empty;
+
+                // iterate through rows
+                for (int x = 0; x < Cells.GetLength(0); x++)
                 {
-                    Cells[x, y].Neighbors = CountNeighbors(x, y);
-
-                    // create rectangle to represent each cell in pixels
-                    RectangleF cellRect = RectangleF.Empty;
-                    cellRect.X = x * CellWidth;
-                    cellRect.Y = y * CellHeight;
-                    cellRect.Width = CellWidth;
-                    cellRect.Height = CellHeight;
-
-                    // draw cell fill
-                    if (Cells[x, y].Value == true)
-                    {
-                        e.Graphics.FillRectangle(CellBrush, cellRect);
-                    }
-
-                    // draw cell lines
-                    if (Options.Display.bShowGrid)
-                    {
-                        e.Graphics.DrawRectangle(GridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-                    }
-
-                    if (bShowNeighbors)
-                    {
-                        // only allow neighbor count to be shown if greater than 0 or cell is alive
-                        if (Cells[x, y].Neighbors > 0 || Cells[x, y].Value)
-                        {
-                            // create rectangle
-                            RectangleF rect = new RectangleF(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-
-                            // draw neighbor count in rectangle
-                            e.Graphics.DrawString(Cells[x, y].Neighbors.ToString(), Font, Brushes.White, rect, StringFormat);
-                        }
-                    }
+                    if (Cells[x, y].Value) CurrentLine += ApplicationOptions.File.LiveSymbol;
+                    else if (!Cells[x, y].Value) CurrentLine += ApplicationOptions.File.DeadSymbol;
                 }
+
+                // write current line
+                Writer.WriteLine(CurrentLine);
             }
 
-            // clean up pens and brushes
-            GridPen.Dispose();
-            CellBrush.Dispose();
+            // close the file
+            Writer.Close();
         }
 
-        private void graphicsPanel_MouseClick(object sender, MouseEventArgs e)
+        private void SaveAs(char DeadChar = '.', char LiveChar = 'O')
         {
-            // check for LMB input
-            if (e.Button == MouseButtons.Left)
+            SaveFileDialog Dialog = new SaveFileDialog();
+            Dialog.Filter = "All Files|*.*|Cells|*.cells";
+            Dialog.FilterIndex = 2; Dialog.DefaultExt = "cells";
+
+            if (DialogResult.OK == Dialog.ShowDialog())
             {
-                // calculate the width and height of each cell in pixels
-                float cellWidth = (float)graphicsPanel.ClientSize.Width / (float)Cells.GetLength(0);
-                float cellHeight = (float)graphicsPanel.ClientSize.Height / (float)Cells.GetLength(1);
-
-                // calculate the cell that was clicked in
-                int x = (int)(e.X / cellWidth);
-                int y = (int)(e.Y / cellHeight);
-
-                // toggle the value of the cell
-                Cells[x, y].Value = !Cells[x, y].Value;
-
-                // repaint form
-                graphicsPanel.Invalidate();
+                OnSave(Dialog.FileName);
             }
         }
 
-        #endregion
-
-        #region Menu Strip
-
-        private void menuStripQuitMenuItem_Click(object sender, EventArgs e)
+        private void Import()
         {
-            Close();
+            if (bIsPlay) Pause();
+
+            OpenFileDialog Dialog = new OpenFileDialog();
+            Dialog.Filter = "All Files|*.*|Cells|*.cells";
+            Dialog.FilterIndex = 2;
+
+            if (DialogResult.OK == Dialog.ShowDialog())
+            {
+                OnImport(Dialog.FileName, 2, 1);
+            }
         }
 
-        private void menuStripClearMenuItem_Click(object sender, EventArgs e)
+        private void OnImport(string FileName, int LocationX, int LocationY)
         {
-            Clear();
+            StreamReader Reader = new StreamReader(FileName);
+
+            int LocalY = 0;
+
+            // read cell data
+            while (!Reader.EndOfStream)
+            {
+                string CurrentLine = Reader.ReadLine();
+
+                // ignore empty lines
+                if (string.IsNullOrWhiteSpace(CurrentLine)) continue;
+
+                // ignore comments
+                if (CurrentLine[0] == ApplicationOptions.File.CommentSymbol) continue;
+
+                switch (ApplicationOptions.File.ImportMode)
+                {
+                    case EImportMode.Override:
+                        {
+                            for (int LocalX = 0; LocalX < CurrentLine.Length; LocalX++)
+                            {
+                                if (CurrentLine[LocalX] == ApplicationOptions.File.LiveSymbol) Cells[LocationX + LocalX, LocationY + LocalY].Value = true;
+                                else if (CurrentLine[LocalX] == ApplicationOptions.File.DeadSymbol) Cells[LocationX + LocalX, LocationY + LocalY].Value = false;
+                            }
+                            break;
+                        }
+
+                    case EImportMode.MaskLive:
+                        {
+                            for (int LocalX = 0; LocalX < CurrentLine.Length; LocalX++)
+                            {
+                                if (CurrentLine[LocalX] == ApplicationOptions.File.LiveSymbol) Cells[LocationX + LocalX, LocationY + LocalY].Value = true;
+                            }
+                            break;
+                        }
+
+                    case EImportMode.MaskDead:
+                        {
+                            for (int LocalX = 0; LocalX < CurrentLine.Length; LocalX++)
+                            {
+                                if (CurrentLine[LocalX] == ApplicationOptions.File.DeadSymbol) Cells[LocationX + LocalX, LocationY + LocalY].Value = false;
+                            }
+                            break;
+                        }
+                }
+                
+
+                LocalY++;
+            }
+
+            // close the file.
+            Reader.Close();
+
+            OnWorldTick();
         }
 
-        #endregion
-
-        #region Tool Strip
-
-        private void toolStripOptionsButton_Click(object sender, EventArgs e)
+        private void Open()
         {
-            ShowOptions();
+            if (bIsPlay) Pause();
+
+            OpenFileDialog Dialog = new OpenFileDialog();
+            Dialog.Filter = "All Files|*.*|Cells|*.cells";
+            Dialog.FilterIndex = 2;
+
+            if (DialogResult.OK == Dialog.ShowDialog())
+            {
+                StreamReader Reader = new StreamReader(Dialog.FileName);
+
+                int MaxWidth = 0;
+                int MaxHeight = 0;
+
+                // calculate world size from file
+                while (!Reader.EndOfStream)
+                {
+                    // read the next line
+                    string CurrentLine = Reader.ReadLine();
+
+                    // ignore empty lines
+                    if (string.IsNullOrWhiteSpace(CurrentLine)) continue;
+
+                    // ignore comments
+                    if (CurrentLine[0] == ApplicationOptions.File.CommentSymbol) continue;
+
+                    // update max width if necessary
+                    if (CurrentLine.Length > MaxWidth) MaxWidth = CurrentLine.Length;
+
+                    // increment max height
+                    MaxHeight++;
+                }
+
+                ResizeWorld(MaxWidth, MaxHeight);
+
+                // return to the start of the file
+                Reader.BaseStream.Seek(0, SeekOrigin.Begin);
+
+                int y = 0;
+
+                // read cell data
+                while (!Reader.EndOfStream)
+                {
+                    string CurrentLine = Reader.ReadLine();
+
+                    // ignore empty lines
+                    if (string.IsNullOrWhiteSpace(CurrentLine)) continue;
+
+                    // ignore comments
+                    if (CurrentLine[0] == ApplicationOptions.File.CommentSymbol) continue;
+
+                    for (int x = 0; x < CurrentLine.Length; x++)
+                    {
+                        if (CurrentLine[x] == ApplicationOptions.File.LiveSymbol) Cells[x, y].Value = true;
+                        else if (CurrentLine[x] == ApplicationOptions.File.DeadSymbol) Cells[x, y].Value = false;
+                    }
+
+                    y++;
+                }
+
+                // Close the file.
+                Reader.Close();
+            }
         }
-
-        private void toolStripPlayButton_Click(object sender, EventArgs e)
-        {
-            Play();
-        }
-
-        private void toolStripPauseButton_Click(object sender, EventArgs e)
-        {
-            Pause();
-        }
-
-        private void toolStripNextButton_Click(object sender, EventArgs e)
-        {
-            Next(sender, e);
-        }
-
-        #endregion
-
-        #region Context Menu
-
-        private void contextMenu_Opened(object sender, EventArgs e)
-        {
-            // update checkboxes
-            contextMenuShowHudMenuItem.Checked = Options.Display.bShowHUD;
-            contextMenuShowNeighborCountMenuItem.Checked = Options.Display.bShowNeighborCount;
-            contextMenuShowGridMenuItem.Checked = Options.Display.bShowGrid;
-        }
-
-        private void contextMenuPlayMenuItem_Click(object sender, EventArgs e)
-        {
-            Play();
-        }
-
-        private void contextMenuPauseMenuItem_Click(object sender, EventArgs e)
-        {
-            Pause();
-        }
-
-        private void contextMenuNextMenuItem_Click(object sender, EventArgs e)
-        {
-            Next(sender, e);
-        }
-
-        private void contextMenuOptionsMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowOptions();
-        }
-
-        private void contextMenuClearMenuItem_Click(object sender, EventArgs e)
-        {
-            Clear();
-        }
-
-        private void contextMenuShowHudMenuItem_Click(object sender, EventArgs e)
-        {
-            // toggle checkbox
-            contextMenuShowHudMenuItem.Checked = !contextMenuShowHudMenuItem.Checked;
-
-            // update options
-            Options.Display.bShowHUD = contextMenuShowHudMenuItem.Checked;
-
-            // call cosmetic load event
-            OnWorldLoadCosmetic();
-
-            // repaint form
-            graphicsPanel.Invalidate();
-        }
-
-        private void contextMenuShowNeighborCountMenuItem_Click(object sender, EventArgs e)
-        {
-            // toggle checkbox
-            contextMenuShowNeighborCountMenuItem.Checked = !contextMenuShowNeighborCountMenuItem.Checked;
-
-            // update options
-            Options.Display.bShowNeighborCount = contextMenuShowNeighborCountMenuItem.Checked;
-
-            // repaint form
-            graphicsPanel.Invalidate();
-        }
-
-        private void contextMenuShowGridMenuItem_Click(object sender, EventArgs e)
-        {
-            // toggle checkbox
-            contextMenuShowGridMenuItem.Checked = !contextMenuShowGridMenuItem.Checked;
-
-            // update options
-            Options.Display.bShowGrid = contextMenuShowGridMenuItem.Checked;
-
-            // repaint form
-            graphicsPanel.Invalidate();
-        }
-
-        #endregion
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -579,34 +515,34 @@ namespace GameOfLife
 
         private void OnWorldInit()
         {
-            Cells = new FCell[Options.General.Scale.X, Options.General.Scale.Y];
+            Cells = new FCell[UserOptions.General.Scale.X, UserOptions.General.Scale.Y];
         }
 
         public void OnWorldLoadCosmetic()
         {
             // set background color
-            graphicsPanel.BackColor = Options.Display.BackgroundColor;
+            graphicsPanel.BackColor = UserOptions.Display.BackgroundColor;
 
             // show / hide hud
-            hudPanel.Visible = Options.Display.bShowHUD;
+            hudPanel.Visible = UserOptions.Display.bShowHUD;
 
-            if (Options.Display.bShowHUD)
+            if (UserOptions.Display.bShowHUD)
             {
                 // show / hide seed
-                hudSeedNameLabel.Visible = Options.Generation.RandomMode == ERandomMode.Seed;
-                hudSeedValueLabel.Visible = Options.Generation.RandomMode == ERandomMode.Seed;
+                hudSeedNameLabel.Visible = UserOptions.Generation.RandomMode == ERandomMode.Seed;
+                hudSeedValueLabel.Visible = UserOptions.Generation.RandomMode == ERandomMode.Seed;
 
                 // load seed
-                if (Options.Generation.RandomMode == ERandomMode.Seed) hudSeedValueLabel.Text = Options.Generation.RandomSeed.ToString();
+                if (UserOptions.Generation.RandomMode == ERandomMode.Seed) hudSeedValueLabel.Text = UserOptions.Generation.RandomSeed.ToString();
 
                 // load hud labels
-                hudIntervalValueLabel.Text = Options.General.Interval.ToString();
-                hudBorderValueLabel.Text = Options.General.BorderMode.ToString();
-                hudScaleValueLabel.Text = Options.General.Scale.X.ToString() + " x " + Options.General.Scale.Y.ToString();
+                hudIntervalValueLabel.Text = UserOptions.General.Interval.ToString();
+                hudBorderValueLabel.Text = UserOptions.General.BorderMode.ToString();
+                hudScaleValueLabel.Text = UserOptions.General.Scale.X.ToString() + " x " + UserOptions.General.Scale.Y.ToString();
             }
 
             // update total
-            Total = Options.General.Scale.X * Options.General.Scale.Y;
+            Total = UserOptions.General.Scale.X * UserOptions.General.Scale.Y;
             statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
         }
 
@@ -654,6 +590,12 @@ namespace GameOfLife
             OnWorldTickCosmetic();
         }
 
+        private void OnWorldResize()
+        {
+            OnWorldInit();
+            OnWorldLoad();
+        }
+
         private void ApplyRules()
         {
             // create queue
@@ -687,7 +629,7 @@ namespace GameOfLife
             for (int i = 0; i < Queue.Count; i++)
             {
                 Cells[Queue[i].x, Queue[i].y].Value = Queue[i].Value;
-                
+
                 // update live
                 if (Queue[i].Value) Live++;
                 else Live--;
@@ -698,13 +640,13 @@ namespace GameOfLife
         {
             int Count = 0;
 
-            switch (Options.General.BorderMode)
+            switch (UserOptions.General.BorderMode)
             {
                 case EBorderMode.Clip:
-                    Count = CountNeighborsClip(X, Y, Options.Rules.NeighborRadius);
+                    Count = CountNeighborsClip(X, Y, UserOptions.Rules.NeighborRadius);
                     break;
                 case EBorderMode.Wrap:
-                    Count = CountNeighborsWrap(X, Y, Options.Rules.NeighborRadius);
+                    Count = CountNeighborsWrap(X, Y, UserOptions.Rules.NeighborRadius);
                     break;
             }
 
@@ -832,43 +774,473 @@ namespace GameOfLife
             return OutCells;
         }
 
-        private void UpdateOptions(FOptions NewOptions)
+        private void ResizeWorld(int NewX, int NewY)
+        {
+            // update options
+            UserOptions.General.Scale.X = NewX;
+            UserOptions.General.Scale.Y = NewY;
+
+            OnWorldResize();
+        }
+
+        private void UpdateOptions(FUserOptions NewOptions)
         {
             // check if scale needs to be updated
-            if (NewOptions.General.Scale.X != Options.General.Scale.X || NewOptions.General.Scale.Y != Options.General.Scale.Y)
+            if (NewOptions.General.Scale.X != UserOptions.General.Scale.X || NewOptions.General.Scale.Y != UserOptions.General.Scale.Y)
             {
-                Cells = new FCell[NewOptions.General.Scale.X, NewOptions.General.Scale.Y];
-
-                // load world
-                OnWorldLoad();
+                OnWorldResize();
             }
 
             // check if interval needs to be updated
-            if (NewOptions.General.Interval != Options.General.Interval)
+            if (NewOptions.General.Interval != UserOptions.General.Interval)
             {
                 FormTimer.Interval = NewOptions.General.Interval;
             }
 
             // update options
-            Options = NewOptions;
+            UserOptions = NewOptions;
         }
 
         public void SetCellColor(Color InColor)
         {
-            Options.Display.CellColor = InColor;
+            UserOptions.Display.CellColor = InColor;
         }
 
         public void SetGridColor(Color InColor)
         {
-            Options.Display.GridColor = InColor;
+            UserOptions.Display.GridColor = InColor;
         }
 
         public void SetBackgroundColor(Color InColor)
         {
-            Options.Display.BackgroundColor = InColor;
-            
+            UserOptions.Display.BackgroundColor = InColor;
+
             // update background color
-            graphicsPanel.BackColor = Options.Display.BackgroundColor;
+            graphicsPanel.BackColor = UserOptions.Display.BackgroundColor;
         }
+
+        #region Shared Actions
+        
+        private void Play()
+        {
+            // disable play and next buttons
+
+            // tool strip
+            toolStripPlayButton.Enabled = false;
+            toolStripNextButton.Enabled = false;
+
+            // context menu
+            contextMenuPlayMenuItem.Enabled = false;
+            contextMenuNextMenuItem.Enabled = false;
+
+            // enable pause buttons
+
+            // tool strip
+            toolStripPauseButton.Enabled = true;
+
+            // context menu
+            contextMenuPauseMenuItem.Enabled = true;
+
+            // enable timer
+            FormTimer.Enabled = true;
+
+            // update play input
+            bIsPlay = true;
+        }
+
+        private void Pause()
+        {
+            // enable play and next buttons
+
+            // tool strip
+            toolStripPlayButton.Enabled = true;
+            toolStripNextButton.Enabled = true;
+
+            // context menu
+            contextMenuPlayMenuItem.Enabled = true;
+            contextMenuNextMenuItem.Enabled = true;
+
+            // disable pause buttons
+
+            // tool strip
+            toolStripPauseButton.Enabled = false;
+
+            // context menu
+            contextMenuPauseMenuItem.Enabled = false;
+
+            // disable timer
+            FormTimer.Enabled = false;
+
+            // update play input
+            bIsPlay = false;
+        }
+
+        private void Next(object sender, EventArgs e)
+        {
+            Timer_Tick(sender, e);
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+        
+        private void ShowOptions()
+        {
+            // create options form
+            OptionsForm Dialog = new OptionsForm(this);
+
+            // save current state
+            FUserOptions SavedOptions = UserOptions;
+            FCell[,] SavedCells = CopyCells(Cells);
+
+            if (Dialog.ShowDialog() == DialogResult.OK)
+            {
+                // save options
+                UpdateOptions(Dialog.UserOptions);
+            }
+            else
+            {
+                UserOptions = SavedOptions;
+                Cells = CopyCells(SavedCells);
+            }
+
+            // load world cosmetic
+            OnWorldLoadCosmetic();
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void Clear()
+        {
+            // iterate through cells
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    Cells[x, y].Value = false;
+                    Cells[x, y].Neighbors = 0;
+                }
+            }
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void Fill()
+        {
+            // iterate through cells
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    Cells[x, y].Value = true;
+                    Cells[x, y].Neighbors = 0;
+                }
+            }
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        #endregion
+
+        #region Graphics Panel
+
+        private void graphicsPanel_Paint(object sender, PaintEventArgs e)
+        {
+            // calculate cell size
+            float CellWidth = (float)graphicsPanel.ClientSize.Width / (float)Cells.GetLength(0);
+            float CellHeight = (float)graphicsPanel.ClientSize.Height / (float)Cells.GetLength(1);
+
+            // create pen for grid lines
+            Pen GridPen = new Pen(UserOptions.Display.GridColor, 1);
+
+            // create pen for cell fill
+            Brush CellBrush = new SolidBrush(UserOptions.Display.CellColor);
+
+            // neighbor count font setup
+            float FontSizeMultiplier = 0.05f;
+            float FontSize = Math.Min(CellWidth, CellHeight) * (ApplicationOptions.Text.NeighborCountSizeMultiplier * FontSizeMultiplier);
+            Font Font = new Font(ApplicationOptions.Text.NeighborCountFontName, FontSize);
+            StringFormat StringFormat = new StringFormat();
+            StringFormat.Alignment = StringAlignment.Center;
+            StringFormat.LineAlignment = StringAlignment.Center;
+
+            bool bShowNeighbors = UserOptions.Display.bShowNeighborCount && FontSize == Math.Min(Math.Max(ApplicationOptions.Text.NeighborCountSizeMin, FontSize), ApplicationOptions.Text.NeighborCountSizeMax);
+
+            // iterate through cells
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    Cells[x, y].Neighbors = CountNeighbors(x, y);
+
+                    // create rectangle to represent each cell in pixels
+                    RectangleF cellRect = RectangleF.Empty;
+                    cellRect.X = x * CellWidth;
+                    cellRect.Y = y * CellHeight;
+                    cellRect.Width = CellWidth;
+                    cellRect.Height = CellHeight;
+
+                    // draw cell fill
+                    if (Cells[x, y].Value == true)
+                    {
+                        e.Graphics.FillRectangle(CellBrush, cellRect);
+                    }
+
+                    // draw cell lines
+                    if (UserOptions.Display.bShowGrid)
+                    {
+                        e.Graphics.DrawRectangle(GridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                    }
+
+                    if (bShowNeighbors)
+                    {
+                        // only allow neighbor count to be shown if greater than 0 or cell is alive
+                        if (Cells[x, y].Neighbors > 0 || Cells[x, y].Value)
+                        {
+                            // create rectangle
+                            RectangleF rect = new RectangleF(cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+
+                            // draw neighbor count in rectangle
+                            e.Graphics.DrawString(Cells[x, y].Neighbors.ToString(), Font, Brushes.White, rect, StringFormat);
+                        }
+                    }
+                }
+            }
+
+            // clean up pens and brushes
+            GridPen.Dispose();
+            CellBrush.Dispose();
+        }
+
+        private void graphicsPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            // check for LMB input
+            if (e.Button == MouseButtons.Left)
+            {
+                // calculate the width and height of each cell in pixels
+                float cellWidth = (float)graphicsPanel.ClientSize.Width / (float)Cells.GetLength(0);
+                float cellHeight = (float)graphicsPanel.ClientSize.Height / (float)Cells.GetLength(1);
+
+                // calculate the cell that was clicked in
+                int x = (int)(e.X / cellWidth);
+                int y = (int)(e.Y / cellHeight);
+
+                // toggle the value of the cell
+                Cells[x, y].Value = !Cells[x, y].Value;
+
+                // repaint form
+                graphicsPanel.Invalidate();
+            }
+        }
+
+        #endregion
+
+        #region Menu Strip
+
+        private void menuStripOpenMenuItem_Click(object sender, EventArgs e)
+        {
+            Open();
+        }
+
+        private void menuStripSaveMenuItem_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void menuStripSaveAsMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveAs();
+        }
+
+        private void menuStripImportMenuItem_Click(object sender, EventArgs e)
+        {
+            Import();
+        }
+
+        private void menuStripQuitMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        
+        private void menuStripOptionsMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowOptions();
+        }
+
+        private void menuStripClearMenuItem_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+        private void menuStripFillMenuItem_Click(object sender, EventArgs e)
+        {
+            Fill();
+        }
+        
+        private void menuStripViewMenu_DropDownOpened(object sender, EventArgs e)
+        {
+            // update checkboxes
+            menuStripShowHudMenuItem.Checked = UserOptions.Display.bShowHUD;
+            menuStripShowNeighborCountMenuItem.Checked = UserOptions.Display.bShowNeighborCount;
+            menuStripShowGridMenuItem.Checked = UserOptions.Display.bShowGrid;
+        }
+
+        private void menuStripShowHudMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            menuStripShowHudMenuItem.Checked = !menuStripShowHudMenuItem.Checked;
+
+            // update options
+            UserOptions.Display.bShowHUD = menuStripShowHudMenuItem.Checked;
+
+            // call cosmetic load event
+            OnWorldLoadCosmetic();
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void menuStripShowNeighborCountMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            menuStripShowNeighborCountMenuItem.Checked = !menuStripShowNeighborCountMenuItem.Checked;
+
+            // update options
+            UserOptions.Display.bShowNeighborCount = menuStripShowNeighborCountMenuItem.Checked;
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void menuStripShowGridMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            menuStripShowGridMenuItem.Checked = !menuStripShowGridMenuItem.Checked;
+
+            // update options
+            UserOptions.Display.bShowGrid = menuStripShowGridMenuItem.Checked;
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void menuStripAboutMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life");
+        }
+
+        #endregion
+
+        #region Tool Strip
+
+        private void toolStripOptionsButton_Click(object sender, EventArgs e)
+        {
+            ShowOptions();
+        }
+        
+        private void toolStripSaveButton_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void toolStripPlayButton_Click(object sender, EventArgs e)
+        {
+            Play();
+        }
+
+        private void toolStripPauseButton_Click(object sender, EventArgs e)
+        {
+            Pause();
+        }
+
+        private void toolStripNextButton_Click(object sender, EventArgs e)
+        {
+            Next(sender, e);
+        }
+
+        #endregion
+
+        #region Context Menu
+
+        private void contextMenu_Opened(object sender, EventArgs e)
+        {
+            // update checkboxes
+            contextMenuShowHudMenuItem.Checked = UserOptions.Display.bShowHUD;
+            contextMenuShowNeighborCountMenuItem.Checked = UserOptions.Display.bShowNeighborCount;
+            contextMenuShowGridMenuItem.Checked = UserOptions.Display.bShowGrid;
+        }
+
+        private void contextMenuPlayMenuItem_Click(object sender, EventArgs e)
+        {
+            Play();
+        }
+
+        private void contextMenuPauseMenuItem_Click(object sender, EventArgs e)
+        {
+            Pause();
+        }
+
+        private void contextMenuNextMenuItem_Click(object sender, EventArgs e)
+        {
+            Next(sender, e);
+        }
+
+        private void contextMenuOptionsMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowOptions();
+        }
+
+        private void contextMenuClearMenuItem_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+        
+        private void contextMenuFillMenuItem_Click(object sender, EventArgs e)
+        {
+            Fill();
+        }
+
+        private void contextMenuShowHudMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            contextMenuShowHudMenuItem.Checked = !contextMenuShowHudMenuItem.Checked;
+
+            // update options
+            UserOptions.Display.bShowHUD = contextMenuShowHudMenuItem.Checked;
+
+            // call cosmetic load event
+            OnWorldLoadCosmetic();
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void contextMenuShowNeighborCountMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            contextMenuShowNeighborCountMenuItem.Checked = !contextMenuShowNeighborCountMenuItem.Checked;
+
+            // update options
+            UserOptions.Display.bShowNeighborCount = contextMenuShowNeighborCountMenuItem.Checked;
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void contextMenuShowGridMenuItem_Click(object sender, EventArgs e)
+        {
+            // toggle checkbox
+            contextMenuShowGridMenuItem.Checked = !contextMenuShowGridMenuItem.Checked;
+
+            // update options
+            UserOptions.Display.bShowGrid = contextMenuShowGridMenuItem.Checked;
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        #endregion
     }
 }

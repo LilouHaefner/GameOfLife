@@ -39,17 +39,13 @@ namespace GameOfLife
             this.menuStripFileMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStripSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripSaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStripFileMenuSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStripImportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStripExportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripFileMenuSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStripQuitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripToolsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripOptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripClearMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripViewMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStripDisplayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStripNeighborsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripHelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripAboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -88,6 +84,13 @@ namespace GameOfLife
             this.hudBorderNameLabel = new System.Windows.Forms.Label();
             this.hudSeedNameLabel = new System.Windows.Forms.Label();
             this.hudIntervalNameLabel = new System.Windows.Forms.Label();
+            this.menuStripFillMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuFillMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStripShowGridMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStripShowNeighborCountMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStripShowHudMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStripFileMenuSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuStripExportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -149,7 +152,7 @@ namespace GameOfLife
             this.menuStripExportMenuItem,
             this.menuStripFileMenuSeparator3,
             this.menuStripQuitMenuItem});
-            this.menuStripFileMenu.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripFileMenu.ForeColor = System.Drawing.Color.Black;
             this.menuStripFileMenu.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.menuStripFileMenu.Name = "menuStripFileMenu";
             this.menuStripFileMenu.Size = new System.Drawing.Size(45, 14);
@@ -157,74 +160,68 @@ namespace GameOfLife
             // 
             // menuStripNewMenuItem
             // 
-            this.menuStripNewMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripNewMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripNewMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripNewMenuItem.Name = "menuStripNewMenuItem";
             this.menuStripNewMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.menuStripNewMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.menuStripNewMenuItem.Size = new System.Drawing.Size(208, 22);
             this.menuStripNewMenuItem.Text = "&New";
             // 
             // menuStripOpenMenuItem
             // 
-            this.menuStripOpenMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripOpenMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripOpenMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripOpenMenuItem.Name = "menuStripOpenMenuItem";
             this.menuStripOpenMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuStripOpenMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.menuStripOpenMenuItem.Size = new System.Drawing.Size(208, 22);
             this.menuStripOpenMenuItem.Text = "&Open";
+            this.menuStripOpenMenuItem.Click += new System.EventHandler(this.menuStripOpenMenuItem_Click);
             // 
             // menuStripFileMenuSeparator1
             // 
             this.menuStripFileMenuSeparator1.Name = "menuStripFileMenuSeparator1";
-            this.menuStripFileMenuSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.menuStripFileMenuSeparator1.Size = new System.Drawing.Size(205, 6);
             // 
             // menuStripSaveMenuItem
             // 
-            this.menuStripSaveMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripSaveMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripSaveMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripSaveMenuItem.Name = "menuStripSaveMenuItem";
             this.menuStripSaveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.menuStripSaveMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.menuStripSaveMenuItem.Size = new System.Drawing.Size(208, 22);
             this.menuStripSaveMenuItem.Text = "&Save";
+            this.menuStripSaveMenuItem.Click += new System.EventHandler(this.menuStripSaveMenuItem_Click);
             // 
             // menuStripSaveAsMenuItem
             // 
-            this.menuStripSaveAsMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripSaveAsMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripSaveAsMenuItem.Name = "menuStripSaveAsMenuItem";
-            this.menuStripSaveAsMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.menuStripSaveAsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.menuStripSaveAsMenuItem.Size = new System.Drawing.Size(208, 22);
             this.menuStripSaveAsMenuItem.Text = "Save &As";
-            // 
-            // menuStripFileMenuSeparator2
-            // 
-            this.menuStripFileMenuSeparator2.Name = "menuStripFileMenuSeparator2";
-            this.menuStripFileMenuSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.menuStripSaveAsMenuItem.Click += new System.EventHandler(this.menuStripSaveAsMenuItem_Click);
             // 
             // menuStripImportMenuItem
             // 
-            this.menuStripImportMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripImportMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripImportMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.menuStripImportMenuItem.Name = "menuStripImportMenuItem";
-            this.menuStripImportMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.menuStripImportMenuItem.Size = new System.Drawing.Size(208, 22);
             this.menuStripImportMenuItem.Text = "&Import";
-            // 
-            // menuStripExportMenuItem
-            // 
-            this.menuStripExportMenuItem.ForeColor = System.Drawing.Color.Gray;
-            this.menuStripExportMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.menuStripExportMenuItem.Name = "menuStripExportMenuItem";
-            this.menuStripExportMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.menuStripExportMenuItem.Text = "&Export";
+            this.menuStripImportMenuItem.Click += new System.EventHandler(this.menuStripImportMenuItem_Click);
             // 
             // menuStripFileMenuSeparator3
             // 
             this.menuStripFileMenuSeparator3.Name = "menuStripFileMenuSeparator3";
-            this.menuStripFileMenuSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.menuStripFileMenuSeparator3.Size = new System.Drawing.Size(205, 6);
             // 
             // menuStripQuitMenuItem
             // 
-            this.menuStripQuitMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripQuitMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripQuitMenuItem.Name = "menuStripQuitMenuItem";
-            this.menuStripQuitMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.menuStripQuitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.menuStripQuitMenuItem.Size = new System.Drawing.Size(208, 22);
             this.menuStripQuitMenuItem.Text = "&Quit";
             this.menuStripQuitMenuItem.Click += new System.EventHandler(this.menuStripQuitMenuItem_Click);
             // 
@@ -232,8 +229,9 @@ namespace GameOfLife
             // 
             this.menuStripToolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuStripOptionsMenuItem,
-            this.menuStripClearMenuItem});
-            this.menuStripToolsMenu.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripClearMenuItem,
+            this.menuStripFillMenuItem});
+            this.menuStripToolsMenu.ForeColor = System.Drawing.Color.Black;
             this.menuStripToolsMenu.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.menuStripToolsMenu.Name = "menuStripToolsMenu";
             this.menuStripToolsMenu.Size = new System.Drawing.Size(52, 14);
@@ -241,55 +239,40 @@ namespace GameOfLife
             // 
             // menuStripOptionsMenuItem
             // 
-            this.menuStripOptionsMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripOptionsMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripOptionsMenuItem.Name = "menuStripOptionsMenuItem";
             this.menuStripOptionsMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuStripOptionsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuStripOptionsMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripOptionsMenuItem.Text = "&Options";
+            this.menuStripOptionsMenuItem.Click += new System.EventHandler(this.menuStripOptionsMenuItem_Click);
             // 
             // menuStripClearMenuItem
             // 
-            this.menuStripClearMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripClearMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripClearMenuItem.Name = "menuStripClearMenuItem";
             this.menuStripClearMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.menuStripClearMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.menuStripClearMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripClearMenuItem.Text = "&Clear";
             this.menuStripClearMenuItem.Click += new System.EventHandler(this.menuStripClearMenuItem_Click);
             // 
             // menuStripViewMenu
             // 
             this.menuStripViewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStripDisplayMenuItem,
-            this.menuStripNeighborsMenuItem});
-            this.menuStripViewMenu.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripShowHudMenuItem,
+            this.menuStripShowNeighborCountMenuItem,
+            this.menuStripShowGridMenuItem});
+            this.menuStripViewMenu.ForeColor = System.Drawing.Color.Black;
             this.menuStripViewMenu.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.menuStripViewMenu.Name = "menuStripViewMenu";
             this.menuStripViewMenu.Size = new System.Drawing.Size(45, 14);
             this.menuStripViewMenu.Text = "&View";
-            // 
-            // menuStripDisplayMenuItem
-            // 
-            this.menuStripDisplayMenuItem.ForeColor = System.Drawing.Color.Gray;
-            this.menuStripDisplayMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.menuStripDisplayMenuItem.Name = "menuStripDisplayMenuItem";
-            this.menuStripDisplayMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.menuStripDisplayMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.menuStripDisplayMenuItem.Text = "&Display";
-            // 
-            // menuStripNeighborsMenuItem
-            // 
-            this.menuStripNeighborsMenuItem.ForeColor = System.Drawing.Color.Gray;
-            this.menuStripNeighborsMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.menuStripNeighborsMenuItem.Name = "menuStripNeighborsMenuItem";
-            this.menuStripNeighborsMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.menuStripNeighborsMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.menuStripNeighborsMenuItem.Text = "Toggle Neighbors";
+            this.menuStripViewMenu.DropDownOpened += new System.EventHandler(this.menuStripViewMenu_DropDownOpened);
             // 
             // menuStripHelpMenu
             // 
             this.menuStripHelpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuStripAboutMenuItem});
-            this.menuStripHelpMenu.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripHelpMenu.ForeColor = System.Drawing.Color.Black;
             this.menuStripHelpMenu.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.menuStripHelpMenu.Name = "menuStripHelpMenu";
             this.menuStripHelpMenu.Size = new System.Drawing.Size(45, 14);
@@ -297,10 +280,12 @@ namespace GameOfLife
             // 
             // menuStripAboutMenuItem
             // 
-            this.menuStripAboutMenuItem.ForeColor = System.Drawing.Color.Gray;
+            this.menuStripAboutMenuItem.ForeColor = System.Drawing.Color.Black;
             this.menuStripAboutMenuItem.Name = "menuStripAboutMenuItem";
-            this.menuStripAboutMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.menuStripAboutMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
+            this.menuStripAboutMenuItem.Size = new System.Drawing.Size(180, 22);
             this.menuStripAboutMenuItem.Text = "&About";
+            this.menuStripAboutMenuItem.Click += new System.EventHandler(this.menuStripAboutMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -324,7 +309,7 @@ namespace GameOfLife
             // 
             // statusStripGenerationStatusLabel
             // 
-            this.statusStripGenerationStatusLabel.ForeColor = System.Drawing.Color.Gray;
+            this.statusStripGenerationStatusLabel.ForeColor = System.Drawing.Color.Black;
             this.statusStripGenerationStatusLabel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.statusStripGenerationStatusLabel.Name = "statusStripGenerationStatusLabel";
             this.statusStripGenerationStatusLabel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -339,7 +324,7 @@ namespace GameOfLife
             // 
             // statusStripLiveStatusLabel
             // 
-            this.statusStripLiveStatusLabel.ForeColor = System.Drawing.Color.Gray;
+            this.statusStripLiveStatusLabel.ForeColor = System.Drawing.Color.Black;
             this.statusStripLiveStatusLabel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.statusStripLiveStatusLabel.Name = "statusStripLiveStatusLabel";
             this.statusStripLiveStatusLabel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -354,7 +339,7 @@ namespace GameOfLife
             // 
             // statusStripTotalStatusLabel
             // 
-            this.statusStripTotalStatusLabel.ForeColor = System.Drawing.Color.Gray;
+            this.statusStripTotalStatusLabel.ForeColor = System.Drawing.Color.Black;
             this.statusStripTotalStatusLabel.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.statusStripTotalStatusLabel.Name = "statusStripTotalStatusLabel";
             this.statusStripTotalStatusLabel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -413,6 +398,7 @@ namespace GameOfLife
             this.toolStripSaveButton.Name = "toolStripSaveButton";
             this.toolStripSaveButton.Size = new System.Drawing.Size(36, 36);
             this.toolStripSaveButton.Text = "Save";
+            this.toolStripSaveButton.Click += new System.EventHandler(this.toolStripSaveButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -482,65 +468,78 @@ namespace GameOfLife
             this.contextMenuDisplaySeparator1,
             this.contextMenuOptionsMenuItem,
             this.contextMenuClearMenuItem,
+            this.contextMenuFillMenuItem,
             this.toolStripSeparator3,
             this.contextMenuShowHudMenuItem,
             this.contextMenuShowNeighborCountMenuItem,
             this.contextMenuShowGridMenuItem});
             this.contextMenu.Name = "contextMenuStrip";
-            this.contextMenu.Size = new System.Drawing.Size(193, 192);
+            this.contextMenu.Size = new System.Drawing.Size(206, 214);
             this.contextMenu.Opened += new System.EventHandler(this.contextMenu_Opened);
             // 
             // contextMenuPlayMenuItem
             // 
+            this.contextMenuPlayMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuPlayMenuItem.ForeColor = System.Drawing.Color.Black;
             this.contextMenuPlayMenuItem.Name = "contextMenuPlayMenuItem";
-            this.contextMenuPlayMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuPlayMenuItem.Size = new System.Drawing.Size(205, 22);
             this.contextMenuPlayMenuItem.Text = "Play";
             this.contextMenuPlayMenuItem.Click += new System.EventHandler(this.contextMenuPlayMenuItem_Click);
             // 
             // contextMenuPauseMenuItem
             // 
+            this.contextMenuPauseMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuPauseMenuItem.ForeColor = System.Drawing.Color.Black;
             this.contextMenuPauseMenuItem.Name = "contextMenuPauseMenuItem";
-            this.contextMenuPauseMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuPauseMenuItem.Size = new System.Drawing.Size(205, 22);
             this.contextMenuPauseMenuItem.Text = "Pause";
             this.contextMenuPauseMenuItem.Click += new System.EventHandler(this.contextMenuPauseMenuItem_Click);
             // 
             // contextMenuNextMenuItem
             // 
+            this.contextMenuNextMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuNextMenuItem.ForeColor = System.Drawing.Color.Black;
             this.contextMenuNextMenuItem.Name = "contextMenuNextMenuItem";
-            this.contextMenuNextMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuNextMenuItem.Size = new System.Drawing.Size(205, 22);
             this.contextMenuNextMenuItem.Text = "Next";
             this.contextMenuNextMenuItem.Click += new System.EventHandler(this.contextMenuNextMenuItem_Click);
             // 
             // contextMenuDisplaySeparator1
             // 
             this.contextMenuDisplaySeparator1.Name = "contextMenuDisplaySeparator1";
-            this.contextMenuDisplaySeparator1.Size = new System.Drawing.Size(189, 6);
+            this.contextMenuDisplaySeparator1.Size = new System.Drawing.Size(202, 6);
             // 
             // contextMenuOptionsMenuItem
             // 
+            this.contextMenuOptionsMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuOptionsMenuItem.ForeColor = System.Drawing.Color.Black;
             this.contextMenuOptionsMenuItem.Name = "contextMenuOptionsMenuItem";
-            this.contextMenuOptionsMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuOptionsMenuItem.Size = new System.Drawing.Size(205, 22);
             this.contextMenuOptionsMenuItem.Text = "Options";
             this.contextMenuOptionsMenuItem.Click += new System.EventHandler(this.contextMenuOptionsMenuItem_Click);
             // 
             // contextMenuClearMenuItem
             // 
+            this.contextMenuClearMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuClearMenuItem.ForeColor = System.Drawing.Color.Black;
             this.contextMenuClearMenuItem.Name = "contextMenuClearMenuItem";
-            this.contextMenuClearMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuClearMenuItem.Size = new System.Drawing.Size(205, 22);
             this.contextMenuClearMenuItem.Text = "Clear";
             this.contextMenuClearMenuItem.Click += new System.EventHandler(this.contextMenuClearMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(189, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
             // 
             // contextMenuShowHudMenuItem
             // 
             this.contextMenuShowHudMenuItem.Checked = true;
             this.contextMenuShowHudMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.contextMenuShowHudMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuShowHudMenuItem.ForeColor = System.Drawing.Color.Black;
             this.contextMenuShowHudMenuItem.Name = "contextMenuShowHudMenuItem";
-            this.contextMenuShowHudMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuShowHudMenuItem.Size = new System.Drawing.Size(205, 22);
             this.contextMenuShowHudMenuItem.Text = "Show HUD";
             this.contextMenuShowHudMenuItem.Click += new System.EventHandler(this.contextMenuShowHudMenuItem_Click);
             // 
@@ -548,8 +547,10 @@ namespace GameOfLife
             // 
             this.contextMenuShowNeighborCountMenuItem.Checked = true;
             this.contextMenuShowNeighborCountMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.contextMenuShowNeighborCountMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuShowNeighborCountMenuItem.ForeColor = System.Drawing.Color.Black;
             this.contextMenuShowNeighborCountMenuItem.Name = "contextMenuShowNeighborCountMenuItem";
-            this.contextMenuShowNeighborCountMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuShowNeighborCountMenuItem.Size = new System.Drawing.Size(205, 22);
             this.contextMenuShowNeighborCountMenuItem.Text = "Show Neighbor Count";
             this.contextMenuShowNeighborCountMenuItem.Click += new System.EventHandler(this.contextMenuShowNeighborCountMenuItem_Click);
             // 
@@ -557,8 +558,10 @@ namespace GameOfLife
             // 
             this.contextMenuShowGridMenuItem.Checked = true;
             this.contextMenuShowGridMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.contextMenuShowGridMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuShowGridMenuItem.ForeColor = System.Drawing.Color.Black;
             this.contextMenuShowGridMenuItem.Name = "contextMenuShowGridMenuItem";
-            this.contextMenuShowGridMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.contextMenuShowGridMenuItem.Size = new System.Drawing.Size(205, 22);
             this.contextMenuShowGridMenuItem.Text = "Show Grid";
             this.contextMenuShowGridMenuItem.Click += new System.EventHandler(this.contextMenuShowGridMenuItem_Click);
             // 
@@ -718,6 +721,70 @@ namespace GameOfLife
             this.hudIntervalNameLabel.TabIndex = 4;
             this.hudIntervalNameLabel.Text = "Interval";
             // 
+            // menuStripFillMenuItem
+            // 
+            this.menuStripFillMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.menuStripFillMenuItem.Name = "menuStripFillMenuItem";
+            this.menuStripFillMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.menuStripFillMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.menuStripFillMenuItem.Text = "&Fill";
+            this.menuStripFillMenuItem.Click += new System.EventHandler(this.menuStripFillMenuItem_Click);
+            // 
+            // contextMenuFillMenuItem
+            // 
+            this.contextMenuFillMenuItem.Font = new System.Drawing.Font("Lucida Console", 9F);
+            this.contextMenuFillMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.contextMenuFillMenuItem.Name = "contextMenuFillMenuItem";
+            this.contextMenuFillMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.contextMenuFillMenuItem.Text = "Fill";
+            this.contextMenuFillMenuItem.Click += new System.EventHandler(this.contextMenuFillMenuItem_Click);
+            // 
+            // menuStripShowGridMenuItem
+            // 
+            this.menuStripShowGridMenuItem.Checked = true;
+            this.menuStripShowGridMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuStripShowGridMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.menuStripShowGridMenuItem.Name = "menuStripShowGridMenuItem";
+            this.menuStripShowGridMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.menuStripShowGridMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.menuStripShowGridMenuItem.Text = "Show &Grid";
+            this.menuStripShowGridMenuItem.Click += new System.EventHandler(this.menuStripShowGridMenuItem_Click);
+            // 
+            // menuStripShowNeighborCountMenuItem
+            // 
+            this.menuStripShowNeighborCountMenuItem.Checked = true;
+            this.menuStripShowNeighborCountMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuStripShowNeighborCountMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.menuStripShowNeighborCountMenuItem.Name = "menuStripShowNeighborCountMenuItem";
+            this.menuStripShowNeighborCountMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.menuStripShowNeighborCountMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.menuStripShowNeighborCountMenuItem.Text = "Show &Neighbor Count";
+            this.menuStripShowNeighborCountMenuItem.Click += new System.EventHandler(this.menuStripShowNeighborCountMenuItem_Click);
+            // 
+            // menuStripShowHudMenuItem
+            // 
+            this.menuStripShowHudMenuItem.Checked = true;
+            this.menuStripShowHudMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuStripShowHudMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.menuStripShowHudMenuItem.Name = "menuStripShowHudMenuItem";
+            this.menuStripShowHudMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.menuStripShowHudMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.menuStripShowHudMenuItem.Text = "Show &HUD";
+            this.menuStripShowHudMenuItem.Click += new System.EventHandler(this.menuStripShowHudMenuItem_Click);
+            // 
+            // menuStripFileMenuSeparator2
+            // 
+            this.menuStripFileMenuSeparator2.Name = "menuStripFileMenuSeparator2";
+            this.menuStripFileMenuSeparator2.Size = new System.Drawing.Size(205, 6);
+            // 
+            // menuStripExportMenuItem
+            // 
+            this.menuStripExportMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.menuStripExportMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menuStripExportMenuItem.Name = "menuStripExportMenuItem";
+            this.menuStripExportMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.menuStripExportMenuItem.Text = "&Export";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -726,6 +793,7 @@ namespace GameOfLife
             this.Controls.Add(this.tableLayoutPanel);
             this.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(960, 540);
             this.Name = "MainForm";
             this.Text = "Game of Life";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -760,17 +828,13 @@ namespace GameOfLife
         private System.Windows.Forms.ToolStripSeparator menuStripFileMenuSeparator1;
         private System.Windows.Forms.ToolStripMenuItem menuStripSaveMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuStripSaveAsMenuItem;
-        private System.Windows.Forms.ToolStripSeparator menuStripFileMenuSeparator2;
         private System.Windows.Forms.ToolStripMenuItem menuStripImportMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem menuStripExportMenuItem;
         private System.Windows.Forms.ToolStripSeparator menuStripFileMenuSeparator3;
         private System.Windows.Forms.ToolStripMenuItem menuStripQuitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuStripToolsMenu;
         private System.Windows.Forms.ToolStripMenuItem menuStripOptionsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuStripClearMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuStripViewMenu;
-        private System.Windows.Forms.ToolStripMenuItem menuStripDisplayMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem menuStripNeighborsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuStripHelpMenu;
         private System.Windows.Forms.ToolStripMenuItem menuStripAboutMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip;
@@ -809,6 +873,13 @@ namespace GameOfLife
         private System.Windows.Forms.ToolStripMenuItem contextMenuNextMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem contextMenuShowNeighborCountMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuStripFillMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuFillMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuStripShowHudMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuStripShowNeighborCountMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuStripShowGridMenuItem;
+        private System.Windows.Forms.ToolStripSeparator menuStripFileMenuSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem menuStripExportMenuItem;
     }
 }
 
