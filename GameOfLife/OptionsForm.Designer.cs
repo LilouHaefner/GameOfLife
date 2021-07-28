@@ -38,12 +38,12 @@ namespace GameOfLife
             this.intervalNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.scaleLabel = new System.Windows.Forms.Label();
             this.intervalLabel = new System.Windows.Forms.Label();
-            this.borderLabel = new System.Windows.Forms.Label();
+            this.borderModeLabel = new System.Windows.Forms.Label();
             this.scaleTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.scaleXNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.scaleSeparatorLabel = new System.Windows.Forms.Label();
             this.scaleYNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.borderComboBox = new System.Windows.Forms.ComboBox();
+            this.borderModeComboBox = new System.Windows.Forms.ComboBox();
             this.rulesTab = new System.Windows.Forms.TabPage();
             this.rulesTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.neighborRadiusLabel = new System.Windows.Forms.Label();
@@ -59,6 +59,7 @@ namespace GameOfLife
             this.generationTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.randomSeedNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.randomThresholdLabel = new System.Windows.Forms.Label();
+            this.randomSeedNewSeedButton = new System.Windows.Forms.Button();
             this.randomModeLabel = new System.Windows.Forms.Label();
             this.randomSeedLabel = new System.Windows.Forms.Label();
             this.randomMultiplierLabel = new System.Windows.Forms.Label();
@@ -69,24 +70,23 @@ namespace GameOfLife
             this.displayTab = new System.Windows.Forms.TabPage();
             this.displayTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.backgroundColorButton = new System.Windows.Forms.Button();
+            this.showGridCheckbox = new System.Windows.Forms.CheckBox();
+            this.showNeighborCountCheckbox = new System.Windows.Forms.CheckBox();
             this.showHudLabel = new System.Windows.Forms.Label();
             this.showNeighborCountLabel = new System.Windows.Forms.Label();
             this.showGridLabel = new System.Windows.Forms.Label();
+            this.showHudCheckbox = new System.Windows.Forms.CheckBox();
             this.gridColorButton = new System.Windows.Forms.Button();
             this.cellColorLabel = new System.Windows.Forms.Label();
             this.cellColorButton = new System.Windows.Forms.Button();
             this.gridColorLabel = new System.Windows.Forms.Label();
             this.backgroundColorLabel = new System.Windows.Forms.Label();
-            this.eBorderModeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.dialogTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.randomSeedNewSeedButton = new System.Windows.Forms.Button();
-            this.showGridCheckbox = new System.Windows.Forms.CheckBox();
-            this.showNeighborCountCheckbox = new System.Windows.Forms.CheckBox();
-            this.showHudCheckbox = new System.Windows.Forms.CheckBox();
+            this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuResetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuReloadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dialogTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.eBorderModeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.generalTableLayout.SuspendLayout();
@@ -108,10 +108,10 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.randomMultiplierNumericUpDown)).BeginInit();
             this.displayTab.SuspendLayout();
             this.displayTableLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).BeginInit();
-            this.tableLayoutPanel.SuspendLayout();
-            this.dialogTableLayout.SuspendLayout();
+            this.tableLayout.SuspendLayout();
             this.contextMenu.SuspendLayout();
+            this.dialogTableLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dialogCancelButton
@@ -169,9 +169,9 @@ namespace GameOfLife
             this.generalTableLayout.Controls.Add(this.intervalNumericUpDown, 1, 1);
             this.generalTableLayout.Controls.Add(this.scaleLabel, 0, 0);
             this.generalTableLayout.Controls.Add(this.intervalLabel, 0, 1);
-            this.generalTableLayout.Controls.Add(this.borderLabel, 0, 2);
+            this.generalTableLayout.Controls.Add(this.borderModeLabel, 0, 2);
             this.generalTableLayout.Controls.Add(this.scaleTableLayout, 1, 0);
-            this.generalTableLayout.Controls.Add(this.borderComboBox, 1, 2);
+            this.generalTableLayout.Controls.Add(this.borderModeComboBox, 1, 2);
             this.generalTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.generalTableLayout.Location = new System.Drawing.Point(0, 0);
             this.generalTableLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -235,18 +235,18 @@ namespace GameOfLife
             this.intervalLabel.Text = "Interval";
             this.intervalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // borderLabel
+            // borderModeLabel
             // 
-            this.borderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.borderLabel.AutoSize = true;
-            this.borderLabel.Location = new System.Drawing.Point(4, 62);
-            this.borderLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.borderLabel.Name = "borderLabel";
-            this.borderLabel.Padding = new System.Windows.Forms.Padding(4);
-            this.borderLabel.Size = new System.Drawing.Size(236, 21);
-            this.borderLabel.TabIndex = 2;
-            this.borderLabel.Text = "Border";
-            this.borderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.borderModeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.borderModeLabel.AutoSize = true;
+            this.borderModeLabel.Location = new System.Drawing.Point(4, 62);
+            this.borderModeLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.borderModeLabel.Name = "borderModeLabel";
+            this.borderModeLabel.Padding = new System.Windows.Forms.Padding(4);
+            this.borderModeLabel.Size = new System.Drawing.Size(236, 21);
+            this.borderModeLabel.TabIndex = 2;
+            this.borderModeLabel.Text = "Border Mode";
+            this.borderModeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // scaleTableLayout
             // 
@@ -272,6 +272,11 @@ namespace GameOfLife
             this.scaleXNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scaleXNumericUpDown.Location = new System.Drawing.Point(0, 0);
             this.scaleXNumericUpDown.Margin = new System.Windows.Forms.Padding(0);
+            this.scaleXNumericUpDown.Maximum = new decimal(new int[] {
+            240,
+            0,
+            0,
+            0});
             this.scaleXNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -304,6 +309,11 @@ namespace GameOfLife
             this.scaleYNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scaleYNumericUpDown.Location = new System.Drawing.Point(67, 0);
             this.scaleYNumericUpDown.Margin = new System.Windows.Forms.Padding(0);
+            this.scaleYNumericUpDown.Maximum = new decimal(new int[] {
+            240,
+            0,
+            0,
+            0});
             this.scaleYNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -319,19 +329,19 @@ namespace GameOfLife
             0,
             0});
             // 
-            // borderComboBox
+            // borderModeComboBox
             // 
-            this.borderComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.borderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.borderComboBox.FormattingEnabled = true;
-            this.borderComboBox.Items.AddRange(new object[] {
+            this.borderModeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.borderModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.borderModeComboBox.FormattingEnabled = true;
+            this.borderModeComboBox.Items.AddRange(new object[] {
             "Clip",
             "Wrap"});
-            this.borderComboBox.Location = new System.Drawing.Point(248, 62);
-            this.borderComboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.borderComboBox.Name = "borderComboBox";
-            this.borderComboBox.Size = new System.Drawing.Size(114, 21);
-            this.borderComboBox.TabIndex = 11;
+            this.borderModeComboBox.Location = new System.Drawing.Point(248, 62);
+            this.borderModeComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.borderModeComboBox.Name = "borderModeComboBox";
+            this.borderModeComboBox.Size = new System.Drawing.Size(114, 21);
+            this.borderModeComboBox.TabIndex = 11;
             // 
             // rulesTab
             // 
@@ -607,6 +617,18 @@ namespace GameOfLife
             this.randomThresholdLabel.Text = "Random Threshold";
             this.randomThresholdLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // randomSeedNewSeedButton
+            // 
+            this.randomSeedNewSeedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.randomSeedNewSeedButton.Location = new System.Drawing.Point(370, 33);
+            this.randomSeedNewSeedButton.Margin = new System.Windows.Forms.Padding(4);
+            this.randomSeedNewSeedButton.Name = "randomSeedNewSeedButton";
+            this.randomSeedNewSeedButton.Size = new System.Drawing.Size(114, 20);
+            this.randomSeedNewSeedButton.TabIndex = 10;
+            this.randomSeedNewSeedButton.Text = "New Seed";
+            this.randomSeedNewSeedButton.UseVisualStyleBackColor = true;
+            this.randomSeedNewSeedButton.Click += new System.EventHandler(this.randomSeedNewSeedButton_Click);
+            // 
             // randomModeLabel
             // 
             this.randomModeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -637,7 +659,7 @@ namespace GameOfLife
             // 
             this.randomMultiplierLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.randomMultiplierLabel.AutoSize = true;
-            this.randomMultiplierLabel.Location = new System.Drawing.Point(4, 92);
+            this.randomMultiplierLabel.Location = new System.Drawing.Point(4, 91);
             this.randomMultiplierLabel.Margin = new System.Windows.Forms.Padding(4);
             this.randomMultiplierLabel.Name = "randomMultiplierLabel";
             this.randomMultiplierLabel.Padding = new System.Windows.Forms.Padding(4);
@@ -659,6 +681,7 @@ namespace GameOfLife
             this.randomModeComboBox.Name = "randomModeComboBox";
             this.randomModeComboBox.Size = new System.Drawing.Size(114, 21);
             this.randomModeComboBox.TabIndex = 17;
+            this.randomModeComboBox.SelectedIndexChanged += new System.EventHandler(this.randomModeComboBox_SelectedIndexChanged);
             // 
             // randomThresholdNumericUpDown
             // 
@@ -685,7 +708,7 @@ namespace GameOfLife
             // 
             this.randomMultiplierNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.randomMultiplierNumericUpDown.DecimalPlaces = 2;
-            this.randomMultiplierNumericUpDown.Location = new System.Drawing.Point(248, 92);
+            this.randomMultiplierNumericUpDown.Location = new System.Drawing.Point(248, 91);
             this.randomMultiplierNumericUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.randomMultiplierNumericUpDown.Minimum = new decimal(new int[] {
             1,
@@ -705,7 +728,7 @@ namespace GameOfLife
             // randomizeButton
             // 
             this.randomizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.randomizeButton.Location = new System.Drawing.Point(248, 121);
+            this.randomizeButton.Location = new System.Drawing.Point(248, 120);
             this.randomizeButton.Margin = new System.Windows.Forms.Padding(4);
             this.randomizeButton.Name = "randomizeButton";
             this.randomizeButton.Size = new System.Drawing.Size(114, 20);
@@ -770,6 +793,30 @@ namespace GameOfLife
             this.backgroundColorButton.UseVisualStyleBackColor = true;
             this.backgroundColorButton.Click += new System.EventHandler(this.backgroundColorButton_Click);
             // 
+            // showGridCheckbox
+            // 
+            this.showGridCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.showGridCheckbox.Checked = true;
+            this.showGridCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showGridCheckbox.Location = new System.Drawing.Point(248, 64);
+            this.showGridCheckbox.Margin = new System.Windows.Forms.Padding(4);
+            this.showGridCheckbox.Name = "showGridCheckbox";
+            this.showGridCheckbox.Size = new System.Drawing.Size(113, 20);
+            this.showGridCheckbox.TabIndex = 24;
+            this.showGridCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // showNeighborCountCheckbox
+            // 
+            this.showNeighborCountCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.showNeighborCountCheckbox.Checked = true;
+            this.showNeighborCountCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showNeighborCountCheckbox.Location = new System.Drawing.Point(248, 35);
+            this.showNeighborCountCheckbox.Margin = new System.Windows.Forms.Padding(4);
+            this.showNeighborCountCheckbox.Name = "showNeighborCountCheckbox";
+            this.showNeighborCountCheckbox.Size = new System.Drawing.Size(113, 20);
+            this.showNeighborCountCheckbox.TabIndex = 23;
+            this.showNeighborCountCheckbox.UseVisualStyleBackColor = true;
+            // 
             // showHudLabel
             // 
             this.showHudLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -805,6 +852,18 @@ namespace GameOfLife
             this.showGridLabel.Size = new System.Drawing.Size(234, 21);
             this.showGridLabel.TabIndex = 14;
             this.showGridLabel.Text = "Show Grid";
+            // 
+            // showHudCheckbox
+            // 
+            this.showHudCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.showHudCheckbox.Checked = true;
+            this.showHudCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showHudCheckbox.Location = new System.Drawing.Point(248, 6);
+            this.showHudCheckbox.Margin = new System.Windows.Forms.Padding(4);
+            this.showHudCheckbox.Name = "showHudCheckbox";
+            this.showHudCheckbox.Size = new System.Drawing.Size(113, 20);
+            this.showHudCheckbox.TabIndex = 16;
+            this.showHudCheckbox.UseVisualStyleBackColor = true;
             // 
             // gridColorButton
             // 
@@ -866,87 +925,23 @@ namespace GameOfLife
             this.backgroundColorLabel.TabIndex = 27;
             this.backgroundColorLabel.Text = "Background Color";
             // 
-            // tableLayoutPanel
+            // tableLayout
             // 
-            this.tableLayoutPanel.ColumnCount = 1;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.ContextMenuStrip = this.contextMenu;
-            this.tableLayoutPanel.Controls.Add(this.dialogTableLayout, 0, 1);
-            this.tableLayoutPanel.Controls.Add(this.tabControl, 0, 0);
-            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.Padding = new System.Windows.Forms.Padding(4);
-            this.tableLayoutPanel.RowCount = 2;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel.Size = new System.Drawing.Size(512, 258);
-            this.tableLayoutPanel.TabIndex = 5;
-            // 
-            // dialogTableLayout
-            // 
-            this.dialogTableLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.dialogTableLayout.AutoSize = true;
-            this.dialogTableLayout.ColumnCount = 2;
-            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.dialogTableLayout.Controls.Add(this.dialogCancelButton, 1, 0);
-            this.dialogTableLayout.Controls.Add(this.dialogConfirmButton, 0, 0);
-            this.dialogTableLayout.Location = new System.Drawing.Point(343, 222);
-            this.dialogTableLayout.Name = "dialogTableLayout";
-            this.dialogTableLayout.RowCount = 1;
-            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.dialogTableLayout.Size = new System.Drawing.Size(162, 29);
-            this.dialogTableLayout.TabIndex = 6;
-            // 
-            // randomSeedNewSeedButton
-            // 
-            this.randomSeedNewSeedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.randomSeedNewSeedButton.Location = new System.Drawing.Point(370, 33);
-            this.randomSeedNewSeedButton.Margin = new System.Windows.Forms.Padding(4);
-            this.randomSeedNewSeedButton.Name = "randomSeedNewSeedButton";
-            this.randomSeedNewSeedButton.Size = new System.Drawing.Size(114, 20);
-            this.randomSeedNewSeedButton.TabIndex = 10;
-            this.randomSeedNewSeedButton.Text = "New Seed";
-            this.randomSeedNewSeedButton.UseVisualStyleBackColor = true;
-            this.randomSeedNewSeedButton.Click += new System.EventHandler(this.randomSeedNewSeedButton_Click);
-            // 
-            // showGridCheckbox
-            // 
-            this.showGridCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.showGridCheckbox.Checked = true;
-            this.showGridCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showGridCheckbox.Location = new System.Drawing.Point(248, 64);
-            this.showGridCheckbox.Margin = new System.Windows.Forms.Padding(4);
-            this.showGridCheckbox.Name = "showGridCheckbox";
-            this.showGridCheckbox.Size = new System.Drawing.Size(113, 20);
-            this.showGridCheckbox.TabIndex = 24;
-            this.showGridCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // showNeighborCountCheckbox
-            // 
-            this.showNeighborCountCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.showNeighborCountCheckbox.Checked = true;
-            this.showNeighborCountCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showNeighborCountCheckbox.Location = new System.Drawing.Point(248, 35);
-            this.showNeighborCountCheckbox.Margin = new System.Windows.Forms.Padding(4);
-            this.showNeighborCountCheckbox.Name = "showNeighborCountCheckbox";
-            this.showNeighborCountCheckbox.Size = new System.Drawing.Size(113, 20);
-            this.showNeighborCountCheckbox.TabIndex = 23;
-            this.showNeighborCountCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // showHudCheckbox
-            // 
-            this.showHudCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.showHudCheckbox.Checked = true;
-            this.showHudCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showHudCheckbox.Location = new System.Drawing.Point(248, 6);
-            this.showHudCheckbox.Margin = new System.Windows.Forms.Padding(4);
-            this.showHudCheckbox.Name = "showHudCheckbox";
-            this.showHudCheckbox.Size = new System.Drawing.Size(113, 20);
-            this.showHudCheckbox.TabIndex = 16;
-            this.showHudCheckbox.UseVisualStyleBackColor = true;
+            this.tableLayout.ColumnCount = 1;
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayout.ContextMenuStrip = this.contextMenu;
+            this.tableLayout.Controls.Add(this.dialogTableLayout, 0, 1);
+            this.tableLayout.Controls.Add(this.tabControl, 0, 0);
+            this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayout.Location = new System.Drawing.Point(0, 0);
+            this.tableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayout.Name = "tableLayout";
+            this.tableLayout.Padding = new System.Windows.Forms.Padding(4);
+            this.tableLayout.RowCount = 2;
+            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayout.Size = new System.Drawing.Size(512, 258);
+            this.tableLayout.TabIndex = 5;
             // 
             // contextMenu
             // 
@@ -970,6 +965,23 @@ namespace GameOfLife
             this.contextMenuReloadMenuItem.Text = "Reload";
             this.contextMenuReloadMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
+            // dialogTableLayout
+            // 
+            this.dialogTableLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.dialogTableLayout.AutoSize = true;
+            this.dialogTableLayout.ColumnCount = 2;
+            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.dialogTableLayout.Controls.Add(this.dialogCancelButton, 1, 0);
+            this.dialogTableLayout.Controls.Add(this.dialogConfirmButton, 0, 0);
+            this.dialogTableLayout.Location = new System.Drawing.Point(343, 222);
+            this.dialogTableLayout.Name = "dialogTableLayout";
+            this.dialogTableLayout.RowCount = 1;
+            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.dialogTableLayout.Size = new System.Drawing.Size(162, 29);
+            this.dialogTableLayout.TabIndex = 6;
+            // 
             // OptionsForm
             // 
             this.AcceptButton = this.dialogConfirmButton;
@@ -977,11 +989,13 @@ namespace GameOfLife
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.dialogCancelButton;
             this.ClientSize = new System.Drawing.Size(512, 258);
-            this.Controls.Add(this.tableLayoutPanel);
+            this.Controls.Add(this.tableLayout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "OptionsForm";
+            this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Options";
             this.tabControl.ResumeLayout(false);
@@ -1011,11 +1025,11 @@ namespace GameOfLife
             this.displayTab.ResumeLayout(false);
             this.displayTableLayout.ResumeLayout(false);
             this.displayTableLayout.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).EndInit();
-            this.tableLayoutPanel.ResumeLayout(false);
-            this.tableLayoutPanel.PerformLayout();
-            this.dialogTableLayout.ResumeLayout(false);
+            this.tableLayout.ResumeLayout(false);
+            this.tableLayout.PerformLayout();
             this.contextMenu.ResumeLayout(false);
+            this.dialogTableLayout.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.eBorderModeBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1061,17 +1075,17 @@ namespace GameOfLife
         private System.Windows.Forms.Label cellColorLabel;
         private System.Windows.Forms.Button cellColorButton;
         private System.Windows.Forms.Button gridColorButton;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel tableLayout;
         private System.Windows.Forms.TableLayoutPanel dialogTableLayout;
         private System.Windows.Forms.Label backgroundColorLabel;
         private System.Windows.Forms.Button backgroundColorButton;
         private System.Windows.Forms.Button randomizeButton;
         private System.Windows.Forms.NumericUpDown randomSeedNumericUpDown;
-        private System.Windows.Forms.Label borderLabel;
+        private System.Windows.Forms.Label borderModeLabel;
         private System.Windows.Forms.NumericUpDown scaleXNumericUpDown;
         private System.Windows.Forms.Label scaleSeparatorLabel;
         private System.Windows.Forms.NumericUpDown scaleYNumericUpDown;
-        private System.Windows.Forms.ComboBox borderComboBox;
+        private System.Windows.Forms.ComboBox borderModeComboBox;
         private System.Windows.Forms.Button randomSeedNewSeedButton;
         private System.Windows.Forms.CheckBox showGridCheckbox;
         private System.Windows.Forms.CheckBox showNeighborCountCheckbox;

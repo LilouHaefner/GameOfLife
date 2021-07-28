@@ -29,8 +29,8 @@ namespace GameOfLife
 
         public object BorderMode
         {
-            get { return borderComboBox.SelectedItem; }
-            set { borderComboBox.SelectedItem = value; }
+            get { return borderModeComboBox.SelectedItem; }
+            set { borderModeComboBox.SelectedItem = value; }
         }
 
         // rules
@@ -118,7 +118,7 @@ namespace GameOfLife
 
         public OptionsForm(MainForm InOwningForm)
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             // set up tab autoscrolling
 
@@ -143,7 +143,7 @@ namespace GameOfLife
             displayTableLayout.AutoScroll = true;
 
             // set combo box data sources
-            borderComboBox.DataSource = Enum.GetValues(typeof(EBorderMode));
+            borderModeComboBox.DataSource = Enum.GetValues(typeof(EBorderMode));
             randomModeComboBox.DataSource = Enum.GetValues(typeof(ERandomMode));
 
             // set owner
@@ -151,6 +151,13 @@ namespace GameOfLife
 
             // load options
             LoadOptions(OwningForm.UserOptions);
+
+            // set seed controls enabled
+            if (UserOptions.Generation.RandomMode == ERandomMode.Seed)
+            {
+                randomSeedNumericUpDown.Enabled = true;
+                randomSeedNewSeedButton.Enabled = true;
+            }
 
             // bind apply event
             EventOnApply += SaveOptions;
@@ -243,7 +250,7 @@ namespace GameOfLife
                 OwningForm.SetCellColor(Dialog.Color);
             }
 
-            
+
             OwningForm.OnWorldTickCosmetic();
         }
 
@@ -287,6 +294,27 @@ namespace GameOfLife
         {
             OwningForm.Reload();
             LoadOptions(OwningForm.UserOptions);
+        }
+
+        private void randomModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (randomModeComboBox.SelectedValue)
+            {
+                case ERandomMode.Seed:
+                    {
+                        randomSeedNumericUpDown.Enabled = true;
+                        randomSeedNewSeedButton.Enabled = true;
+
+                        break;
+                    }
+                case ERandomMode.Time:
+                    {
+                        randomSeedNumericUpDown.Enabled = false;
+                        randomSeedNewSeedButton.Enabled = false;
+
+                        break;
+                    }
+            }
         }
     }
 }
