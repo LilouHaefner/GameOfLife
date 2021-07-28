@@ -62,9 +62,6 @@
     <Setting Name="NeighborCountSizeMin" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">4</Value>
     </Setting>
-    <Setting Name="NeighborCountSizeMax" Type="System.Single" Scope="Application">
-      <Value Profile="(Default)">24</Value>
-    </Setting>
     <Setting Name="FileSuffix" Type="System.String" Scope="Application">
       <Value Profile="(Default)">world</Value>
     </Setting>
@@ -76,9 +73,6 @@
     </Setting>
     <Setting Name="CommentSymbol" Type="System.Char" Scope="User">
       <Value Profile="(Default)">!</Value>
-    </Setting>
-    <Setting Name="ImportMode" Type="GameOfLife.EImportMode" Scope="User">
-      <Value Profile="(Default)">MaskLive</Value>
     </Setting>
   </Settings>
 </SettingsFile>

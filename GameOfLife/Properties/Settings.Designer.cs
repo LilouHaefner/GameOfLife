@@ -256,15 +256,6 @@ namespace GameOfLife.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("24")]
-        public float NeighborCountSizeMax {
-            get {
-                return ((float)(this["NeighborCountSizeMax"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("world")]
         public string FileSuffix {
             get {
@@ -302,18 +293,6 @@ namespace GameOfLife.Properties {
             }
             set {
                 this["CommentSymbol"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MaskLive")]
-        public global::GameOfLife.EImportMode ImportMode {
-            get {
-                return ((global::GameOfLife.EImportMode)(this["ImportMode"]));
-            }
-            set {
-                this["ImportMode"] = value;
             }
         }
     }
