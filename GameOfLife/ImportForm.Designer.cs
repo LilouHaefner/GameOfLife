@@ -30,23 +30,23 @@ namespace GameOfLife
         private void InitializeComponent()
         {
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.dialogCancelButton = new System.Windows.Forms.Button();
-            this.dialogConfirmButton = new System.Windows.Forms.Button();
-            this.dialogTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.optionsTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.offsetLabel = new System.Windows.Forms.Label();
+            this.importModeLabel = new System.Windows.Forms.Label();
             this.offsetTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.offsetXNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.offsetSeparatorLabel = new System.Windows.Forms.Label();
             this.offsetYNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.importModeComboBox = new System.Windows.Forms.ComboBox();
-            this.importModeLabel = new System.Windows.Forms.Label();
-            this.offsetSeparatorLabel = new System.Windows.Forms.Label();
+            this.offsetLabel = new System.Windows.Forms.Label();
+            this.dialogTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.dialogCancelButton = new System.Windows.Forms.Button();
+            this.dialogConfirmButton = new System.Windows.Forms.Button();
             this.tableLayout.SuspendLayout();
-            this.dialogTableLayout.SuspendLayout();
             this.optionsTableLayout.SuspendLayout();
             this.offsetTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.offsetXNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.offsetYNumericUpDown)).BeginInit();
+            this.dialogTableLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayout
@@ -65,44 +65,6 @@ namespace GameOfLife
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayout.Size = new System.Drawing.Size(332, 112);
             this.tableLayout.TabIndex = 0;
-            // 
-            // dialogCancelButton
-            // 
-            this.dialogCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.dialogCancelButton.Location = new System.Drawing.Point(84, 3);
-            this.dialogCancelButton.Name = "dialogCancelButton";
-            this.dialogCancelButton.Size = new System.Drawing.Size(75, 23);
-            this.dialogCancelButton.TabIndex = 1;
-            this.dialogCancelButton.Text = "Cancel";
-            this.dialogCancelButton.UseVisualStyleBackColor = true;
-            // 
-            // dialogConfirmButton
-            // 
-            this.dialogConfirmButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.dialogConfirmButton.Location = new System.Drawing.Point(3, 3);
-            this.dialogConfirmButton.Name = "dialogConfirmButton";
-            this.dialogConfirmButton.Size = new System.Drawing.Size(75, 23);
-            this.dialogConfirmButton.TabIndex = 0;
-            this.dialogConfirmButton.Text = "Confirm";
-            this.dialogConfirmButton.UseVisualStyleBackColor = true;
-            // 
-            // dialogTableLayout
-            // 
-            this.dialogTableLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.dialogTableLayout.AutoSize = true;
-            this.dialogTableLayout.ColumnCount = 2;
-            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.dialogTableLayout.Controls.Add(this.dialogCancelButton, 1, 0);
-            this.dialogTableLayout.Controls.Add(this.dialogConfirmButton, 0, 0);
-            this.dialogTableLayout.Location = new System.Drawing.Point(166, 79);
-            this.dialogTableLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.dialogTableLayout.Name = "dialogTableLayout";
-            this.dialogTableLayout.RowCount = 1;
-            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.dialogTableLayout.Size = new System.Drawing.Size(162, 29);
-            this.dialogTableLayout.TabIndex = 7;
             // 
             // optionsTableLayout
             // 
@@ -126,18 +88,18 @@ namespace GameOfLife
             this.optionsTableLayout.Size = new System.Drawing.Size(324, 75);
             this.optionsTableLayout.TabIndex = 8;
             // 
-            // offsetLabel
+            // importModeLabel
             // 
-            this.offsetLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.offsetLabel.AutoSize = true;
-            this.offsetLabel.Location = new System.Drawing.Point(4, 4);
-            this.offsetLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.offsetLabel.Name = "offsetLabel";
-            this.offsetLabel.Padding = new System.Windows.Forms.Padding(4);
-            this.offsetLabel.Size = new System.Drawing.Size(154, 21);
-            this.offsetLabel.TabIndex = 0;
-            this.offsetLabel.Text = "Offset";
-            this.offsetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.importModeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.importModeLabel.AutoSize = true;
+            this.importModeLabel.Location = new System.Drawing.Point(4, 33);
+            this.importModeLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.importModeLabel.Name = "importModeLabel";
+            this.importModeLabel.Padding = new System.Windows.Forms.Padding(4);
+            this.importModeLabel.Size = new System.Drawing.Size(154, 21);
+            this.importModeLabel.TabIndex = 2;
+            this.importModeLabel.Text = "Import Mode";
+            this.importModeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // offsetTableLayout
             // 
@@ -174,6 +136,17 @@ namespace GameOfLife
             this.offsetXNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.offsetXNumericUpDown.ValueChanged += new System.EventHandler(this.offsetXNumericUpDown_ValueChanged);
             // 
+            // offsetSeparatorLabel
+            // 
+            this.offsetSeparatorLabel.AutoSize = true;
+            this.offsetSeparatorLabel.Location = new System.Drawing.Point(70, 0);
+            this.offsetSeparatorLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.offsetSeparatorLabel.Name = "offsetSeparatorLabel";
+            this.offsetSeparatorLabel.Padding = new System.Windows.Forms.Padding(2);
+            this.offsetSeparatorLabel.Size = new System.Drawing.Size(14, 17);
+            this.offsetSeparatorLabel.TabIndex = 8;
+            this.offsetSeparatorLabel.Text = " ";
+            // 
             // offsetYNumericUpDown
             // 
             this.offsetYNumericUpDown.AutoSize = true;
@@ -206,34 +179,63 @@ namespace GameOfLife
             this.importModeComboBox.TabIndex = 11;
             this.importModeComboBox.SelectedIndexChanged += new System.EventHandler(this.importModeComboBox_SelectedIndexChanged);
             // 
-            // importModeLabel
+            // offsetLabel
             // 
-            this.importModeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.importModeLabel.AutoSize = true;
-            this.importModeLabel.Location = new System.Drawing.Point(4, 33);
-            this.importModeLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.importModeLabel.Name = "importModeLabel";
-            this.importModeLabel.Padding = new System.Windows.Forms.Padding(4);
-            this.importModeLabel.Size = new System.Drawing.Size(154, 21);
-            this.importModeLabel.TabIndex = 2;
-            this.importModeLabel.Text = "Import Mode";
-            this.importModeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.offsetLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.offsetLabel.AutoSize = true;
+            this.offsetLabel.Location = new System.Drawing.Point(4, 4);
+            this.offsetLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.offsetLabel.Name = "offsetLabel";
+            this.offsetLabel.Padding = new System.Windows.Forms.Padding(4);
+            this.offsetLabel.Size = new System.Drawing.Size(154, 21);
+            this.offsetLabel.TabIndex = 0;
+            this.offsetLabel.Text = "Offset";
+            this.offsetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // offsetSeparatorLabel
+            // dialogTableLayout
             // 
-            this.offsetSeparatorLabel.AutoSize = true;
-            this.offsetSeparatorLabel.Location = new System.Drawing.Point(70, 0);
-            this.offsetSeparatorLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.offsetSeparatorLabel.Name = "offsetSeparatorLabel";
-            this.offsetSeparatorLabel.Padding = new System.Windows.Forms.Padding(2);
-            this.offsetSeparatorLabel.Size = new System.Drawing.Size(14, 17);
-            this.offsetSeparatorLabel.TabIndex = 8;
-            this.offsetSeparatorLabel.Text = " ";
+            this.dialogTableLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.dialogTableLayout.AutoSize = true;
+            this.dialogTableLayout.ColumnCount = 2;
+            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.dialogTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.dialogTableLayout.Controls.Add(this.dialogCancelButton, 1, 0);
+            this.dialogTableLayout.Controls.Add(this.dialogConfirmButton, 0, 0);
+            this.dialogTableLayout.Location = new System.Drawing.Point(166, 79);
+            this.dialogTableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.dialogTableLayout.Name = "dialogTableLayout";
+            this.dialogTableLayout.RowCount = 1;
+            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.dialogTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.dialogTableLayout.Size = new System.Drawing.Size(162, 29);
+            this.dialogTableLayout.TabIndex = 7;
+            // 
+            // dialogCancelButton
+            // 
+            this.dialogCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.dialogCancelButton.Location = new System.Drawing.Point(84, 3);
+            this.dialogCancelButton.Name = "dialogCancelButton";
+            this.dialogCancelButton.Size = new System.Drawing.Size(75, 23);
+            this.dialogCancelButton.TabIndex = 1;
+            this.dialogCancelButton.Text = "Cancel";
+            this.dialogCancelButton.UseVisualStyleBackColor = true;
+            // 
+            // dialogConfirmButton
+            // 
+            this.dialogConfirmButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.dialogConfirmButton.Location = new System.Drawing.Point(3, 3);
+            this.dialogConfirmButton.Name = "dialogConfirmButton";
+            this.dialogConfirmButton.Size = new System.Drawing.Size(75, 23);
+            this.dialogConfirmButton.TabIndex = 0;
+            this.dialogConfirmButton.Text = "Confirm";
+            this.dialogConfirmButton.UseVisualStyleBackColor = true;
             // 
             // ImportForm
             // 
+            this.AcceptButton = this.dialogConfirmButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.dialogCancelButton;
             this.ClientSize = new System.Drawing.Size(332, 112);
             this.Controls.Add(this.tableLayout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -246,13 +248,13 @@ namespace GameOfLife
             this.Text = "Import";
             this.tableLayout.ResumeLayout(false);
             this.tableLayout.PerformLayout();
-            this.dialogTableLayout.ResumeLayout(false);
             this.optionsTableLayout.ResumeLayout(false);
             this.optionsTableLayout.PerformLayout();
             this.offsetTableLayout.ResumeLayout(false);
             this.offsetTableLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.offsetXNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.offsetYNumericUpDown)).EndInit();
+            this.dialogTableLayout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
