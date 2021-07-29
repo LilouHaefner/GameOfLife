@@ -4,6 +4,11 @@
 
 ## Features
 
+### Lexicon Search
+`bool(string PatternName, out FCell[,] OutPattern)`
+
+Search `Lexicon.txt` for a `string` pattern and generate it, if possible.
+
 ### Clear
 `void()`
 
