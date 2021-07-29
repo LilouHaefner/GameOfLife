@@ -31,7 +31,7 @@ namespace GameOfLife
         {
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.randomButton = new System.Windows.Forms.Button();
-            this.templateButton = new System.Windows.Forms.Button();
+            this.lexiconButton = new System.Windows.Forms.Button();
             this.blankButton = new System.Windows.Forms.Button();
             this.tableLayout.SuspendLayout();
             this.SuspendLayout();
@@ -44,7 +44,7 @@ namespace GameOfLife
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayout.Controls.Add(this.randomButton, 0, 0);
-            this.tableLayout.Controls.Add(this.templateButton, 1, 0);
+            this.tableLayout.Controls.Add(this.lexiconButton, 1, 0);
             this.tableLayout.Controls.Add(this.blankButton, 0, 0);
             this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayout.Location = new System.Drawing.Point(0, 0);
@@ -73,23 +73,23 @@ namespace GameOfLife
             this.randomButton.UseVisualStyleBackColor = false;
             this.randomButton.Click += new System.EventHandler(this.randomButton_Click);
             // 
-            // templateButton
+            // lexiconButton
             // 
-            this.templateButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.templateButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.templateButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.templateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.templateButton.Font = new System.Drawing.Font("Century Gothic", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.templateButton.ForeColor = System.Drawing.Color.Gray;
-            this.templateButton.Location = new System.Drawing.Point(532, 0);
-            this.templateButton.Margin = new System.Windows.Forms.Padding(0);
-            this.templateButton.Name = "templateButton";
-            this.templateButton.Size = new System.Drawing.Size(268, 450);
-            this.templateButton.TabIndex = 1;
-            this.templateButton.TabStop = false;
-            this.templateButton.Text = "Template";
-            this.templateButton.UseVisualStyleBackColor = false;
-            this.templateButton.Click += new System.EventHandler(this.templateButton_Click);
+            this.lexiconButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.lexiconButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.lexiconButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lexiconButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lexiconButton.Font = new System.Drawing.Font("Century Gothic", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lexiconButton.ForeColor = System.Drawing.Color.Gray;
+            this.lexiconButton.Location = new System.Drawing.Point(532, 0);
+            this.lexiconButton.Margin = new System.Windows.Forms.Padding(0);
+            this.lexiconButton.Name = "lexiconButton";
+            this.lexiconButton.Size = new System.Drawing.Size(268, 450);
+            this.lexiconButton.TabIndex = 1;
+            this.lexiconButton.TabStop = false;
+            this.lexiconButton.Text = "Lexicon";
+            this.lexiconButton.UseVisualStyleBackColor = false;
+            this.lexiconButton.Click += new System.EventHandler(this.templateButton_Click);
             // 
             // blankButton
             // 
@@ -132,7 +132,7 @@ namespace GameOfLife
         #endregion
         private System.Windows.Forms.TableLayoutPanel tableLayout;
         private System.Windows.Forms.Button randomButton;
-        private System.Windows.Forms.Button templateButton;
+        private System.Windows.Forms.Button lexiconButton;
         private System.Windows.Forms.Button blankButton;
     }
 }

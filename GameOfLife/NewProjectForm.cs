@@ -31,9 +31,9 @@ namespace GameOfLife
 
         private void templateButton_Click(object sender, EventArgs e)
         {
-            ProjectType = EProjectType.Template;
+            ProjectType = EProjectType.Lexicon;
             
-            //MessageBox.Show("Not yet implemented");
+            MessageBox.Show("Not yet implemented");
         }
     }
 }
