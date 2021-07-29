@@ -36,7 +36,7 @@ namespace GameOfLife
     {
         Blank,
         Random,
-        Template
+        Lexicon
     }
 
     #endregion
@@ -188,7 +188,6 @@ namespace GameOfLife
             public char LiveSymbol;
             public char DeadSymbol;
             public char CommentSymbol;
-            public EImportMode ImportMode;
 
             public void Load()
             {
@@ -196,7 +195,6 @@ namespace GameOfLife
                 LiveSymbol = Properties.Settings.Default.LiveSymbol;
                 DeadSymbol = Properties.Settings.Default.DeadSymbol;
                 CommentSymbol = Properties.Settings.Default.CommentSymbol;
-                //ImportMode = Properties.Settings.Default.ImportMode;
             }
         }
 
@@ -263,9 +261,6 @@ namespace GameOfLife
             FormTimer.Tick += Timer_Tick;
             Pause();
 
-            // randomize world
-            // Randomize(UserOptions.Generation.RandomMode, UserOptions.Generation.RandomThreshold, UserOptions.Generation.RandomMultiplier, UserOptions.Generation.RandomSeed);
-
             // load world
             OnWorldLoad();
 
@@ -294,6 +289,185 @@ namespace GameOfLife
             Properties.Settings.Default.Save();
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ApplyRules();
+
+            // increment generation
+            Generation++;
+
+            // repaint form
+            graphicsPanel.Invalidate();
+
+            // call tick event
+            OnWorldTick();
+        }
+
+        private void OnWorldInit()
+        {
+            Cells = new FCell[UserOptions.General.Scale.X, UserOptions.General.Scale.Y];
+        }
+
+        public void OnWorldLoadCosmetic()
+        {
+            // set background color
+            graphicsPanel.BackColor = UserOptions.Display.BackgroundColor;
+
+            // show / hide hud
+            hudPanel.Visible = UserOptions.Display.bShowHUD;
+
+            if (UserOptions.Display.bShowHUD)
+            {
+                // show / hide seed
+                hudSeedNameLabel.Visible = UserOptions.Generation.RandomMode == ERandomMode.Seed;
+                hudSeedValueLabel.Visible = UserOptions.Generation.RandomMode == ERandomMode.Seed;
+
+                // load seed
+                if (UserOptions.Generation.RandomMode == ERandomMode.Seed) hudSeedValueLabel.Text = UserOptions.Generation.RandomSeed.ToString();
+
+                // load hud labels
+                hudIntervalValueLabel.Text = UserOptions.General.Interval.ToString();
+                hudBorderValueLabel.Text = UserOptions.General.BorderMode.ToString();
+                hudScaleValueLabel.Text = UserOptions.General.Scale.X.ToString() + " x " + UserOptions.General.Scale.Y.ToString();
+            }
+
+            // update total
+            Total = Cells.GetLength(0) * Cells.GetLength(1); //UserOptions.General.Scale.X * UserOptions.General.Scale.Y;
+            statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
+        }
+
+        private void OnWorldLoad()
+        {
+            // call cosmetic load event
+            OnWorldLoadCosmetic();
+
+            // reset saved file name
+            LastSavedFileName = null;
+
+            // disable pause buttons
+            toolStripPauseButton.Enabled = false;
+            contextMenuPauseMenuItem.Enabled = false;
+
+            // reset labels
+            Generation = 0;
+            Live = 0;
+
+            // iterate through cells
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    // calculate cell neighbors, live
+                    Cells[x, y].Neighbors = CountNeighbors(x, y);
+                    if (Cells[x, y].Value) Live++;
+                }
+            }
+
+            // call tick event
+            OnWorldTick();
+        }
+
+        public void OnWorldTickCosmetic()
+        {
+            // update status labels
+            statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
+            statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
+
+            // repaint form
+            graphicsPanel.Invalidate();
+        }
+
+        private void OnWorldTick()
+        {
+            // call cosmetic tick event
+            OnWorldTickCosmetic();
+        }
+
+        private void OnWorldResize()
+        {
+            OnWorldInit();
+            OnWorldLoad();
+        }
+
+        private FCell[,] CopyCells(FCell[,] InCells)
+        {
+            FCell[,] OutCells = new FCell[InCells.GetLength(0), InCells.GetLength(1)];
+
+            for (int x = 0; x < Cells.GetLength(0); x++)
+            {
+                for (int y = 0; y < Cells.GetLength(1); y++)
+                {
+                    OutCells[x, y].Value = InCells[x, y].Value;
+                    OutCells[x, y].Neighbors = InCells[x, y].Neighbors;
+                }
+            }
+
+            return OutCells;
+        }
+
+        private void ResizeWorld(int NewX, int NewY)
+        {
+            // save current state
+            FCell[,] SavedCells = CopyCells(Cells);
+
+            // update options
+            UserOptions.General.Scale.X = NewX;
+            UserOptions.General.Scale.Y = NewY;
+
+            OnWorldResize();
+
+            // reset to previous state
+            if (Cells.GetLength(0) < SavedCells.GetLength(0) && Cells.GetLength(1) < SavedCells.GetLength(1))
+            {
+                for (int x = 0; x < Cells.GetLength(0); x++)
+                {
+                    for (int y = 0; y < Cells.GetLength(1); y++)
+                    {
+                        Cells[x, y].Value = SavedCells[x, y].Value;
+                        Cells[x, y].Neighbors = SavedCells[x, y].Neighbors;
+                    }
+                }
+            }
+        }
+
+        public void SetCellColor(Color InColor)
+        {
+            UserOptions.Display.CellColor = InColor;
+        }
+
+        public void SetGridColor(Color InColor)
+        {
+            UserOptions.Display.GridColor = InColor;
+        }
+
+        public void SetBackgroundColor(Color InColor)
+        {
+            UserOptions.Display.BackgroundColor = InColor;
+
+            // update background color
+            graphicsPanel.BackColor = UserOptions.Display.BackgroundColor;
+        }
+
+        private void UpdateOptions(FUserOptions NewOptions)
+        {
+            // check if scale needs to be updated
+            if (NewOptions.General.Scale.X != UserOptions.General.Scale.X || NewOptions.General.Scale.Y != UserOptions.General.Scale.Y)
+            {
+                ResizeWorld(NewOptions.General.Scale.X, NewOptions.General.Scale.Y);
+            }
+
+            // check if interval needs to be updated
+            if (NewOptions.General.Interval != UserOptions.General.Interval)
+            {
+                FormTimer.Interval = NewOptions.General.Interval;
+            }
+
+            // update options
+            UserOptions = NewOptions;
+        }
+
+        #region Settings
+
         public void Reset()
         {
             Properties.Settings.Default.Reset();
@@ -318,6 +492,8 @@ namespace GameOfLife
             OnWorldLoad();
         }
 
+        #endregion
+
         #region File Handling
 
         private void Save()
@@ -341,9 +517,12 @@ namespace GameOfLife
             LastSavedFileName = FileName;
 
             // write header
-            Writer.WriteLine($"!Size\t\t {UserOptions.General.Scale.X} x {UserOptions.General.Scale.Y}");
-            Writer.WriteLine($"!Live Key\t {ApplicationOptions.File.LiveSymbol}");
-            Writer.WriteLine($"!Dead Key\t {ApplicationOptions.File.DeadSymbol}");
+            Writer.WriteLine($"!Info");
+            Writer.WriteLine($"[Live Symbol\t] {ApplicationOptions.File.LiveSymbol}");
+            Writer.WriteLine($"[Dead Symbol\t] {ApplicationOptions.File.DeadSymbol}");
+            Writer.WriteLine();
+            Writer.WriteLine($"!Properties");
+            Writer.WriteLine($"[Border Mode\t] {UserOptions.General.BorderMode}");
             Writer.WriteLine();
 
             // iterate through columns
@@ -414,6 +593,8 @@ namespace GameOfLife
                 // ignore comments
                 if (CurrentLine[0] == ApplicationOptions.File.CommentSymbol) continue;
 
+                if (CurrentLine[0] == '[') continue;
+
                 for (int LocalX = 0; LocalX < CurrentLine.Length; LocalX++)
                 {
                     int CurrentX = ImportOptions.OffsetX + LocalX;
@@ -454,7 +635,7 @@ namespace GameOfLife
             // close the file.
             Reader.Close();
 
-            OnWorldTick();
+            OnWorldLoad();
         }
 
         private void Open()
@@ -490,6 +671,9 @@ namespace GameOfLife
                 // ignore comments
                 if (CurrentLine[0] == ApplicationOptions.File.CommentSymbol) continue;
 
+                // ignore properties
+                if (CurrentLine[0] == '[') continue;
+
                 // update max width if necessary
                 if (CurrentLine.Length > MaxWidth) MaxWidth = CurrentLine.Length;
 
@@ -515,6 +699,20 @@ namespace GameOfLife
                 // ignore comments
                 if (CurrentLine[0] == ApplicationOptions.File.CommentSymbol) continue;
 
+                // parse properties
+
+                if (CurrentLine[0] == '[')
+                {
+                    // parse border mode
+                    string BorderMode;
+                    if (ParseProperty(CurrentLine, "Border Mode", out BorderMode))
+                    {
+                        Enum.TryParse(BorderMode, out UserOptions.General.BorderMode);
+                    }
+
+                    continue;
+                }
+
                 for (int x = 0; x < CurrentLine.Length; x++)
                 {
                     if (CurrentLine[x] == ApplicationOptions.File.LiveSymbol) Cells[x, y].Value = true;
@@ -526,106 +724,27 @@ namespace GameOfLife
 
             // Close the file.
             Reader.Close();
+
+            OnWorldLoad();
         }
 
-        #endregion
-
-        private void Timer_Tick(object sender, EventArgs e)
+        bool ParseProperty(string Text, string PropertyName, out string PropertyValue)
         {
-            ApplyRules();
+            PropertyValue = null;
 
-            // increment generation
-            Generation++;
-
-            // repaint form
-            graphicsPanel.Invalidate();
-
-            // call tick event
-            OnWorldTick();
-        }
-
-        private void OnWorldInit()
-        {
-            Cells = new FCell[UserOptions.General.Scale.X, UserOptions.General.Scale.Y];
-        }
-
-        public void OnWorldLoadCosmetic()
-        {
-            // set background color
-            graphicsPanel.BackColor = UserOptions.Display.BackgroundColor;
-
-            // show / hide hud
-            hudPanel.Visible = UserOptions.Display.bShowHUD;
-
-            if (UserOptions.Display.bShowHUD)
+            if (Text[0] == '[')
             {
-                // show / hide seed
-                hudSeedNameLabel.Visible = UserOptions.Generation.RandomMode == ERandomMode.Seed;
-                hudSeedValueLabel.Visible = UserOptions.Generation.RandomMode == ERandomMode.Seed;
-
-                // load seed
-                if (UserOptions.Generation.RandomMode == ERandomMode.Seed) hudSeedValueLabel.Text = UserOptions.Generation.RandomSeed.ToString();
-
-                // load hud labels
-                hudIntervalValueLabel.Text = UserOptions.General.Interval.ToString();
-                hudBorderValueLabel.Text = UserOptions.General.BorderMode.ToString();
-                hudScaleValueLabel.Text = UserOptions.General.Scale.X.ToString() + " x " + UserOptions.General.Scale.Y.ToString();
-            }
-
-            // update total
-            Total = Cells.GetLength(0) * Cells.GetLength(1); //UserOptions.General.Scale.X * UserOptions.General.Scale.Y;
-            statusStripTotalStatusLabel.Text = "Total: " + Total.ToString();
-        }
-
-        private void OnWorldLoad()
-        {
-            // call cosmetic load event
-            OnWorldLoadCosmetic();
-
-            // disable pause buttons
-            toolStripPauseButton.Enabled = false;
-            contextMenuPauseMenuItem.Enabled = false;
-
-            // reset labels
-            Generation = 0;
-            Live = 0;
-
-            // iterate through cells
-            for (int x = 0; x < Cells.GetLength(0); x++)
-            {
-                for (int y = 0; y < Cells.GetLength(1); y++)
+                if (Text.StartsWith("[" + PropertyName))
                 {
-                    // calculate cell neighbors, live
-                    Cells[x, y].Neighbors = CountNeighbors(x, y);
-                    if (Cells[x, y].Value) Live++;
+                    PropertyValue = Text.Replace("[", "").Replace(PropertyName, "").Replace("\t", "").Replace("]", "").Trim();
+                    return true;
                 }
             }
 
-            // call tick event
-            OnWorldTick();
+            return false;
         }
 
-        public void OnWorldTickCosmetic()
-        {
-            // repaint form
-            graphicsPanel.Invalidate();
-        }
-
-        private void OnWorldTick()
-        {
-            // update status labels
-            statusStripGenerationStatusLabel.Text = "Generation: " + Generation.ToString();
-            statusStripLiveStatusLabel.Text = "Live: " + Live.ToString();
-
-            // call cosmetic tick event
-            OnWorldTickCosmetic();
-        }
-
-        private void OnWorldResize()
-        {
-            OnWorldInit();
-            OnWorldLoad();
-        }
+        #endregion
 
         #region Rules
 
@@ -797,83 +916,6 @@ namespace GameOfLife
 
         #endregion
 
-        private FCell[,] CopyCells(FCell[,] InCells)
-        {
-            FCell[,] OutCells = new FCell[InCells.GetLength(0), InCells.GetLength(1)];
-
-            for (int x = 0; x < Cells.GetLength(0); x++)
-            {
-                for (int y = 0; y < Cells.GetLength(1); y++)
-                {
-                    OutCells[x, y].Value = InCells[x, y].Value;
-                    OutCells[x, y].Neighbors = InCells[x, y].Neighbors;
-                }
-            }
-
-            return OutCells;
-        }
-
-        private void ResizeWorld(int NewX, int NewY)
-        {
-            // save current state
-            FCell[,] SavedCells = CopyCells(Cells);
-
-            // update options
-            UserOptions.General.Scale.X = NewX;
-            UserOptions.General.Scale.Y = NewY;
-
-            OnWorldResize();
-
-            // reset to previous state
-            if (Cells.GetLength(0) < SavedCells.GetLength(0) && Cells.GetLength(1) < SavedCells.GetLength(1))
-            {
-                for (int x = 0; x < Cells.GetLength(0); x++)
-                {
-                    for (int y = 0; y < Cells.GetLength(1); y++)
-                    {
-                        Cells[x, y].Value = SavedCells[x, y].Value;
-                        Cells[x, y].Neighbors = SavedCells[x, y].Neighbors;
-                    }
-                }
-            }
-        }
-
-        private void UpdateOptions(FUserOptions NewOptions)
-        {
-            // check if scale needs to be updated
-            if (NewOptions.General.Scale.X != UserOptions.General.Scale.X || NewOptions.General.Scale.Y != UserOptions.General.Scale.Y)
-            {
-                ResizeWorld(NewOptions.General.Scale.X, NewOptions.General.Scale.Y);
-            }
-
-            // check if interval needs to be updated
-            if (NewOptions.General.Interval != UserOptions.General.Interval)
-            {
-                FormTimer.Interval = NewOptions.General.Interval;
-            }
-
-            // update options
-            UserOptions = NewOptions;
-        }
-
-        public void SetCellColor(Color InColor)
-        {
-            UserOptions.Display.CellColor = InColor;
-        }
-
-        public void SetGridColor(Color InColor)
-        {
-            UserOptions.Display.GridColor = InColor;
-        }
-
-        public void SetBackgroundColor(Color InColor)
-        {
-            UserOptions.Display.BackgroundColor = InColor;
-
-            // update background color
-            graphicsPanel.BackColor = UserOptions.Display.BackgroundColor;
-        }
-
         #region Shared Actions
 
         private void Play()
@@ -964,48 +1006,153 @@ namespace GameOfLife
             // repaint form
             graphicsPanel.Invalidate();
         }
+
         private void ShowNewProjectForm()
         {
+            if (bIsPlay) Pause();
+
             // create options form
             NewProjectForm Dialog = new NewProjectForm();
 
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
                 Clear();
+                OnWorldInit();
 
                 switch (Dialog.ProjectType)
                 {
+                    case EProjectType.Blank:
+                        {
+                            OnWorldLoad();
+
+                            Reset();
+
+                            break;
+                        }
                     case EProjectType.Random:
                         {
                             Random RandomGenerator = new Random();
 
-                            int Scale = RandomGenerator.Next() % 50 * 2 + 1;
+                            int Scale = (RandomGenerator.Next() % 100) + 1;
                             UserOptions.General.Scale = new Point(Scale * 2, Scale);
                             UserOptions.General.BorderMode = (EBorderMode)(int)Math.Round(RandomGenerator.NextDouble());
                             UserOptions.Generation.RandomMode = ERandomMode.Time;
                             UserOptions.Generation.RandomThreshold = (float)RandomGenerator.NextDouble() * 10.0f;
                             UserOptions.Generation.RandomMultiplier = (float)(RandomGenerator.NextDouble() * 10.0f) / 2 + UserOptions.Generation.RandomThreshold;
 
-                            ResizeWorld(UserOptions.General.Scale.X, UserOptions.General.Scale.Y);
+                            OnWorldInit();
+
                             Randomize(UserOptions.Generation.RandomMode, UserOptions.Generation.RandomThreshold, UserOptions.Generation.RandomMultiplier);
+
+                            OnWorldLoad();
+                            ApplyRules();
 
                             break;
                         }
-                    case EProjectType.Template:
+                    case EProjectType.Lexicon:
                         {
-                            OpenFile(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "/Templates/Gliders.cells");
+
+                            /*
+                             * unfinished code
+                             * 
+                            LexiconSearchForm SearchDialog = new LexiconSearchForm();
+
+                            if (SearchDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                FCell[,] Pattern;
+
+                                if (GetPatternFromLexicon(SearchDialog.SearchValue, out Pattern))
+                                {
+                                    UserOptions.General.Scale = new Point(Pattern.GetLength(0), Pattern.GetLength(1));
+                                    ResizeWorld(UserOptions.General.Scale.X, UserOptions.General.Scale.Y);
+                                    Cells = CopyCells(Pattern);
+                                    OnWorldLoad();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Pattern not found");
+                                }
+                            }
+                            */
 
                             break;
                         }
                 }
             }
 
-            // load world cosmetic
-            OnWorldLoadCosmetic();
-
             // repaint form
             graphicsPanel.Invalidate();
         }
+
+        /*
+         * unfinished code
+         * 
+        private bool GetPatternFromLexicon(string PatternName, out FCell[,] OutPattern)
+        {
+            List<string> Queue = new List<string>();
+
+            StreamReader Reader = new StreamReader("Lexicon.txt");
+
+            // calculate world size from file
+            while (!Reader.EndOfStream)
+            {
+                // read the next line
+                string CurrentLine = Reader.ReadLine();
+
+                // ignore empty lines
+                if (string.IsNullOrWhiteSpace(CurrentLine)) continue;
+
+                // ignore comments
+                if (CurrentLine[0] == ':')
+                {
+                    if (CurrentLine.Contains(':' + PatternName + ':'))
+                    {
+                        do
+                        {
+                            if (CurrentLine[0] == '\t')
+                            {
+                                Queue.Add(CurrentLine.Trim());
+                                CurrentLine = Reader.ReadLine();
+                            }
+                            else
+                            {
+                                CurrentLine = Reader.ReadLine();
+                            }
+                        }
+                        while (!Reader.EndOfStream && CurrentLine[0] != ':');
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            // Close the file.
+            Reader.Close();
+
+            int MaxWidth = 0;
+            int MaxHeight = Queue.Count;
+
+            for (int x = 0; x < Queue.Count; x++)
+            {
+                if (Queue[x].Length > MaxWidth) MaxWidth = Queue[x].Length;
+            }
+
+            OutPattern = new FCell[MaxWidth, MaxHeight];
+
+            for (int x = 0; x < Queue.Count; x++)
+            {
+                for (int y = 0; y < Queue[x].Length; y++)
+                {
+                    if (y == ApplicationOptions.File.LiveSymbol) OutPattern[x, y].Value = true;
+                    else if (y == ApplicationOptions.File.DeadSymbol) OutPattern[x, y].Value = false;
+                }
+            }
+
+            return true;
+        }
+        */
 
         private void Clear()
         {
@@ -1050,13 +1197,15 @@ namespace GameOfLife
 
         #endregion
 
+        #region Controls
+
         #region Graphics Panel
 
         private void graphicsPanel_Paint(object sender, PaintEventArgs e)
         {
             float PanelWidth = (float)graphicsPanel.ClientSize.Width;
             float PanelHeight = (float)graphicsPanel.ClientSize.Height;
-            
+
             // calculate cell size
             float CellWidth = PanelWidth / (float)Cells.GetLength(0);
             float CellHeight = PanelHeight / (float)Cells.GetLength(1);
@@ -1068,7 +1217,11 @@ namespace GameOfLife
             Pen GridPen = new Pen(UserOptions.Display.GridColor, 1);
 
             // create pen for helpers
-            Pen HelperPen = new Pen(Color.Red, 1);
+            Pen HelperPenRectangle = new Pen(Color.FromArgb(128, 128, 128), 2);
+            Pen HelperPenLines = new Pen(Color.FromArgb(96, 96, 96), 2);
+
+            // create brush for neighbor count text
+            Brush TextBrush = new SolidBrush(UserOptions.Display.GridColor);
 
             // neighbor count font setup
             float FontSizeMultiplier = 0.05f;
@@ -1115,26 +1268,26 @@ namespace GameOfLife
                             RectangleF Rect = new RectangleF(CellRect.X, CellRect.Y, CellRect.Width, CellRect.Height);
 
                             // draw neighbor count in rectangle
-                            e.Graphics.DrawString(Cells[x, y].Neighbors.ToString(), Font, Brushes.White, Rect, StringFormat);
+                            e.Graphics.DrawString(Cells[x, y].Neighbors.ToString(), Font, TextBrush, Rect, StringFormat);
                         }
                     }
-
-                    if (bShowHelpers)
-                    {
-                        e.Graphics.DrawRectangle(HelperPen, 0, 0, (PanelWidth / 2), (PanelHeight / 2));
-                        e.Graphics.DrawRectangle(HelperPen, (PanelWidth / 2) - 1, 0, (PanelWidth / 2), (PanelHeight / 2));
-                        e.Graphics.DrawRectangle(HelperPen, 0, (PanelHeight / 2) - 1, (PanelWidth / 2), (PanelHeight / 2));
-                        e.Graphics.DrawRectangle(HelperPen, (PanelWidth / 2) - 1, (PanelHeight / 2) - 1, (PanelWidth / 2), (PanelHeight / 2));
-
-                        e.Graphics.DrawRectangle(HelperPen, 0, (PanelHeight / 4), PanelWidth, (PanelHeight / 2));
-                        e.Graphics.DrawRectangle(HelperPen, (PanelWidth / 4), 0, (PanelWidth / 2), PanelHeight);
-                    }
                 }
+            }
+
+            if (bShowHelpers)
+            {
+                float CrosshairRadius = 10.0f;
+                e.Graphics.DrawRectangle(HelperPenRectangle, ((PanelWidth / 2) - (CrosshairRadius / 2)), ((PanelHeight / 2) - (CrosshairRadius / 2)), CrosshairRadius, CrosshairRadius);
+                e.Graphics.DrawLine(HelperPenLines, new PointF((PanelWidth / 2), 1), new PointF((PanelWidth / 2), PanelHeight));
+                e.Graphics.DrawLine(HelperPenLines, new PointF(0, (PanelHeight / 2)), new PointF(PanelWidth, (PanelHeight / 2)));
             }
 
             // clean up pens and brushes
             GridPen.Dispose();
             CellBrush.Dispose();
+            HelperPenLines.Dispose();
+            HelperPenRectangle.Dispose();
+            TextBrush.Dispose();
         }
 
         private void graphicsPanel_MouseClick(object sender, MouseEventArgs e)
@@ -1218,6 +1371,7 @@ namespace GameOfLife
             menuStripShowHudMenuItem.Checked = UserOptions.Display.bShowHUD;
             menuStripShowNeighborCountMenuItem.Checked = UserOptions.Display.bShowNeighborCount;
             menuStripShowGridMenuItem.Checked = UserOptions.Display.bShowGrid;
+            menuStripShowHelpersMenuItem.Checked = bShowHelpers;
         }
 
         private void menuStripShowHudMenuItem_Click(object sender, EventArgs e)
@@ -1258,7 +1412,7 @@ namespace GameOfLife
             // repaint form
             graphicsPanel.Invalidate();
         }
-       
+
         private void menuStripShowHelpersMenuItem_Click(object sender, EventArgs e)
         {
             // toggle checkbox
@@ -1320,6 +1474,7 @@ namespace GameOfLife
             contextMenuShowHudMenuItem.Checked = UserOptions.Display.bShowHUD;
             contextMenuShowNeighborCountMenuItem.Checked = UserOptions.Display.bShowNeighborCount;
             contextMenuShowGridMenuItem.Checked = UserOptions.Display.bShowGrid;
+            contextMenuShowHelpersMenuItem.Checked = bShowHelpers;
         }
 
         private void contextMenuPlayMenuItem_Click(object sender, EventArgs e)
@@ -1402,6 +1557,8 @@ namespace GameOfLife
             // repaint form
             graphicsPanel.Invalidate();
         }
+
+        #endregion
 
         #endregion
     }
