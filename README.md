@@ -6,14 +6,17 @@
 
 ### Clear
 `void()`
+
 Clears all cells
 
 ### Fill
 `void()`
+
 Fills all cells
 
 ### Randomize
 `void(ERandomMode RandomMode, float Threshold, float Multiplier, int Seed)`
+
 Randomly fills cells at an approximate ratio of `Multiplier - Threshold` live to `Multiplier` total
 
 ## Options
