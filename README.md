@@ -4,11 +4,6 @@
 
 ## Features
 
-### Lexicon Search
-`bool(string PatternName, out FCell[,] OutPattern)`
-
-Search `Lexicon.txt` for a `string` pattern and generate it, if possible.
-
 ### Clear
 `void()`
 
@@ -23,6 +18,11 @@ Fills all cells
 `void(ERandomMode RandomMode, float Threshold, float Multiplier, int Seed)`
 
 Randomly fills cells at an approximate ratio of `Multiplier - Threshold` live to `Multiplier` total
+
+### Lexicon Search
+`bool(string PatternName, out FCell[,] OutPattern)`
+
+Search `Lexicon.txt` for a `string` pattern and generate it, if possible.
 
 ## Options
 
