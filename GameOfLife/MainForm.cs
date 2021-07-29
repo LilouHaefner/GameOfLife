@@ -1049,26 +1049,33 @@ namespace GameOfLife
                         }
                     case EProjectType.Lexicon:
                         {
-                            LexiconSearchForm SearchDialog = new LexiconSearchForm();
-
-                            if (SearchDialog.ShowDialog() == DialogResult.OK)
+                            if (File.Exists(Environment.CurrentDirectory + "\\Lexicon.txt"))
                             {
-                                FCell[,] Pattern;
+                                LexiconSearchForm SearchDialog = new LexiconSearchForm();
 
-                                if (GetPatternFromLexicon(SearchDialog.SearchValue, out Pattern))
+                                if (SearchDialog.ShowDialog() == DialogResult.OK)
                                 {
-                                    OnWorldInit();
-                                    OnWorldLoad();
-                                    Clear();
+                                    FCell[,] Pattern;
 
-                                    UserOptions.General.Scale = new Point(Pattern.GetLength(0), Pattern.GetLength(1));
-                                    UserOptions.General.BorderMode = EBorderMode.Clip;
-                                    UserOptions.Generation.RandomMode = ERandomMode.Time;
+                                    if (GetPatternFromLexicon(SearchDialog.SearchValue, out Pattern))
+                                    {
+                                        OnWorldInit();
+                                        OnWorldLoad();
+                                        Clear();
 
-                                    ResizeWorld(UserOptions.General.Scale.X, UserOptions.General.Scale.Y);
-                                    Cells = CopyCells(Pattern);
-                                    OnWorldLoad();
+                                        UserOptions.General.Scale = new Point(Pattern.GetLength(0), Pattern.GetLength(1));
+                                        UserOptions.General.BorderMode = EBorderMode.Clip;
+                                        UserOptions.Generation.RandomMode = ERandomMode.Time;
+
+                                        ResizeWorld(UserOptions.General.Scale.X, UserOptions.General.Scale.Y);
+                                        Cells = CopyCells(Pattern);
+                                        OnWorldLoad();
+                                    }
                                 }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Lexicon not found");
                             }
 
                             break;
