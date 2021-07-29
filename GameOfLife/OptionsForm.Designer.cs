@@ -428,11 +428,6 @@ namespace GameOfLife
             this.neighborLiveMinNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
             this.neighborLiveMinNumericUpDown.Location = new System.Drawing.Point(0, 0);
             this.neighborLiveMinNumericUpDown.Margin = new System.Windows.Forms.Padding(0);
-            this.neighborLiveMinNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.neighborLiveMinNumericUpDown.Name = "neighborLiveMinNumericUpDown";
             this.neighborLiveMinNumericUpDown.Size = new System.Drawing.Size(48, 20);
             this.neighborLiveMinNumericUpDown.TabIndex = 9;
@@ -460,11 +455,6 @@ namespace GameOfLife
             this.neighborLiveMaxNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
             this.neighborLiveMaxNumericUpDown.Location = new System.Drawing.Point(66, 0);
             this.neighborLiveMaxNumericUpDown.Margin = new System.Windows.Forms.Padding(0);
-            this.neighborLiveMaxNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.neighborLiveMaxNumericUpDown.Name = "neighborLiveMaxNumericUpDown";
             this.neighborLiveMaxNumericUpDown.Size = new System.Drawing.Size(48, 20);
             this.neighborLiveMaxNumericUpDown.TabIndex = 10;
@@ -481,7 +471,7 @@ namespace GameOfLife
             this.neighborRadiusNumericUpDown.Location = new System.Drawing.Point(248, 4);
             this.neighborRadiusNumericUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.neighborRadiusNumericUpDown.Maximum = new decimal(new int[] {
-            200,
+            25,
             0,
             0,
             0});
@@ -520,11 +510,6 @@ namespace GameOfLife
             this.cellBirthThresholdNumericUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.cellBirthThresholdNumericUpDown.Maximum = new decimal(new int[] {
             200,
-            0,
-            0,
-            0});
-            this.cellBirthThresholdNumericUpDown.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});

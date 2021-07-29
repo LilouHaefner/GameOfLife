@@ -209,9 +209,6 @@ namespace GameOfLife
             bShowHUD = UserOptions.Display.bShowHUD;
             bShowNeighborCount = UserOptions.Display.bShowNeighborCount;
             bShowGrid = UserOptions.Display.bShowGrid;
-            //CellColor = Options.Display.CellColor;
-            //GridColor = Options.Display.GridColor;
-            //BackgroundColor = Options.Display.BackgroundColor;
         }
 
         private void SaveOptions(object sender, EventArgs e)
