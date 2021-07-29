@@ -24,10 +24,10 @@
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="RandomMode" Type="GameOfLife.ERandomMode" Scope="User">
-      <Value Profile="(Default)">Seed</Value>
+      <Value Profile="(Default)">Time</Value>
     </Setting>
     <Setting Name="RandomSeed" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2000</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="RandomThreshold" Type="System.Single" Scope="User">
       <Value Profile="(Default)">7.5</Value>
@@ -66,13 +66,13 @@
       <Value Profile="(Default)">world</Value>
     </Setting>
     <Setting Name="LiveSymbol" Type="System.Char" Scope="Application">
-      <Value Profile="(Default)">O</Value>
+      <Value Profile="(Default)">*</Value>
     </Setting>
     <Setting Name="DeadSymbol" Type="System.Char" Scope="User">
       <Value Profile="(Default)">.</Value>
     </Setting>
     <Setting Name="CommentSymbol" Type="System.Char" Scope="User">
-      <Value Profile="(Default)">!</Value>
+      <Value Profile="(Default)">#</Value>
     </Setting>
   </Settings>
 </SettingsFile>

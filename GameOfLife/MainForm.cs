@@ -1016,15 +1016,13 @@ namespace GameOfLife
 
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                Clear();
-                OnWorldInit();
-
                 switch (Dialog.ProjectType)
                 {
                     case EProjectType.Blank:
                         {
+                            OnWorldInit();
                             OnWorldLoad();
-
+                            Clear();
                             Reset();
 
                             break;
@@ -1051,10 +1049,6 @@ namespace GameOfLife
                         }
                     case EProjectType.Lexicon:
                         {
-
-                            /*
-                             * unfinished code
-                             * 
                             LexiconSearchForm SearchDialog = new LexiconSearchForm();
 
                             if (SearchDialog.ShowDialog() == DialogResult.OK)
@@ -1063,17 +1057,19 @@ namespace GameOfLife
 
                                 if (GetPatternFromLexicon(SearchDialog.SearchValue, out Pattern))
                                 {
+                                    OnWorldInit();
+                                    OnWorldLoad();
+                                    Clear();
+
                                     UserOptions.General.Scale = new Point(Pattern.GetLength(0), Pattern.GetLength(1));
+                                    UserOptions.General.BorderMode = EBorderMode.Clip;
+                                    UserOptions.Generation.RandomMode = ERandomMode.Time;
+
                                     ResizeWorld(UserOptions.General.Scale.X, UserOptions.General.Scale.Y);
                                     Cells = CopyCells(Pattern);
                                     OnWorldLoad();
                                 }
-                                else
-                                {
-                                    MessageBox.Show("Pattern not found");
-                                }
                             }
-                            */
 
                             break;
                         }
@@ -1083,12 +1079,10 @@ namespace GameOfLife
             // repaint form
             graphicsPanel.Invalidate();
         }
-
-        /*
-         * unfinished code
-         * 
         private bool GetPatternFromLexicon(string PatternName, out FCell[,] OutPattern)
         {
+            OutPattern = new FCell[0, 0];
+
             List<string> Queue = new List<string>();
 
             StreamReader Reader = new StreamReader("Lexicon.txt");
@@ -1102,24 +1096,66 @@ namespace GameOfLife
                 // ignore empty lines
                 if (string.IsNullOrWhiteSpace(CurrentLine)) continue;
 
-                // ignore comments
                 if (CurrentLine[0] == ':')
                 {
                     if (CurrentLine.Contains(':' + PatternName + ':'))
                     {
                         do
                         {
+                            CurrentLine = Reader.ReadLine();
+
+                            // ignore empty lines
+                            if (string.IsNullOrWhiteSpace(CurrentLine)) continue;
+
+                            // return if we reach the next pattern
+                            if (CurrentLine[0] == ':')
+                            {
+                                if (Queue.Count <= 0)
+                                {
+                                    MessageBox.Show("Pattern missing definition");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            // search for indent
                             if (CurrentLine[0] == '\t')
                             {
                                 Queue.Add(CurrentLine.Trim());
-                                CurrentLine = Reader.ReadLine();
-                            }
-                            else
-                            {
-                                CurrentLine = Reader.ReadLine();
                             }
                         }
-                        while (!Reader.EndOfStream && CurrentLine[0] != ':');
+                        while (!Reader.EndOfStream);
+
+                        if (Queue.Count > 0 && !Queue.Contains(null) && !Queue.Contains(string.Empty))
+                        {
+                            // Close the file.
+                            Reader.Close();
+
+                            int MaxWidth = 0;
+                            int MaxHeight = Queue.Count;
+
+                            for (int x = 0; x < Queue.Count; x++)
+                            {
+                                if (Queue[x].Length > MaxWidth) MaxWidth = Queue[x].Length;
+                            }
+
+                            OutPattern = new FCell[MaxWidth, MaxHeight];
+
+                            for (int y = 0; y < Queue.Count; y++)
+                            {
+                                for (int x = 0; x < Queue[y].Length; x++)
+                                {
+                                    if (Queue[y][x] == ApplicationOptions.File.LiveSymbol) OutPattern[x, y].Value = true;
+                                    else if (Queue[y][x] == ApplicationOptions.File.DeadSymbol) OutPattern[x, y].Value = false;
+                                }
+                            }
+
+                            return true;
+                        }
                     }
                 }
                 else
@@ -1128,31 +1164,10 @@ namespace GameOfLife
                 }
             }
 
-            // Close the file.
-            Reader.Close();
+            MessageBox.Show("Pattern not found");
 
-            int MaxWidth = 0;
-            int MaxHeight = Queue.Count;
-
-            for (int x = 0; x < Queue.Count; x++)
-            {
-                if (Queue[x].Length > MaxWidth) MaxWidth = Queue[x].Length;
-            }
-
-            OutPattern = new FCell[MaxWidth, MaxHeight];
-
-            for (int x = 0; x < Queue.Count; x++)
-            {
-                for (int y = 0; y < Queue[x].Length; y++)
-                {
-                    if (y == ApplicationOptions.File.LiveSymbol) OutPattern[x, y].Value = true;
-                    else if (y == ApplicationOptions.File.DeadSymbol) OutPattern[x, y].Value = false;
-                }
-            }
-
-            return true;
+            return false;
         }
-        */
 
         private void Clear()
         {

@@ -1,6 +1,9 @@
-!Size		 100 x 50
-!Live Key	 O
-!Dead Key	 .
+!Info
+[Live Symbol	] O
+[Dead Symbol	] .
+
+!Properties
+[Border Mode	] Wrap
 
 .O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O...
 ..O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O....O..

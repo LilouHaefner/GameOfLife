@@ -109,7 +109,7 @@ namespace GameOfLife.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Seed")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Time")]
         public global::GameOfLife.ERandomMode RandomMode {
             get {
                 return ((global::GameOfLife.ERandomMode)(this["RandomMode"]));
@@ -121,7 +121,7 @@ namespace GameOfLife.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int RandomSeed {
             get {
                 return ((int)(this["RandomSeed"]));
@@ -265,7 +265,7 @@ namespace GameOfLife.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("O")]
+        [global::System.Configuration.DefaultSettingValueAttribute("*")]
         public char LiveSymbol {
             get {
                 return ((char)(this["LiveSymbol"]));
@@ -286,7 +286,7 @@ namespace GameOfLife.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("!")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#")]
         public char CommentSymbol {
             get {
                 return ((char)(this["CommentSymbol"]));
